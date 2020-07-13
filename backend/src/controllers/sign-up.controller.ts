@@ -21,12 +21,12 @@ class SignUpController {
 
     const insertedIds = await trx('Account').insert(Account)
 
-    const Account_id = insertedIds[0]
+    const AccountId = insertedIds[0]
 
     await trx.commit()
 
     return res.json({
-      id: Account_id,
+      id: AccountId,
       ...Account
     })
   }
