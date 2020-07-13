@@ -6,7 +6,7 @@ export async function up (knex: Knex) {
     table.string('user').notNullable()
     table.string('email').notNullable()
     table.string('password').notNullable()
-    table.string('password_confirmation').notNullable()
+    table.string('passwordConfirmation').notNullable()
   })
 }
 
