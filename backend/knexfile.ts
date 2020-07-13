@@ -4,15 +4,12 @@ require('dotenv').config()
 module.exports = {
   client: 'mysql',
   connection: {
-    host: '127.0.0.1',
-    user: 'root',
-    password: '**********',
-    database: 'nlw'
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME,
+    host: process.env.DB_HOST
   },
   migrations: {
     directory: path.resolve(__dirname, 'src', 'database', 'migrations')
-  },
-  seeds: {
-    directory: path.resolve(__dirname, 'src', 'database', 'seeds')
   }
 }
