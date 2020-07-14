@@ -1,8 +1,19 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import LoginPage from './pages/login/login.page';
+
+import styled from 'styled-components';
+
 import logo from './logo.svg';
+
 import './App.css';
+
+const StyledDiv = styled.div`
+	position: fixed;
+	background-color: red;
+	width: 100%;
+	height: 100%;
+`;
 
 function App() {
 	return (
@@ -27,7 +38,9 @@ function App() {
 					</div>
 				</Route>
 				<Route path="/">
-					<LoginPage />
+					<StyledDiv>
+						<LoginPage />
+					</StyledDiv>
 				</Route>
 			</Switch>
 		</Router>
