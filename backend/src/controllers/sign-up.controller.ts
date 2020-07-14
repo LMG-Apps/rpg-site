@@ -20,15 +20,17 @@ class SignUpController {
 
     const emailExists = await knex('Account')
       .where('email', email)
+      .distinct()
 
     const userExists = await knex('Account')
       .where('user', user)
+      .distinct()
 
-    if (userExists.length === 1) {
+    if (userExists) {
       return res.status(400).json({ message: 'User already exists' })
     }
 
-    if (emailExists.length === 1) {
+    if (emailExists) {
       return res.status(400).json({ message: 'Email already exists' })
     }
 
@@ -51,11 +53,11 @@ class SignUpController {
 
     await trx.commit()
 
+    delete Account.password
+
     return res.json({
       message: 'Account created',
-      id: AccountId,
-      user,
-      email,
+      ...Account,
       token,
       refreshToken
     })
