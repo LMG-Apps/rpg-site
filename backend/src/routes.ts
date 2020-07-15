@@ -1,22 +1,13 @@
 import express from 'express'
+import SignUpController from './controllers/sign-up.controller'
+import SignInController from './controllers/sign-in.controller'
 
 const routes = express.Router()
 
-routes.get('/auth/sign-up', (req, res) => {
-  const login = {
-    email: 'lutilipe02@hotmail.com',
-    password: '123',
-    password_confirmation: '123'
-  }
-  res.json(login)
-})
+const signUpController = new SignUpController()
+routes.post('/auth/sign-up', signUpController.create)
 
-routes.get('/auth/sign-in', (req, res) => {
-  const login = {
-    email: 'lutilipe02@hotmail.com',
-    password: '123'
-  }
-  res.json(login)
-})
+const signInController = new SignInController()
+routes.get('/auth/sign-in', signInController.index)
 
 export default routes
