@@ -2,6 +2,7 @@ import knex from '../database/connection'
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
 import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
+import getMessage from '../helpers/message.helper'
 
 interface Account {
     id: number;
@@ -12,17 +13,18 @@ interface Account {
 
 class SignInController {
   async index (req: Request, res: Response) {
-    const { user, password } = req.body
+    const { email, password } = req.body
 
     const data = await knex('Account')
-      .where('user', user)
+      .where('email', email)
       .distinct()
 
     const Account: Account = data[0]
 
     const match = Account ? bcrypt.compareSync(password, Account.password) : null
     if (!match) {
-      return res.status(400).json({ message: 'Incorrect User and Password combination.' })
+      const message = getMessage('account.signin.invalid')
+      return res.status(400).json({ message })
     }
 
     const token = generateJwt({ jwtid: String(Account.id) })
@@ -31,7 +33,7 @@ class SignInController {
     delete Account.password
 
     return res.status(200).json({
-      message: 'Logged In',
+      message: getMessage('account.signin.success'),
       ...Account,
       token,
       refreshToken
