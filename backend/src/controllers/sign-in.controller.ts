@@ -18,8 +18,9 @@ class SignInController {
     const data = await knex('Account')
       .where('email', email)
       .distinct()
+      .first()
 
-    const Account: Account = data[0]
+    const Account: Account = data
 
     const match = Account ? bcrypt.compareSync(password, Account.password) : null
     if (!match) {
