@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import logo from './logo.svg';
 
 import './App.css';
+import Dashboard from './pages/dashboard/dashboard.page';
 
 const StyledDiv = styled.div`
 	position: fixed;
@@ -36,9 +37,14 @@ function App() {
 						</header>
 					</div>
 				</Route>
-				<Route path="/">
+				<Route exact path="/">
 					<StyledDiv>
 						<LoginPage />
+					</StyledDiv>
+				</Route>
+				<Route path="/dashboard">
+					<StyledDiv>
+						<Dashboard />
 					</StyledDiv>
 				</Route>
 			</Switch>
