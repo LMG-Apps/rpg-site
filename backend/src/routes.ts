@@ -12,4 +12,8 @@ routes.post('/auth/sign-up', accountSignUp, signUpController.create)
 const signInController = new SignInController()
 routes.get('/auth/sign-in', accountSignIn, signInController.index)
 
+routes.get('/aa', (req, res) => {
+  return res.json({ deu: 'certo' })
+})
+
 export default routes

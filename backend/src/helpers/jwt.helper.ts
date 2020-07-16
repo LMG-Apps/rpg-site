@@ -1,4 +1,5 @@
-import jwt, { SignOptions } from 'jsonwebtoken'
+import jwt, { SignOptions, JwtHeader } from 'jsonwebtoken'
+import { IncomingHttpHeaders } from 'http'
 
 require('dotenv').config()
 
@@ -29,7 +30,7 @@ export const verifyRefreshJwt = (token: string) => {
   return jwt.verify(token, refreshTokenPrivateKey)
 }
 
-export const getTokenFromHeaders = (headers: any) => {
+export const getTokenFromHeaders = (headers: IncomingHttpHeaders) => {
   const token = headers.authorization
   return token ? token.slice(7, token.length) : null
 }

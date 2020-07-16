@@ -15,5 +15,7 @@
     "account.signin.password.string.pattern.base": "Invalid email or password.",
     "account.signin.invalid": "Invalid email or password.",
     "account.signin.email.string.empty": "Email is required.",
-    "account.signin.success": "Logged in."
+    "account.signin.success": "Logged in.",
+
+    "account.token.invalid": "Invalid token"
 }
