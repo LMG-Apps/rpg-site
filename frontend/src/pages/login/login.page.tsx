@@ -8,11 +8,12 @@ import styled from 'styled-components';
 
 import campfire from '../../assets/images/campire1.jpeg';
 import campfire2 from '../../assets/images/campire2.jpeg';
+import campfireResize from '../../assets/images/campfireresize.jpeg';
 // import { Container } from './styles';
 
 const StyledDiv = styled.div`
 	position: fixed;
-	background-image: url(${campfire});
+	background-image: url(${campfireResize});
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 100%;

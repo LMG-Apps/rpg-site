@@ -10,7 +10,6 @@ import './App.css';
 
 const StyledDiv = styled.div`
 	position: fixed;
-	background-color: red;
 	width: 100%;
 	height: 100%;
 `;
