@@ -2,6 +2,7 @@ import knex from '../database/connection'
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
 import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
+import getMessage from '../helpers/message.helper'
 
 const saltRounds = 10
 
@@ -10,28 +11,25 @@ class SignUpController {
     const {
       user,
       email,
-      password,
-      passwordConfirmation
+      password
     } = req.body
-
-    if (password !== passwordConfirmation) {
-      return res.json({ message: 'Passwords do not match' })
-    }
 
     const emailExists = await knex('Account')
       .where('email', email)
-      .distinct()
+      .first()
 
     const userExists = await knex('Account')
       .where('user', user)
-      .distinct()
+      .first()
 
     if (userExists) {
-      return res.status(400).json({ message: 'User already exists' })
+      const message = getMessage('account.signup.user_exists')
+      return res.status(400).json({ message })
     }
 
     if (emailExists) {
-      return res.status(400).json({ message: 'Email already exists' })
+      const message = getMessage('account.signup.email_exists')
+      return res.status(400).json({ message })
     }
 
     const trx = await knex.transaction()
@@ -55,8 +53,8 @@ class SignUpController {
 
     delete Account.password
 
-    return res.json({
-      message: 'Account created',
+    return res.status(200).json({
+      message: getMessage('account.signup.success'),
       ...Account,
       token,
       refreshToken

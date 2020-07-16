@@ -1,5 +1,5 @@
 import { verifyJwt, getTokenFromHeaders } from '../helpers/jwt.helper'
-
+import getMessage from '../helpers/message.helper'
 import { Request, Response, NextFunction } from 'express'
 
 const checkJwt = (req: Request, res: Response, next: NextFunction) => {
@@ -15,10 +15,18 @@ const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const token = getTokenFromHeaders(req.headers)
 
   if (!token) {
-    return
+    const message = getMessage('account.token.invalid')
+    return res.status(401).json({ message })
   }
 
-  console.log(token)
+  try {
+    const decoded = verifyJwt(token)
+    req.accountId = Object(decoded).jwtid
+    next()
+  } catch (e) {
+    const message = getMessage('account.token.invalid')
+    return res.status(401).json({ message })
+  }
 }
 
 export default checkJwt
