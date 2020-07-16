@@ -1,9 +1,12 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
 import getMessage from '../helpers/message.helper'
-import { getTokenFromHeaders, verifyJwt } from '../helpers/jwt.helper'
+import { promisify } from 'util'
+import { randomBytes } from 'crypto'
 import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
+
+require('dotenv').config()
 
 class ForgotPassword {
   async create (req: Request, res: Response) {
@@ -22,23 +25,8 @@ class ForgotPassword {
       res.status(400).json({ message })
     }
 
-    const token = getTokenFromHeaders(req.headers)
-
-    if (!token) {
-      const message = getMessage('account.token.invalid')
-      return res.status(401).json({ message })
-    }
-
-    // const trx = await knex.transaction()
-    // const hour = 360000
-    // const expireTime = (Date.now() + hour).toString()
-
-    // await trx('Account')
-    //   .where('email', email)
-    //   .update('resetPasswordToken', token)
-    //   .update('resetPasswordExpires', expireTime)
-
-    // trx.commit()
+    const random = await promisify(randomBytes)(24)
+    const token = random.toString('hex')
 
     const smtpTransport = nodemailer.createTransport({
       service: 'Gmail',
@@ -51,7 +39,14 @@ class ForgotPassword {
       to: email,
       from: 'lutilipe2469@gmail.com',
       subject: 'RPG - Password Reset',
-      text: `Click http://localhost:3333/${token}`
+      text: `
+      You are receiving this because you (or someone else) have requested the reset of password.
+
+      Please click on the link or paste it on your browser to complete the process: 
+      http://localhost:3333/${token}
+
+      If you did not request this, ignore this email. Your password will still the same.
+      `
     }
     smtpTransport.sendMail(mailOptions, err => {
       if (err) {
