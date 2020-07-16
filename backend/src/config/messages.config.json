@@ -17,5 +17,9 @@
     "account.signin.email.string.empty": "Email is required.",
     "account.signin.success": "Logged in.",
 
+    "account.reset.email.string.empty": "Email is required.",
+    "account.reset.email.invalid": "No account with this email exists",
+    "account.reset.email.sent": "Email sent",
+
     "account.token.invalid": "Invalid token"
 }

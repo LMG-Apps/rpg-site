@@ -7,6 +7,8 @@ export async function up (knex: Knex) {
     table.string('email').unique().notNullable()
     table.string('password').notNullable()
     table.string('profileImage')
+    table.string('resetPasswordToken')
+    table.string('resetPasswordExpires')
     table.timestamp('createdAt', { precision: 6 }).defaultTo(knex.fn.now(6))
     table.timestamp('updatedAt', { precision: 6 }).defaultTo(knex.fn.now(6))
   })
