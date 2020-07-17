@@ -10,7 +10,7 @@ import { htmlTemplate } from '../helpers/htmlEmailTemplate.helper'
 
 require('dotenv').config()
 
-const hour = 1000
+const hour = 3600000
 const saltRounds = 10
 
 class ForgotPassword {
