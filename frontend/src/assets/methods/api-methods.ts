@@ -11,9 +11,9 @@ const signUp: any = async (
   cPassword: string
 ) => {
   const informationJSON = {
-    user: username,
-    email: email,
-    password: password,
+    username,
+    email,
+    password,
     passwordConfirmation: cPassword
   }
 
