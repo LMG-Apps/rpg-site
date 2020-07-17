@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 
 import Paper from '@material-ui/core/Paper'
-import Button from '@material-ui/core/Button'
 import Collapse from '@material-ui/core/Collapse'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -20,28 +19,28 @@ const StyledPaper = styled(Paper)`
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
 `
 
-const StyledButton = styled(Button)`
-  font-family: "Grenze Gotisch", cursive;
-  font-size: 24px;
-  text-transform: none;
-  line-height: 17px;
-  color: white;
-  background-color: rgba(255, 85, 85, 1);
-  &:hover {
-    background-color: rgba(255, 85, 85, 0.9);
-  }
-`
+// const StyledButton = styled(Button)`
+//   font-family: "Grenze Gotisch", cursive;
+//   font-size: 24px;
+//   text-transform: none;
+//   line-height: 17px;
+//   color: white;
+//   background-color: rgba(255, 85, 85, 1);
+//   &:hover {
+//     background-color: rgba(255, 85, 85, 0.9);
+//   }
+// `
 
 const SignInSignUpCard: React.FC = () => {
   const [tab, setTab] = useState('signin')
 
-  const [email, setEmail] = useState('')
+  // const [email, setEmail] = useState('')
 
-  const [username, setUsername] = useState('')
+  // const [username, setUsername] = useState('')
 
-  const [password, setPassword] = useState('')
+  // const [password, setPassword] = useState('')
 
-  const [cPassword, setCpassword] = useState('')
+  // const [cPassword, setCpassword] = useState('')
 
   return (
     <StylesProvider injectFirst>
