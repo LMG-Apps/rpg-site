@@ -1,15 +1,15 @@
-import React from 'react';
+import React from 'react'
 
 class Dashboard extends React.Component<{}, {}> {
-	constructor(props) {
-		super(props);
+  constructor (props) {
+    super(props)
 
-		this.state = {};
-	}
+    this.state = {}
+  }
 
-	render() {
-		return <div>Dashboard page PORRAAAAAAAAAAAAAAAAAAAAAAaa</div>;
-	}
+  render () {
+    return <div>Dashboard page PORRAAAAAAAAAAAAAAAAAAAAAAaa</div>
+  }
 }
 
-export default Dashboard;
+export default Dashboard
