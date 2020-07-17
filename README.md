@@ -5,7 +5,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 RPG-Site is a website intended for a group of friends that want to keep track of their RPG story online.
 Moreover, here you can also connect to other RPG players and share your thoughts and stories!
 
-### Development status
+### Development status (frontend)
 #### Finished
 Login page
 #### Under development 
