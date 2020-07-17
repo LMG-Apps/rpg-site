@@ -1,5 +1,23 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Description
+
+RPG-Site is a website intended for a group of friends that want to keep track of their RPG story online.
+Moreover, here you can also connect to other RPG players and share your thoughts and stories!
+
+### Development status
+#### Finished
+Login page
+#### Under development 
+Dashboard page
+#### Incoming features
+* A description page for the story
+* An editing page for the story
+* A user profile
+* An online chat
+
+Last update: 17-07-2020
+
 ## Available Scripts
 
 In the project directory, you can run:
