@@ -16,6 +16,7 @@ import styled from 'styled-components'
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
+  margin: auto 0;
   background-color: rgba(255, 255, 255, 0.9);
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
 `
