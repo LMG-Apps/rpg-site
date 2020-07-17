@@ -14,7 +14,7 @@ const rules = {
     .required(),
   password: Joi
     .string()
-    .pattern(new RegExp('^[a-zA-Z0-9]{3,30}$')),
+    .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')),
   passwordConfirmation: Joi
     .string()
     .valid(Joi.ref('password'))
@@ -43,16 +43,34 @@ export const accountSignIn = (req: Request, res: Response, next: NextFunction) =
 }
 
 export const accountSignUp = (req: Request, res: Response, next: NextFunction) => {
-  const { user, email, password, passwordConfirmation } = req.body
+  const { username, email, password, passwordConfirmation } = req.body
 
   const schema = Joi.object({
-    user: rules.user,
+    username: rules.user,
     email: rules.email,
     password: rules.password,
     passwordConfirmation: rules.passwordConfirmation
   })
 
-  const { error } = schema.validate({ user, email, password, passwordConfirmation }, options)
+  const { error } = schema.validate({ username, email, password, passwordConfirmation }, options)
+  if (error) {
+    const messages = getValidatorError(error, 'account.signup')
+
+    return res.status(400).json({ messages })
+  }
+
+  next()
+}
+
+export const accountPasswordReset = (req: Request, res: Response, next: NextFunction) => {
+  const { password, passwordConfirmation } = req.body
+
+  const schema = Joi.object({
+    password: rules.password,
+    passwordConfirmation: rules.passwordConfirmation
+  })
+
+  const { error } = schema.validate({ password, passwordConfirmation }, options)
   if (error) {
     const messages = getValidatorError(error, 'account.signup')
 

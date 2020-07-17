@@ -7,7 +7,7 @@ import getMessage from '../helpers/message.helper'
 interface Account {
     id: number;
     email: string;
-    user: string;
+    username: string;
     password: string;
 }
 
