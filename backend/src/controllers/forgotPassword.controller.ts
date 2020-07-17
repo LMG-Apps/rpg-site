@@ -5,15 +5,20 @@ import { promisify } from 'util'
 import { randomBytes } from 'crypto'
 import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
+import bcrypt from 'bcrypt'
+import { htmlTemplate } from '../helpers/htmlEmailTemplate.helper'
 
 require('dotenv').config()
+
+const hour = 1000
+const saltRounds = 10
 
 class ForgotPassword {
   async create (req: Request, res: Response) {
     const { email } = req.body
     if (!email) {
       const message = getMessage('account.reset.email.string.empty')
-      res.status(400).json({ message })
+      return res.status(400).json({ message })
     }
 
     const user = await knex('Account')
@@ -22,39 +27,76 @@ class ForgotPassword {
 
     if (!user) {
       const message = getMessage('account.reset.email.invalid')
-      res.status(400).json({ message })
+      return res.status(400).json({ message })
     }
 
     const random = await promisify(randomBytes)(24)
     const token = random.toString('hex')
 
+    const trx = await knex.transaction()
+    const expireTime = (Date.now() + hour).toString()
+
+    await trx('Account')
+      .where('email', email)
+      .update('resetPasswordToken', token)
+      .update('resetPasswordExpires', expireTime)
+
+    trx.commit()
+
     const smtpTransport = nodemailer.createTransport({
       service: 'Gmail',
       auth: {
-        user: 'lutilipe2469@gmail.com',
-        pass: 'Paimeliga081200'
+        user: process.env.EMAIL,
+        pass: process.env.EMAIL_PASS
       }
     } as SMTPTransport.Options)
+
     const mailOptions = {
       to: email,
-      from: 'lutilipe2469@gmail.com',
+      from: process.env.EMAIL,
       subject: 'RPG - Password Reset',
-      text: `
-      You are receiving this because you (or someone else) have requested the reset of password.
-
-      Please click on the link or paste it on your browser to complete the process: 
-      http://localhost:3333/${token}
-
-      If you did not request this, ignore this email. Your password will still the same.
-      `
+      html: htmlTemplate(token, user.username)
     }
+
     smtpTransport.sendMail(mailOptions, err => {
       if (err) {
-        res.status(500).json({ message: err })
+        return res.status(500).json({ message: err })
       }
       const message = getMessage('account.reset.email.sent')
-      res.status(200).json({ message })
+      return res.status(200).json({ message })
     })
+  }
+
+  async update (req: Request, res: Response) {
+    const { token }: { token?: string } = req.query
+    const { password } = req.body
+
+    const trx = await knex.transaction()
+
+    const account = await trx('Account')
+      .where('resetPasswordToken', token)
+      .first()
+
+    if (!account || +account.resetPasswordExpires < Date.now()) {
+      const message = getMessage('account.reset.token.invalid')
+      await trx('Account')
+        .update('resetPasswordToken', knex.raw('DEFAULT'))
+        .update('resetPasswordExpires', knex.raw('DEFAULT'))
+        .where('id', account.id)
+      return res.status(401).json({ message })
+    }
+
+    const hash = bcrypt.hashSync(password, saltRounds)
+
+    await trx('Account')
+      .update('password', hash)
+      .update('resetPasswordToken', knex.raw('DEFAULT'))
+      .update('resetPasswordExpires', knex.raw('DEFAULT'))
+      .where('id', account.id)
+
+    trx.commit()
+
+    return res.status(200).json({ message: getMessage('account.reset.success') })
   }
 }
 

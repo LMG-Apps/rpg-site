@@ -9,7 +9,7 @@ const saltRounds = 10
 class SignUpController {
   async create (req: Request, res: Response) {
     const {
-      user,
+      username,
       email,
       password
     } = req.body
@@ -19,7 +19,7 @@ class SignUpController {
       .first()
 
     const userExists = await knex('Account')
-      .where('user', user)
+      .where('username', username)
       .first()
 
     if (userExists) {
@@ -37,7 +37,7 @@ class SignUpController {
     const hash = bcrypt.hashSync(password, saltRounds)
 
     const Account = {
-      user,
+      username,
       email,
       password: hash
     }
