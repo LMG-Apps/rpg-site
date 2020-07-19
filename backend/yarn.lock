@@ -138,6 +138,11 @@
   resolved "https://registry.yarnpkg.com/@types/hapi__joi/-/hapi__joi-17.1.4.tgz#e46cd1bd81d25cd45247d652dadb3666514d807c"
   integrity sha512-gqY3TeTyZvnyNhM02HgyCIoGIWsTFMnuzMfnD8evTsr1KIfueGJaz+QC77j+dFvhZ5cJArUNjDRHUjPxNohzGA==
 
+"@types/hogan.js@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/hogan.js/-/hogan.js-3.0.0.tgz#bf26560f39a38224ab6d0491b06f72c8fbe0953d"
+  integrity sha512-djkvb/AN43c3lIGCojNQ1FBS9VqqKhcTns5RQnHw4xBT/csy0jAssAsOiJ8NfaaioZaeKYE7XkVRxE5NeSZcaA==
+
 "@types/json-schema@^7.0.3":
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
@@ -2332,6 +2337,14 @@ has@^1.0.3:
   dependencies:
     function-bind "^1.1.1"
 
+hogan.js@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/hogan.js/-/hogan.js-3.0.2.tgz#4cd9e1abd4294146e7679e41d7898732b02c7bfd"
+  integrity sha1-TNnhq9QpQUbnZ55B14mHMrAse/0=
+  dependencies:
+    mkdirp "0.3.0"
+    nopt "1.0.10"
+
 homedir-polyfill@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/homedir-polyfill/-/homedir-polyfill-1.0.3.tgz#743298cef4e5af3e194161fbadcc2151d3a058e8"
@@ -3561,6 +3574,11 @@ mixin-deep@^1.2.0:
     for-in "^1.0.2"
     is-extendable "^1.0.1"
 
+mkdirp@0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.3.0.tgz#1bbf5ab1ba827af23575143490426455f481fe1e"
+  integrity sha1-G79asbqCevI1dRQ0kEJkVfSB/h4=
+
 mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@^0.5.5, mkdirp@~0.5.0:
   version "0.5.5"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.5.tgz#d91cefd62d1436ca0f41620e251288d420099def"
@@ -3730,6 +3748,13 @@ nodemailer@^6.4.10:
   version "6.4.10"
   resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-6.4.10.tgz#f4c8dc7991c57f41fd081bef224ef01f7065143d"
   integrity sha512-j+pS9CURhPgk6r0ENr7dji+As2xZiHSvZeVnzKniLOw1eRAyM/7flP0u65tCnsapV8JFu+t0l/5VeHsCZEeh9g==
+
+nopt@1.0.10:
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/nopt/-/nopt-1.0.10.tgz#6ddd21bd2a31417b92727dd585f8a6f37608ebee"
+  integrity sha1-bd0hvSoxQXuScn3Vhfim83YI6+4=
+  dependencies:
+    abbrev "1"
 
 nopt@^4.0.1, nopt@^4.0.3:
   version "4.0.3"

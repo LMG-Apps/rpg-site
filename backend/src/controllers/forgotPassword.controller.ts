@@ -6,9 +6,14 @@ import { randomBytes } from 'crypto'
 import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import bcrypt from 'bcrypt'
-import { htmlTemplate } from '../helpers/htmlEmailTemplate.helper'
+import fs from 'fs'
+import hogan from 'hogan.js'
+import path from 'path'
 
 require('dotenv').config()
+
+const template = fs.readFileSync(path.resolve(__dirname, '..', 'views', 'emailTemplate.hjs'), 'utf-8')
+const compiledTemplate = hogan.compile(template)
 
 const hour = 3600000
 const saltRounds = 10
@@ -55,7 +60,7 @@ class ForgotPassword {
       to: email,
       from: process.env.EMAIL,
       subject: 'RPG - Password Reset',
-      html: htmlTemplate(token, user.username)
+      html: compiledTemplate.render({ token, user: user.username })
     }
 
     smtpTransport.sendMail(mailOptions, err => {
