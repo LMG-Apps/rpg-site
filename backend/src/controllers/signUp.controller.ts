@@ -7,7 +7,7 @@ import getMessage from '../helpers/message.helper'
 const saltRounds = 10
 
 class SignUpController {
-  async create (req: Request, res: Response) {
+  async store (req: Request, res: Response) {
     const {
       username,
       email,
@@ -46,8 +46,8 @@ class SignUpController {
 
     const AccountId = insertedIds[0]
 
-    const token = generateJwt({ jwtid: String(AccountId) })
-    const refreshToken = generateRefreshJwt({ jwtid: String(AccountId) })
+    const token = generateJwt({ id: AccountId, username: Account.username })
+    const refreshToken = generateRefreshJwt({ id: AccountId, username: Account.username })
 
     await trx.commit()
 

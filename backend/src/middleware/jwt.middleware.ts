@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express'
 const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const { url: path } = req
 
-  const excludedPaths = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot', '/auth/reset']
+  const excludedPaths = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot', '/auth/reset', '/refresh']
   const isExcluded = !!excludedPaths.find(p => path.startsWith(p))
   if (isExcluded) {
     return next()
@@ -20,7 +20,7 @@ const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const decoded = verifyJwt(token)
-    req.accountId = Object(decoded).jwtid
+    req.accountId = Object(decoded).id
     next()
   } catch (e) {
     const message = getMessage('account.token.invalid')

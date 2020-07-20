@@ -8,6 +8,7 @@
     "account.signup.user_exists": "Username already exists.",
     "account.signup.username.string.min": "Username must contain between 5 and 15 characters.",
     "account.signup.email.string.empty": "Email is required.",
+    "account.signin.email.any.required": "Email is required",
     "account.signup.username.string.empty": "Username is required.",
     "account.signup.email.string.email": "Invalid email.",
     "account.signup.success": "Account created.",
@@ -25,5 +26,6 @@
     "account.reset.token.invalid": "Your token is invalid or it has expired",
     "account.reset.success": "Password changed.",
 
-    "account.token.invalid": "Invalid token."
+    "account.token.success": "Success.",
+    "account.token.invalid": "Invalid token"
 }

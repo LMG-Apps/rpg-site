@@ -19,7 +19,7 @@ const hour = 3600000
 const saltRounds = 10
 
 class ForgotPassword {
-  async create (req: Request, res: Response) {
+  async store (req: Request, res: Response) {
     const { email } = req.body
     if (!email) {
       const message = getMessage('account.reset.email.string.empty')

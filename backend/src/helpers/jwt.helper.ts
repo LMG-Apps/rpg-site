@@ -1,7 +1,12 @@
-import jwt, { SignOptions, JwtHeader } from 'jsonwebtoken'
+import jwt, { SignOptions } from 'jsonwebtoken'
 import { IncomingHttpHeaders } from 'http'
 
 require('dotenv').config()
+
+interface Session extends SignOptions {
+  id: number;
+  username: string;
+}
 
 const tokenPrivateKey: string = process.env.JWT_TOKEN_PRIVATE_KEY!
 const refreshTokenPrivateKey: string = process.env.JWT_REFRESH_TOKEN_PRIVATE_KEY!
@@ -14,11 +19,11 @@ const refreshOptions = {
   expiresIn: '30 days'
 }
 
-export const generateJwt = (payload: SignOptions) => {
+export const generateJwt = (payload: Session) => {
   return jwt.sign(payload, tokenPrivateKey, options)
 }
 
-export const generateRefreshJwt = (payload: SignOptions) => {
+export const generateRefreshJwt = (payload: Session) => {
   return jwt.sign(payload, refreshTokenPrivateKey, refreshOptions)
 }
 
