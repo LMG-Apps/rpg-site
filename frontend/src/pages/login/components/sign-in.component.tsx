@@ -23,7 +23,7 @@ export const SignIn: React.FC = () => {
   const [password, setPassword] = useState('')
 
   return (
-    <Grid container direction="column" spacing={2}>
+    <div style={{ textAlign: 'center' }}>
       <span
         style={{
           fontFamily: 'Grenze Gotisch, cursive',
@@ -35,30 +35,24 @@ export const SignIn: React.FC = () => {
       >
         Bem vindo
       </span>
-      <Grid item>
-        <TextField
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
-          label="Usuário"
-          variant="outlined"
-          fullWidth
-        />
-      </Grid>
-      <Grid item>
-        <TextField
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          label="Senha"
-          variant="outlined"
-          type="password"
-          fullWidth
-        />
-      </Grid>
-      <Grid item>
-        <StyledButton variant="contained" size="large" fullWidth>
-          Entrar
-        </StyledButton>
-      </Grid>
-    </Grid>
+      <TextField
+        value={username}
+        onChange={(event) => setUsername(event.target.value)}
+        label="Usuário"
+        variant="outlined"
+        fullWidth
+      />
+      <TextField
+        value={password}
+        onChange={(event) => setPassword(event.target.value)}
+        label="Senha"
+        variant="outlined"
+        type="password"
+        fullWidth
+      />
+      <StyledButton variant="contained" size="large" fullWidth>
+        Entrar
+      </StyledButton>
+    </div>
   )
 }

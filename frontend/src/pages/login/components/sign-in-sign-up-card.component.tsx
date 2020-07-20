@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import Paper from '@material-ui/core/Paper'
 import Collapse from '@material-ui/core/Collapse'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -13,23 +12,22 @@ import { SignUp } from './sign-up.component'
 
 import styled from 'styled-components'
 
-const StyledPaper = styled(Paper)`
+const StyledDiv = styled.div`
+  display: flex;  
   padding: 20px;
+  width: min(320px, 100vw);
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.9);
+  flex-direction: column;
+  flex-shrink: 1;
+  /* margin-right: 20px; */
+  /* margin-left: auto; */
+  height: auto;
+  /* @media (max-width: 600px) {
+    margin: auto;
+  } */
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
 `
-
-// const StyledButton = styled(Button)`
-//   font-family: "Grenze Gotisch", cursive;
-//   font-size: 24px;
-//   text-transform: none;
-//   line-height: 17px;
-//   color: white;
-//   background-color: rgba(255, 85, 85, 1);
-//   &:hover {
-//     background-color: rgba(255, 85, 85, 0.9);
-//   }
-// `
 
 const SignInSignUpCard: React.FC = () => {
   const [tab, setTab] = useState('signin')
@@ -44,10 +42,10 @@ const SignInSignUpCard: React.FC = () => {
 
   return (
     <StylesProvider injectFirst>
-      <StyledPaper elevation={3}>
+      <StyledDiv>
         <SignIn />
         <ListItem
-          style={{ marginTop: '5px' }}
+          style={{ marginTop: '15px' }}
           button
           onClick={() => {
             if (tab === 'signin') {
@@ -63,7 +61,7 @@ const SignInSignUpCard: React.FC = () => {
         <Collapse in={tab === 'signup'}>
           <SignUp />
         </Collapse>
-      </StyledPaper>
+      </StyledDiv>
     </StylesProvider>
   )
 }
