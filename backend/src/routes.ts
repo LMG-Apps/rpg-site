@@ -15,7 +15,7 @@ const signInController = new SignInController()
 routes.get('/auth/sign-in', accountSignIn, signInController.index)
 
 const refreshToken = new RefreshToken()
-routes.get('/refresh', accountSignIn, refreshToken.index)
+routes.get('/refresh', refreshToken.index)
 
 const forgotPassword = new ForgotPassword()
 routes.post('/auth/forgot', forgotPassword.store)
