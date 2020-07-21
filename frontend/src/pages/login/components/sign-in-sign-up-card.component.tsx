@@ -15,40 +15,26 @@ import styled from 'styled-components'
 
 const StyledPaper = styled(Paper)`
   padding: 20px;
-  margin: auto 0;
+  width: min(320px, 100vw);
+  border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.9);
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
-`
+  width: min(330px, 100vw);
 
-// const StyledButton = styled(Button)`
-//   font-family: "Grenze Gotisch", cursive;
-//   font-size: 24px;
-//   text-transform: none;
-//   line-height: 17px;
-//   color: white;
-//   background-color: rgba(255, 85, 85, 1);
-//   &:hover {
-//     background-color: rgba(255, 85, 85, 0.9);
-//   }
-// `
+  @media (max-width: 600px) {
+    margin: auto;
+  }
+`
 
 const SignInSignUpCard: React.FC = () => {
   const [tab, setTab] = useState('signin')
-
-  // const [email, setEmail] = useState('')
-
-  // const [username, setUsername] = useState('')
-
-  // const [password, setPassword] = useState('')
-
-  // const [cPassword, setCpassword] = useState('')
 
   return (
     <StylesProvider injectFirst>
       <StyledPaper elevation={3}>
         <SignIn />
         <ListItem
-          style={{ marginTop: '5px' }}
+          style={{ marginTop: '15px' }}
           button
           onClick={() => {
             if (tab === 'signin') {
