@@ -4,6 +4,8 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
+import { signIn } from '../../../helpers/api-methods'
+
 import styled from 'styled-components'
 
 const StyledButton = styled(Button)`
@@ -19,7 +21,7 @@ const StyledButton = styled(Button)`
 `
 
 export const SignIn: React.FC = () => {
-  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
   return (
@@ -37,8 +39,8 @@ export const SignIn: React.FC = () => {
       </span>
       <Grid item>
         <TextField
-          value={username}
-          onChange={(event) => setUsername(event.target.value)}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
           label="Usuário"
           variant="outlined"
           fullWidth
@@ -55,7 +57,12 @@ export const SignIn: React.FC = () => {
         />
       </Grid>
       <Grid item>
-        <StyledButton variant="contained" size="large" fullWidth>
+        <StyledButton
+          variant="contained"
+          size="large"
+          onClick={() => signIn(email, password)}
+          fullWidth
+        >
           Entrar
         </StyledButton>
       </Grid>
