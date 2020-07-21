@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
-import signUp from '../../../helpers/api-methods'
+import { signUp } from '../../../helpers/api-methods'
 
 import styled from 'styled-components'
 

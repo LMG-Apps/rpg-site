@@ -4,7 +4,20 @@ const api = axios.create({
   baseURL: 'http://localhost:3333'
 })
 
-const signUp: any = async (
+export const signIn: any = async (email: string, password: string) => {
+  const informationJSON = {
+    email,
+    password
+  }
+
+  console.log('information', informationJSON)
+
+  const response = await api.post('auth/sign-in', informationJSON)
+
+  console.log('Response: ', response)
+}
+
+export const signUp: any = async (
   email: string,
   username: string,
   password: string,
@@ -35,5 +48,3 @@ const signUp: any = async (
   // console.log('Initia lResponse: ', response)
   // console.log('Response data: ', await response.json())
 }
-
-export default signUp
