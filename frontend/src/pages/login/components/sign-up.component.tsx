@@ -27,47 +27,57 @@ export const SignUp: React.FC = () => {
   const [cPassword, setCpassword] = useState('')
 
   return (
-    <div>
-      <TextField
-        style={{ marginTop: '15px' }}
-        value={email}
-        onChange={(event) => setEmail(event.target.value)}
-        label="Email"
-        variant="outlined"
-        type="email"
-        fullWidth
-      />
-      <TextField
-        label="Nome de usuário"
-        value={username}
-        onChange={(event) => setUsername(event.target.value)}
-        variant="outlined"
-        fullWidth
-      />
-      <TextField
-        label="Senha"
-        value={password}
-        onChange={(event) => setPassword(event.target.value)}
-        variant="outlined"
-        type="password"
-        fullWidth
-      />
-      <TextField
-        label="Confirmar senha"
-        value={cPassword}
-        onChange={(event) => setCpassword(event.target.value)}
-        variant="outlined"
-        type="password"
-        fullWidth
-      />
-      <StyledButton
-        onClick={() => signUp(email, username, password, cPassword)}
-        variant="contained"
-        size="large"
-        fullWidth
-      >
-        Cadastrar
-      </StyledButton>
-    </div>
+    <Grid container direction="column" spacing={2}>
+      <Grid item>
+        <TextField
+          style={{ marginTop: '15px' }}
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          label="Email"
+          variant="outlined"
+          type="email"
+          fullWidth
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          label="Nome de usuário"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+          variant="outlined"
+          fullWidth
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          label="Senha"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          variant="outlined"
+          type="password"
+          fullWidth
+        />
+      </Grid>
+      <Grid item>
+        <TextField
+          label="Confirmar senha"
+          value={cPassword}
+          onChange={(event) => setCpassword(event.target.value)}
+          variant="outlined"
+          type="password"
+          fullWidth
+        />
+      </Grid>
+      <Grid item>
+        <StyledButton
+          onClick={() => signUp(email, username, password, cPassword)}
+          variant="contained"
+          size="large"
+          fullWidth
+        >
+          Cadastrar
+        </StyledButton>
+      </Grid>
+    </Grid>
   )
 }

@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import campfire from '../../assets/images/campire1.jpeg'
 
 const BackgroundImage = styled.div`
+<<<<<<< HEAD
   position: fixed;
   background-image: url(${campfire});
   background-size: 100% 100%;
@@ -30,6 +31,26 @@ const StyledDiv2 = styled(Grid)`
 
   /* Mobile padding */
   @media (max-width: 400px) {
+=======
+  /* Div size and position */
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  /* Background image settings */
+  background-image: url(${campfire});
+  background-size: max(100vw, 1280px) max(100vh, 720px);
+  background-repeat: no-repeat;
+
+  overflow-x: hidden;
+`
+
+const StyledGrid = styled(Grid)`
+  padding: 20px;
+  height: 100vh;
+
+  /* Custom padding for mobile */
+  @media (max-width: 600px) {
+>>>>>>> dashboard-page
     padding: 10px;
   }
 `
@@ -37,9 +58,15 @@ const StyledDiv2 = styled(Grid)`
 const LoginPage: React.FC = () => {
   return (
     <BackgroundImage>
+<<<<<<< HEAD
       <StyledDiv2>
         <SignInSignUpCard />
       </StyledDiv2>
+=======
+      <StyledGrid container justify="flex-end" alignItems="center">
+        <SignInSignUpCard />
+      </StyledGrid>
+>>>>>>> dashboard-page
     </BackgroundImage>
   )
 }

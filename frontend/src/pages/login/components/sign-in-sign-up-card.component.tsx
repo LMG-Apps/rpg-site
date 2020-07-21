@@ -1,5 +1,9 @@
 import React, { useState } from 'react'
 
+<<<<<<< HEAD
+=======
+import Paper from '@material-ui/core/Paper'
+>>>>>>> dashboard-page
 import Collapse from '@material-ui/core/Collapse'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -27,8 +31,9 @@ const StyledDiv = styled.div`
     margin: auto;
   } */
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
-`
+  width: min(330px, 100vw);
 
+<<<<<<< HEAD
 const SignInSignUpCard: React.FC = () => {
   const [tab, setTab] = useState('signin')
 
@@ -40,6 +45,16 @@ const SignInSignUpCard: React.FC = () => {
 
   // const [cPassword, setCpassword] = useState('')
 
+=======
+  @media (max-width: 600px) {
+    margin: auto;
+  }
+`
+
+const SignInSignUpCard: React.FC = () => {
+  const [tab, setTab] = useState('signin')
+
+>>>>>>> dashboard-page
   return (
     <StylesProvider injectFirst>
       <StyledDiv>
