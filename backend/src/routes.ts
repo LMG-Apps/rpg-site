@@ -11,7 +11,7 @@ const signUpController = new SignUpController()
 routes.post('/auth/sign-up', accountSignUp, signUpController.create)
 
 const signInController = new SignInController()
-routes.get('/auth/sign-in', accountSignIn, signInController.index)
+routes.post('/auth/sign-in', accountSignIn, signInController.index)
 
 const forgotPassword = new ForgotPassword()
 routes.post('/auth/forgot', forgotPassword.create)
