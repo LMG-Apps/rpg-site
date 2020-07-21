@@ -28,8 +28,8 @@ class SignInController {
       return res.status(400).json({ message })
     }
 
-    const token = generateJwt({ id: Account.id, username: Account.username })
-    const refreshToken = generateRefreshJwt({ id: Account.id, username: Account.username })
+    const token = generateJwt({ id: Account.id })
+    const refreshToken = generateRefreshJwt({ id: Account.id })
 
     delete Account.password
 

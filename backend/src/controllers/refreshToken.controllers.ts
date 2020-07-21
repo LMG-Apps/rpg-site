@@ -33,7 +33,7 @@ class RefreshToken {
       }
 
       const metadata = {
-        token: generateJwt({ id: account.id, username: account.username })
+        token: generateJwt({ id: account.id })
       }
 
       return res.status(200).json({ message: messageSuccessful, metadata })

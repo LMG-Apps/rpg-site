@@ -1,8 +1,8 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
 import getMessage from '../helpers/message.helper'
-import { promisify } from 'util'
-import { randomBytes } from 'crypto'
+import { generateJwt, verifyJwt, Session } from '../helpers/jwt.helper'
+import jwtDecode from 'jwt-decode'
 import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
 import bcrypt from 'bcrypt'
@@ -15,7 +15,6 @@ require('dotenv').config()
 const template = fs.readFileSync(path.resolve(__dirname, '..', 'views', 'emailTemplate.hjs'), 'utf-8')
 const compiledTemplate = hogan.compile(template)
 
-const hour = 3600000
 const saltRounds = 10
 
 class ForgotPassword {
@@ -35,11 +34,11 @@ class ForgotPassword {
       return res.status(400).json({ message })
     }
 
-    const random = await promisify(randomBytes)(24)
-    const token = random.toString('hex')
+    const token = generateJwt({ id: user.id })
+    const data: Session = jwtDecode(token)
+    const expireTime = +data.exp! * 1000
 
     const trx = await knex.transaction()
-    const expireTime = (Date.now() + hour).toString()
 
     await trx('Account')
       .where('email', email)
@@ -82,7 +81,7 @@ class ForgotPassword {
       .where('resetPasswordToken', token)
       .first()
 
-    if (!account || +account.resetPasswordExpires < Date.now()) {
+    if (!account || account.resetPasswordExpires < Date.now()) {
       const message = getMessage('account.reset.token.invalid')
       await trx('Account')
         .update('resetPasswordToken', knex.raw('DEFAULT'))

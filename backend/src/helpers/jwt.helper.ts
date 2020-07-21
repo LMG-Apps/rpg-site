@@ -3,9 +3,10 @@ import { IncomingHttpHeaders } from 'http'
 
 require('dotenv').config()
 
-interface Session extends SignOptions {
+export interface Session extends SignOptions {
   id: number;
-  username: string;
+  iat?: string;
+  exp?: string;
 }
 
 const tokenPrivateKey: string = process.env.JWT_TOKEN_PRIVATE_KEY!

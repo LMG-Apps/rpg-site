@@ -46,8 +46,8 @@ class SignUpController {
 
     const AccountId = insertedIds[0]
 
-    const token = generateJwt({ id: AccountId, username: Account.username })
-    const refreshToken = generateRefreshJwt({ id: AccountId, username: Account.username })
+    const token = generateJwt({ id: AccountId })
+    const refreshToken = generateRefreshJwt({ id: AccountId })
 
     await trx.commit()
 

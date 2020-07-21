@@ -12,7 +12,7 @@ const signUpController = new SignUpController()
 routes.post('/auth/sign-up', accountSignUp, signUpController.store)
 
 const signInController = new SignInController()
-routes.get('/auth/sign-in', accountSignIn, signInController.index)
+routes.post('/auth/sign-in', accountSignIn, signInController.index)
 
 const refreshToken = new RefreshToken()
 routes.get('/refresh', refreshToken.index)
