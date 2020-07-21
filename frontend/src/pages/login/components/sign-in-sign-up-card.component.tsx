@@ -13,16 +13,11 @@ import { SignUp } from './sign-up.component'
 
 import styled from 'styled-components'
 
-const StyledPaper = styled.div`
+const StyledPaper = styled(Paper)`
   padding: 20px;
   width: min(320px, 100vw);
   border-radius: 5px;
   background-color: rgba(255, 255, 255, 0.9);
-  /* margin-right: 20px; */
-  /* margin-left: auto; */
-  /* @media (max-width: 600px) {
-    margin: auto;
-  } */
   /* font-family: 'Grenze Gotisch', cursive; font-size: 40px; */
   width: min(330px, 100vw);
 
