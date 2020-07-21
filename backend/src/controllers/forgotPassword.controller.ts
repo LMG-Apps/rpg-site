@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
 import getMessage from '../helpers/message.helper'
-import { generateJwt, verifyJwt, Session } from '../helpers/jwt.helper'
+import { generateJwt, Session } from '../helpers/jwt.helper'
 import jwtDecode from 'jwt-decode'
 import nodemailer from 'nodemailer'
 import SMTPTransport from 'nodemailer/lib/smtp-transport'
