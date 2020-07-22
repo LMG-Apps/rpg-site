@@ -17,6 +17,7 @@ const getValidatorError = (error: ValidationError, messagePath: string) => {
     const key = detail.context?.key!
 
     const path = `${messagePath}.${key}.${type}`
+    console.log(path)
     const customPath = getMessage(path)
     errorMessages[key] = customPath || message
   })

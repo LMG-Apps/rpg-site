@@ -13,7 +13,7 @@ interface Story {
 
 const tmpPath = path.resolve(__dirname, '..', '..', 'tmp')
 
-class Story {
+class StoryDetails {
   async index (req: Request, res: Response) {
     const { accountId } = req
     const stories: Story[] = await knex('Story')
@@ -76,7 +76,7 @@ class Story {
   async update (req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
-    const { name, description, text, isPublic } = req.body
+    const { name, description, isPublic } = req.body
     const image = req.file ? req.file.filename : null
 
     const story: Story = await knex('Story')
@@ -96,7 +96,6 @@ class Story {
       .where('id', id)
       .update('name', name)
       .update('description', description)
-      .update('text', text)
       .update('image', image || knex.raw('DEFAULT'))
       .update('isPublic', isPublic)
 
@@ -116,6 +115,12 @@ class Story {
     const { accountId } = req
     const { id } = req.params
 
+    const { image }: { image?: string} = await knex('Story')
+      .where('accountId', accountId)
+      .where('id', id)
+      .first()
+      .select('image')
+
     const story = await knex('Story')
       .where('accountId', accountId)
       .where('id', id)
@@ -125,12 +130,6 @@ class Story {
       const message = getMessage('story.id.notfound')
       return res.status(404).json({ message })
     }
-
-    const { image } = await knex('Story')
-      .where('accountId', accountId)
-      .where('id', id)
-      .first()
-      .select('image')
 
     if (image) {
       fs.unlink(path.resolve(tmpPath, `${image}`), err => {
@@ -143,4 +142,4 @@ class Story {
   }
 }
 
-export default Story
+export default StoryDetails

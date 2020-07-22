@@ -13,7 +13,7 @@ const rules = {
 
 const options = { abortEarly: false }
 
-export const storyValidator = (req: Request, res: Response, next: NextFunction) => {
+export const storyDetailsValidator = (req: Request, res: Response, next: NextFunction) => {
   const { name, description } = req.body
 
   const schema = Joi.object({
@@ -22,6 +22,24 @@ export const storyValidator = (req: Request, res: Response, next: NextFunction) 
   })
 
   const { error } = schema.validate({ name, description }, options)
+
+  if (error) {
+    const messages = getValidatorError(error, 'story')
+
+    return res.status(400).json({ messages })
+  }
+
+  next()
+}
+
+export const storyWriteValidator = (req: Request, res: Response, next: NextFunction) => {
+  const { text } = req.body
+
+  const schema = Joi.object({
+    text: rules.text
+  })
+
+  const { error } = schema.validate({ text }, options)
 
   if (error) {
     const messages = getValidatorError(error, 'story')

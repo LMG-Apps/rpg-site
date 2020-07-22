@@ -6,10 +6,11 @@ import SignUpController from './controllers/signUp.controller'
 import SignInController from './controllers/signIn.controller'
 import ForgotPassword from './controllers/forgotPassword.controller'
 import RefreshToken from './controllers/refreshToken.controller'
-import Story from './controllers/story.controller'
+import StoryDetails from './controllers/storyDetails.controller'
+import StoryWrite from './controllers/storyWrite.controller'
 
 import { accountSignIn, accountSignUp, accountPasswordReset } from './validators/account.validators'
-import { storyValidator } from './validators/story.validator'
+import { storyDetailsValidator, storyWriteValidator } from './validators/story.validator'
 
 const routes = express.Router()
 const upload = multer(multerConfig)
@@ -27,11 +28,14 @@ const forgotPassword = new ForgotPassword()
 routes.post('/auth/forgot', forgotPassword.store)
 routes.put('/auth/reset', accountPasswordReset, forgotPassword.update)
 
-const story = new Story()
-routes.get('/story', story.index)
-routes.get('/story/:id', story.show)
-routes.put('/story/:id', upload.single('image'), storyValidator, story.update)
-routes.post('/story', upload.single('image'), storyValidator, story.create)
-routes.delete('/story/:id', story.delete)
+const storyDetails = new StoryDetails()
+routes.get('/story', storyDetails.index)
+routes.get('/story/:id', storyDetails.show)
+routes.put('/story/:id', upload.single('image'), storyDetailsValidator, storyDetails.update)
+routes.post('/story', upload.single('image'), storyDetailsValidator, storyDetails.create)
+routes.delete('/story/:id', storyDetails.delete)
+
+const storyWrite = new StoryWrite()
+routes.put('/story/write/:id', storyWriteValidator, storyWrite.update)
 
 export default routes

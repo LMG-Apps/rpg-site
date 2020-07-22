@@ -38,5 +38,6 @@
     "story.name.string.required": "Name is required",
     "story.description.string.required": "Description is required",
     "story.name.any.required": "Name is required",
-    "story.description.any.required": "Description is required"
+    "story.description.any.required": "Description is required",
+    "story.text.string.max": "You have reached the maximum number of characters in the book"
 }
