@@ -20,7 +20,7 @@ const saltRounds = 10
 class ForgotPassword {
   async store (req: Request, res: Response) {
     const { email } = req.body
-    if (!email) {
+    if (!email || !email.trim()) {
       const message = getMessage('account.reset.email.string.empty')
       return res.status(400).json({ message })
     }
@@ -36,7 +36,7 @@ class ForgotPassword {
 
     const token = generateJwt({ id: user.id })
     const data: Session = jwtDecode(token)
-    const expireTime = +data.exp! * 1000
+    const expireTime = +data.exp!
 
     const trx = await knex.transaction()
 
@@ -81,7 +81,7 @@ class ForgotPassword {
       .where('resetPasswordToken', token)
       .first()
 
-    if (!account || account.resetPasswordExpires < Date.now()) {
+    if (!account || account.resetPasswordExpires * 1000 < Date.now()) {
       const message = getMessage('account.reset.token.invalid')
       await trx('Account')
         .update('resetPasswordToken', knex.raw('DEFAULT'))

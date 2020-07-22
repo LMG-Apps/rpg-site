@@ -17,7 +17,7 @@ class Story {
   async index (req: Request, res: Response) {
     const { accountId } = req
     const stories: Story[] = await knex('Story')
-      .where('account_id', accountId)
+      .where('accountId', accountId)
 
     const serializedStories = stories.map(point => {
       return {
@@ -31,13 +31,14 @@ class Story {
 
   async create (req: Request, res: Response) {
     const { accountId, body } = req
-    const { name, description } = body
+    const { name, description, isPublic } = body
 
     const story = {
       name,
       description,
-      image: req.file.filename,
-      account_id: accountId
+      image: req.file ? req.file.filename : null,
+      accountId,
+      isPublic
     }
 
     const trx = await knex.transaction()
@@ -55,7 +56,7 @@ class Story {
     const { id } = req.params
 
     const story: Story = await knex('Story')
-      .where('account_id', accountId)
+      .where('accountId', accountId)
       .where('id', id)
       .first()
 
@@ -75,11 +76,11 @@ class Story {
   async update (req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
-    const { name, description, text } = req.body
-    const { filename: image } = req.file
+    const { name, description, text, isPublic } = req.body
+    const image = req.file ? req.file.filename : null
 
     const story: Story = await knex('Story')
-      .where('account_id', accountId)
+      .where('accountId', accountId)
       .where('id', id)
       .first()
 
@@ -91,18 +92,21 @@ class Story {
     const trx = await knex.transaction()
 
     await trx('Story')
-      .where('account_id', accountId)
+      .where('accountId', accountId)
       .where('id', id)
       .update('name', name)
       .update('description', description)
       .update('text', text)
-      .update('image', image)
+      .update('image', image || knex.raw('DEFAULT'))
+      .update('isPublic', isPublic)
 
     await trx.commit()
 
-    fs.unlink(path.resolve(tmpPath, `${story.image}`), err => {
-      if (err) console.log(err)
-    })
+    if (story.image) {
+      fs.unlink(path.resolve(tmpPath, `${story.image}`), err => {
+        if (err) console.log(err)
+      })
+    }
 
     const message = getMessage('story.updated')
     return res.status(200).json({ message })
@@ -112,14 +116,8 @@ class Story {
     const { accountId } = req
     const { id } = req.params
 
-    const { image } = await knex('Story')
-      .where('account_id', accountId)
-      .where('id', id)
-      .first()
-      .select('image')
-
     const story = await knex('Story')
-      .where('account_id', accountId)
+      .where('accountId', accountId)
       .where('id', id)
       .del()
 
@@ -128,9 +126,17 @@ class Story {
       return res.status(404).json({ message })
     }
 
-    fs.unlink(path.resolve(tmpPath, `${image}`), err => {
-      if (err) console.log(err)
-    })
+    const { image } = await knex('Story')
+      .where('accountId', accountId)
+      .where('id', id)
+      .first()
+      .select('image')
+
+    if (image) {
+      fs.unlink(path.resolve(tmpPath, `${image}`), err => {
+        if (err) console.log(err)
+      })
+    }
 
     const message = getMessage('story.deleted')
     return res.status(200).json({ message })

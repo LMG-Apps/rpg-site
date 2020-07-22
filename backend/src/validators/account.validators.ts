@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express'
 import getValidatorError from '../helpers/validators.helper'
 
 const rules = {
-  user: Joi.string()
+  username: Joi.string()
     .alphanum()
     .min(5)
     .max(15)
@@ -46,7 +46,7 @@ export const accountSignUp = (req: Request, res: Response, next: NextFunction) =
   const { username, email, password, passwordConfirmation } = req.body
 
   const schema = Joi.object({
-    username: rules.user,
+    username: rules.username,
     email: rules.email,
     password: rules.password,
     passwordConfirmation: rules.passwordConfirmation

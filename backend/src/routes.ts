@@ -9,6 +9,7 @@ import RefreshToken from './controllers/refreshToken.controller'
 import Story from './controllers/story.controller'
 
 import { accountSignIn, accountSignUp, accountPasswordReset } from './validators/account.validators'
+import { storyValidator } from './validators/story.validator'
 
 const routes = express.Router()
 const upload = multer(multerConfig)
@@ -29,8 +30,8 @@ routes.put('/auth/reset', accountPasswordReset, forgotPassword.update)
 const story = new Story()
 routes.get('/story', story.index)
 routes.get('/story/:id', story.show)
-routes.put('/story/:id', upload.single('image'), story.update)
-routes.post('/story', upload.single('image'), story.create)
+routes.put('/story/:id', upload.single('image'), storyValidator, story.update)
+routes.post('/story', upload.single('image'), storyValidator, story.create)
 routes.delete('/story/:id', story.delete)
 
 export default routes
