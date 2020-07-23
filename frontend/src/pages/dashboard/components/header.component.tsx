@@ -7,13 +7,12 @@ import styled from 'styled-components'
 
 interface HeaderProps {
   width: number;
-  height?: number;
 }
 
-const Header: React.FC<HeaderProps> = ({ width, height }: HeaderProps) => (
+const Header: React.FC<HeaderProps> = ({ width }: HeaderProps) => (
   <StyledDiv>
     <Title>
-      <img src={logo} width="32" height="38" />
+      <img alt="site-logo" src={logo} width="32" height="38" />
       <h2 style={{ margin: '0', marginLeft: '10px' }}>RPG Storytelling</h2>
     </Title>
     <Profile>

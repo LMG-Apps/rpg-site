@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-
 import campfire from '../../assets/images/campire2.jpeg'
 import campfire2 from '../../assets/images/campire1.jpeg'
 
@@ -41,7 +39,7 @@ class Dashboard extends React.Component<{}, { width: number; height: number }> {
   };
 
   render () {
-    const { width, height } = this.state
+    const { width } = this.state
 
     return (
       <Background>
