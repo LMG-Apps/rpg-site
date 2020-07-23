@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
-import Paper from '@material-ui/core/Paper'
 import AddIcon from '@material-ui/icons/Add'
 
 import styled from 'styled-components'
@@ -11,7 +10,42 @@ interface StoryCardProps {
   image?: string;
 }
 
-const StyledPaper = styled(Paper)`
+const StoryCard: React.FC<StoryCardProps> = ({
+  empty,
+  image
+}: StoryCardProps) => (
+  <>
+    {empty ? (
+      <Card>
+        <Grid
+          container
+          justify="center"
+          alignItems="center"
+          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
+        >
+          <Grid item>
+            <AddIcon style={{ width: '64px', height: '64px' }} />
+          </Grid>
+        </Grid>
+      </Card>
+    ) : (
+      <Card>
+        <Grid
+          container
+          justify="center"
+          direction="row"
+          //   alignItems="flex-end"
+          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
+        >
+          <BackgroundImage item image={image} />
+          <Grid item>Titulo do RPG pouco longo</Grid>
+        </Grid>
+      </Card>
+    )}
+  </>
+)
+
+const Card = styled.div`
   width: 220px;
   height: 220px;
 
@@ -22,7 +56,7 @@ const StyledPaper = styled(Paper)`
   font-family: "Grenze Gotisch", cursive;
   color: rgba(225, 225, 225, 1);
   font-size: 20px;
-
+  margin: 10px;
   transition: 300ms;
   :hover {
     cursor: pointer;
@@ -39,40 +73,5 @@ const BackgroundImage = styled(Grid)`
   background-repeat: no-repeat;
   /* background-color: blue; */
 `
-
-const StoryCard: React.FC<StoryCardProps> = ({
-  empty,
-  image
-}: StoryCardProps) => (
-  <>
-    {empty ? (
-      <StyledPaper elevation={0}>
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
-        >
-          <Grid item>
-            <AddIcon style={{ width: '64px', height: '64px' }} />
-          </Grid>
-        </Grid>
-      </StyledPaper>
-    ) : (
-      <StyledPaper elevation={0}>
-        <Grid
-          container
-          justify="center"
-          direction="row"
-          //   alignItems="flex-end"
-          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
-        >
-          <BackgroundImage item image={image} />
-          <Grid item>Titulo do RPG pouco longo</Grid>
-        </Grid>
-      </StyledPaper>
-    )}
-  </>
-)
 
 export default StoryCard

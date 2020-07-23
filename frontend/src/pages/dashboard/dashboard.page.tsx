@@ -11,7 +11,7 @@ import Header from './components/header.component'
 
 import FriendList from './components/friend-list.component'
 
-import './components/dashboard.styles.css'
+import styled from 'styled-components'
 
 class Dashboard extends React.Component<{}, { width: number; height: number }> {
   constructor (props) {
@@ -44,57 +44,61 @@ class Dashboard extends React.Component<{}, { width: number; height: number }> {
     const { width, height } = this.state
 
     return (
-      <Grid
-        className="background"
-        container
-        direction={width < 1180 ? 'row' : 'column'}
-        alignItems={width < 600 ? 'center' : 'flex-start'}
-      >
+      <Background>
         <Header width={width} />
-        <h2>Minhas historias</h2>
-        <Grid item container direction="row" spacing={1}>
-          <Grid
-            container
-            item
-            direction="row"
-            xs
-            justify={width <= 730 ? 'center' : 'flex-start'}
-            spacing={2}
-          >
-            <Grid item>
+        <Container>
+          <h2>Minhas historias</h2>
+          <OuterRow>
+            <Row>
               <StoryCard image={campfire} />
-            </Grid>
-            <Grid item>
               <StoryCard image={campfire2} />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-            <Grid item>
               <StoryCard empty />
-            </Grid>
-          </Grid>
-          {width > 730 ? (
-            <Grid item>
+            </Row>
+            {width > 730 ? (
               <FriendList />
-            </Grid>
-          ) : null}
-        </Grid>
-      </Grid>
+            ) : null}
+          </OuterRow>
+        </Container>
+      </Background>
     )
   }
 }
+
+const Background = styled.div`
+  padding-top: 80px;
+  background-color: rgb(22, 20, 26);
+  min-height: 100vh;
+  color: white;
+  overflow: hidden;
+  /* @media (max-width: 768px) {
+    padding-top: 60px;
+  } */
+`
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+
+  @media (max-width: 730px) {
+    justify-content: center;
+  }
+`
+const OuterRow = styled.div`
+display: flex;
+flex-flow: row nowrap;
+justify-content: flex-start;
+`
 
 export default Dashboard

@@ -1,6 +1,9 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
 import ProfileBadge from '../../../components/profile-badge.component'
+
+import logo from '../../../assets/images/Logo2.png'
+
+import styled from 'styled-components'
 
 interface HeaderProps {
   width: number;
@@ -8,27 +11,47 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ width, height }: HeaderProps) => (
-  <Grid
-    container
-    direction={width < 600 ? 'column' : 'row'}
-    spacing={2}
-    justify={width < 600 ? 'center' : 'flex-start'}
-    alignItems="center"
-  >
-    <Grid item xs={width < 600 ? 'auto' : 6}>
-      <h1>RPG Storytelling</h1>
-    </Grid>
-    <Grid
-      item
-      xs={width < 600 ? 'auto' : 6}
-      container
-      justify="flex-end"
-    >
-      <Grid item>
-        <ProfileBadge name="Rasengan" />
-      </Grid>
-    </Grid>
-  </Grid>
+  <StyledDiv>
+    <Title>
+      <img src={logo} width="32" height="38" />
+      <h2 style={{ margin: '0', marginLeft: '10px' }}>RPG Storytelling</h2>
+    </Title>
+    <Profile>
+      <ProfileBadge
+        name="Lopao del Morro"
+        size={width < 600 ? 'small' : 'default'}
+      />
+    </Profile>
+  </StyledDiv>
 )
+
+const StyledDiv = styled.div`
+  /* Makes div float */
+  position: fixed;
+  /* Makes div stay at the top */
+  top: 0px;
+  /* Makes div stay in front of almost everything else in the screen */
+  z-index: 9998;
+  /* Dimensions */
+  height: 80px;
+  width: 100%;
+  /* Defines itens arrangement in the div */
+  display: flex;
+  justify-content: space-between;
+  /* Styling */
+  color: white;
+  padding: 0 30px;
+  background-color: rgb(34,34,44);
+`
+const Title = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`
+
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+`
 
 export default Header

@@ -12,6 +12,7 @@ import { StyledLink } from '../styles/app-styles'
 
 interface ProfileBadgeProps {
   name?: string;
+  size?: 'default' | 'small';
   id?: number;
 }
 
@@ -25,13 +26,17 @@ const StyledAvatar = styled(Avatar)`
 `
 
 const ProfileBadge: React.FC<ProfileBadgeProps> = ({
-  name
+  name,
+  size,
+  id
 }: ProfileBadgeProps) => (
   <Grid container direction="row-reverse" justify="flex-start" spacing={1}>
     <Grid item>
-      <StyledLink to="/">
-        <h4 style={{ margin: 0 }}>{name}</h4>
-      </StyledLink>
+      {size === 'small' ? null : (
+        <StyledLink to="/">
+          <h4 style={{ margin: 0 }}>{name}</h4>
+        </StyledLink>
+      )}
     </Grid>
     <Grid item>
       <Badge

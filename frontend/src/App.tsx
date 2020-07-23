@@ -8,31 +8,27 @@ import Dashboard from './pages/dashboard/dashboard.page'
 const cookies = new Cookies()
 
 function App () {
-  // const changeListener: Array = cookies.addChangeListener((name: string, value: string, options: object) => [name, value, options])
+  const handleCookies = (info) => {
+    console.log(info)
+  }
 
   useEffect(() => {
-    console.log(cookies.getAll())
+    console.log('all cookies', cookies.getAll())
 
-    cookies.addChangeListener((info) => {
-      console.log('cookie name:', info.name)
-      console.log('cookie value:', info.value)
-    })
+    cookies.addChangeListener(handleCookies)
   })
 
   return (
-    <React.StrictMode>
-      {/* StrictMode is a tool for highlighting potential problems in an application. */}
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <LoginPage />
-          </Route>
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
-        </Switch>
-      </Router>
-    </React.StrictMode>
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <LoginPage />
+        </Route>
+        <Route path="/dashboard">
+          <Dashboard />
+        </Route>
+      </Switch>
+    </Router>
   )
 }
 
