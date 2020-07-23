@@ -6,8 +6,6 @@ import Avatar from '@material-ui/core/Avatar'
 
 import styled from 'styled-components'
 
-import { NavLink } from 'react-router-dom'
-
 import { StyledLink } from '../styles/app-styles'
 
 interface ProfileBadgeProps {
@@ -30,30 +28,26 @@ const ProfileBadge: React.FC<ProfileBadgeProps> = ({
   size,
   id
 }: ProfileBadgeProps) => (
-  <Grid container direction="row-reverse" justify="flex-start" spacing={1}>
-    <Grid item>
-      {size === 'small' ? null : (
-        <StyledLink to="/">
-          <h4 style={{ margin: 0 }}>{name}</h4>
-        </StyledLink>
-      )}
-    </Grid>
-    <Grid item>
-      <Badge
-        overlap="circle"
-        // anchorOrigin={{
-        //   vertical: 'top',
-        //   horizontal: 'right'
-        // }}
-        color="primary"
-        variant="dot"
-      >
-        <NavLink to="/" activeStyle={{ textDecoration: 'none' }}>
+  <StyledLink to="/user">
+    <Grid container direction="row-reverse" justify="flex-start" spacing={1}>
+      <Grid item>
+        {size === 'small' ? null : <h4 style={{ margin: 0 }}>{name}</h4>}
+      </Grid>
+      <Grid item>
+        <Badge
+          overlap="circle"
+          // anchorOrigin={{
+          //   vertical: 'top',
+          //   horizontal: 'right'
+          // }}
+          color="primary"
+          variant="dot"
+        >
           <StyledAvatar alt="profile-pic">{name && name[0]}</StyledAvatar>
-        </NavLink>
-      </Badge>
+        </Badge>
+      </Grid>
     </Grid>
-  </Grid>
+  </StyledLink>
 )
 
 export default ProfileBadge

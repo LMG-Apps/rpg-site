@@ -4,6 +4,8 @@ import LoginPage from './pages/login/login.page'
 import Cookies from 'universal-cookie'
 
 import Dashboard from './pages/dashboard/dashboard.page'
+import ProfilePage from './pages/profile/profile.page'
+import StoryCreationPage from './pages/story-creation/story-creation.page'
 
 const cookies = new Cookies()
 
@@ -26,6 +28,12 @@ function App () {
         </Route>
         <Route path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route path="/user">
+          <ProfilePage />
+        </Route>
+        <Route path="/story/create">
+          <StoryCreationPage />
         </Route>
       </Switch>
     </Router>
