@@ -7,24 +7,11 @@ import campfire2 from '../../assets/images/campire1.jpeg'
 
 import StoryCard from './components/story-card.component'
 
-import styled from 'styled-components'
 import Header from './components/header.component'
-
-import './components/dashboard.styles.css'
 
 import FriendList from './components/friend-list.component'
 
-// const StyledGrid = styled(Grid)`
-//   padding: 30px;
-// `
-
-const Background = styled.div`
-  /* position: fixed; */
-  background-color: rgba(5, 5, 5, 0.8);
-  height: 100%;
-  /* color: white; */
-  /* overflow: hidden; */
-`
+import './components/dashboard.styles.css'
 
 class Dashboard extends React.Component<{}, { width: number; height: number }> {
   constructor (props) {
