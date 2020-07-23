@@ -1,9 +1,6 @@
 import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
-import Badge from '@material-ui/core/Badge'
-import Avatar from '@material-ui/core/Avatar'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 
 import campfire from '../../assets/images/campire2.jpeg'
 import campfire2 from '../../assets/images/campire1.jpeg'
@@ -11,54 +8,104 @@ import campfire2 from '../../assets/images/campire1.jpeg'
 import StoryCard from './components/story-card.component'
 
 import styled from 'styled-components'
+import Header from './components/header.component'
 
-const StyledGrid = styled(Grid)`
-  padding: 30px;
+import './components/dashboard.styles.css'
+
+import FriendList from './components/friend-list.component'
+
+// const StyledGrid = styled(Grid)`
+//   padding: 30px;
+// `
+
+const Background = styled.div`
+  /* position: fixed; */
+  background-color: rgba(5, 5, 5, 0.8);
+  height: 100%;
+  /* color: white; */
+  /* overflow: hidden; */
 `
 
-class Dashboard extends React.Component<{}, {}> {
+class Dashboard extends React.Component<{}, { width: number; height: number }> {
   constructor (props) {
     super(props)
 
-    this.state = {}
+    this.state = {
+      width: window.innerWidth,
+      height: window.innerHeight
+    }
   }
 
+  componentDidMount () {
+    window.addEventListener('resize', this.handleResize)
+  }
+
+  componentWillUnmount () {
+    window.removeEventListener('resize', this.handleResize)
+  }
+
+  handleResize = (event) => {
+    console.log('innerwidth: ', event.currentTarget.innerWidth)
+    console.log('innerheight: ', event.currentTarget.innerHeight)
+    this.setState({
+      width: event.currentTarget.innerWidth,
+      height: event.currentTarget.innerHeight
+    })
+  };
+
   render () {
+    const { width, height } = this.state
+
     return (
-      <div style={{ backgroundColor: 'rgba(5, 5, 5, 0.75)', height: '100vh', color: 'white' }}>
-        <Grid container direction="row">
-          <Grid item xs={10}>
-            <h1>RPG Storytelling</h1>
-          </Grid>
-          <Grid item xs={2}>
-            Lopao do Morro
-            <Badge
-              overlap="circle"
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right'
-              }}
-              badgeContent={<AccountCircle />}
-            >
-              <Avatar alt="Travis Howard" />
-            </Badge>
-          </Grid>
-          <StyledGrid item xs={12}>
-            <h2>Minhas historias</h2>
-            <Grid container justify="flex-start" spacing={3}>
-              <Grid item>
-                <StoryCard image={campfire} />
-              </Grid>
-              <Grid item>
-                <StoryCard image={campfire2} />
-              </Grid>
-              <Grid item>
-                <StoryCard empty />
-              </Grid>
+      <Grid
+        className="background"
+        container
+        direction={width < 1180 ? 'row' : 'column'}
+        alignItems={width < 600 ? 'center' : 'flex-start'}
+      >
+        <Header width={width} />
+        <h2>Minhas historias</h2>
+        <Grid item container direction="row" spacing={1}>
+          <Grid
+            container
+            item
+            direction="row"
+            xs
+            justify={width <= 730 ? 'center' : 'flex-start'}
+            spacing={2}
+          >
+            <Grid item>
+              <StoryCard image={campfire} />
             </Grid>
-          </StyledGrid>
+            <Grid item>
+              <StoryCard image={campfire2} />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+            <Grid item>
+              <StoryCard empty />
+            </Grid>
+          </Grid>
+          {width > 730 ? (
+            <Grid item>
+              <FriendList />
+            </Grid>
+          ) : null}
         </Grid>
-      </div>
+      </Grid>
     )
   }
 }

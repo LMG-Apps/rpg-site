@@ -15,7 +15,8 @@ const StyledButton = styled(Button)`
   line-height: 17px;
   color: white;
   background-color: rgba(255, 85, 85, 1);
-  &:hover {
+  
+  :hover {
     background-color: rgba(255, 85, 85, 0.9);
   }
 `

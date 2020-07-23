@@ -1,4 +1,7 @@
 import axios from 'axios'
+import Cookies from 'universal-cookie'
+
+const cookies = new Cookies()
 
 const api = axios.create({
   baseURL: 'http://localhost:3333'
@@ -13,6 +16,11 @@ export const signIn: any = async (email: string, password: string) => {
   const response = await api.post('auth/sign-in', informationJSON)
 
   console.log('Response: ', response)
+
+  if (response.status === 200) {
+    cookies.set('token', response.data.token)
+    cookies.set('refreshToken', response.data.refreshToken)
+  }
 }
 
 export const signUp: any = async (

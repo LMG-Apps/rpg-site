@@ -7,7 +7,7 @@ import AddIcon from '@material-ui/icons/Add'
 import styled from 'styled-components'
 
 interface StoryCardProps {
-  empty?: boolean | false;
+  empty?: boolean;
   image?: string;
 }
 
@@ -15,16 +15,18 @@ const StyledPaper = styled(Paper)`
   width: 220px;
   height: 220px;
 
-  background-color: rgba(0, 0, 0, 0.05);
+  background-color: rgba(0, 0, 0, 0.1);
   border-radius: 20px;
   align-items: center;
 
   font-family: "Grenze Gotisch", cursive;
+  color: rgba(225, 225, 225, 1);
   font-size: 20px;
 
+  transition: 300ms;
   :hover {
     cursor: pointer;
-    transform: scale(1.05, 1.05);
+    transform: scale(1.05);
   }
 `
 
