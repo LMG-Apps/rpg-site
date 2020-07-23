@@ -5,6 +5,10 @@ import AddIcon from '@material-ui/icons/Add'
 
 import styled from 'styled-components'
 
+import { StyledLink } from '../../../styles/app-styles'
+
+import { NavLink } from 'react-router-dom'
+
 interface StoryCardProps {
   empty?: boolean;
   image?: string;
@@ -16,31 +20,35 @@ const StoryCard: React.FC<StoryCardProps> = ({
 }: StoryCardProps) => (
   <>
     {empty ? (
-      <Card>
-        <Grid
-          container
-          justify="center"
-          alignItems="center"
-          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
-        >
-          <Grid item>
-            <AddIcon style={{ width: '64px', height: '64px' }} />
+      <StyledLink to="/story/create">
+        <Card>
+          <Grid
+            container
+            justify="center"
+            alignItems="center"
+            style={{ height: '100%', width: '100%', borderRadius: '20px' }}
+          >
+            <Grid item>
+              <AddIcon style={{ width: '64px', height: '64px' }} />
+            </Grid>
           </Grid>
-        </Grid>
-      </Card>
+        </Card>
+      </StyledLink>
     ) : (
-      <Card>
-        <Grid
-          container
-          justify="center"
-          direction="row"
-          //   alignItems="flex-end"
-          style={{ height: '100%', width: '100%', borderRadius: '20px' }}
-        >
-          <BackgroundImage item image={image} />
-          <Grid item>Titulo do RPG pouco longo</Grid>
-        </Grid>
-      </Card>
+      <NavLink to="/story/description" style={{ textDecoration: 'none' }}>
+        <Card>
+          <Grid
+            container
+            justify="center"
+            direction="row"
+            //   alignItems="flex-end"
+            style={{ height: '100%', width: '100%', borderRadius: '20px' }}
+          >
+            <BackgroundImage item image={image} />
+            <Grid item>Titulo do RPG pouco longo</Grid>
+          </Grid>
+        </Card>
+      </NavLink>
     )}
   </>
 )
