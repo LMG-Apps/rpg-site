@@ -3,7 +3,8 @@ import { Request, Response, NextFunction } from 'express'
 import getValidatorError from '../helpers/validators.helper'
 
 const rules = {
-  username: Joi.string()
+  username: Joi
+    .string()
     .alphanum()
     .min(5)
     .max(15)
@@ -14,11 +15,15 @@ const rules = {
     .required(),
   password: Joi
     .string()
-    .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$')),
+    .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
+    .required(),
   passwordConfirmation: Joi
     .string()
     .valid(Joi.ref('password'))
-    .required()
+    .required(),
+  description: Joi
+    .string()
+    .max(1)
 }
 
 const options = { abortEarly: false }
