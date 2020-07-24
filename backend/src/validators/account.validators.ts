@@ -20,10 +20,7 @@ const rules = {
   passwordConfirmation: Joi
     .string()
     .valid(Joi.ref('password'))
-    .required(),
-  description: Joi
-    .string()
-    .max(1)
+    .required()
 }
 
 const options = { abortEarly: false }

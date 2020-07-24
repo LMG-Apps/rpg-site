@@ -36,8 +36,11 @@
     "story.deleted": "Story deleted",
     "story.updated": "Story updated",
     "story.name.string.required": "Name is required",
-    "story.description.string.required": "Description is required",
     "story.name.any.required": "Name is required",
-    "story.description.any.required": "Description is required",
-    "story.text.string.max": "You have reached the maximum number of characters in the book"
+    "story.text.string.max": "You have reached the maximum number of characters in the book",
+    "story.name.string.max": "Name must have less than 100 characters.",
+    "story.description.string.max": "Description must have less than 200 characters.",
+
+    "user.id.notfound": "User not found.",
+    "user.updated": "User updated"
 }

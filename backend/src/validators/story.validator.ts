@@ -4,9 +4,10 @@ import getValidatorError from '../helpers/validators.helper'
 
 const rules = {
   name: Joi.string()
-    .required(),
+    .required()
+    .max(100),
   description: Joi.string()
-    .required(),
+    .max(200),
   text: Joi.string()
     .max(16777215)
 }

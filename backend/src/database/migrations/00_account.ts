@@ -6,7 +6,7 @@ export async function up (knex: Knex) {
     table.string('username').unique().notNullable()
     table.string('email').unique().notNullable()
     table.string('password').notNullable()
-    table.string('description').nullable().defaultTo(null)
+    table.string('biography').nullable().defaultTo(null)
     table.string('profileImage').nullable().defaultTo(null)
     table.integer('resetPasswordExpires').nullable().defaultTo(null)
     table.string('resetPasswordToken').nullable().defaultTo(null)

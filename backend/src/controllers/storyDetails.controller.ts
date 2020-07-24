@@ -1,8 +1,7 @@
 import knex from '../database/connection'
 import { Request, Response } from 'express'
 import getMessage from '../helpers/message.helper'
-import fs from 'fs'
-import path from 'path'
+import removeImage from '../helpers/removeImage.helper'
 
 interface Story {
   name: string;
@@ -10,8 +9,6 @@ interface Story {
   text: string;
   image: string;
 }
-
-const tmpPath = path.resolve(__dirname, '..', '..', 'tmp')
 
 class StoryDetails {
   async index (req: Request, res: Response) {
@@ -39,6 +36,11 @@ class StoryDetails {
       image: req.file ? req.file.filename : null,
       accountId,
       isPublic
+    }
+
+    if (!name.trim()) {
+      const message = getMessage('story.name.string.required')
+      return res.status(400).json({ message })
     }
 
     const trx = await knex.transaction()
@@ -79,6 +81,11 @@ class StoryDetails {
     const { name, description, isPublic } = req.body
     const image = req.file ? req.file.filename : null
 
+    if (!name.trim()) {
+      const message = getMessage('story.name.string.required')
+      return res.status(400).json({ message })
+    }
+
     const story: Story = await knex('Story')
       .where('accountId', accountId)
       .where('id', id)
@@ -101,11 +108,7 @@ class StoryDetails {
 
     await trx.commit()
 
-    if (story.image) {
-      fs.unlink(path.resolve(tmpPath, `${story.image}`), err => {
-        if (err) console.log(err)
-      })
-    }
+    removeImage(story.image)
 
     const message = getMessage('story.updated')
     return res.status(200).json({ message })
@@ -115,7 +118,7 @@ class StoryDetails {
     const { accountId } = req
     const { id } = req.params
 
-    const { image }: { image?: string} = await knex('Story')
+    const { image }: { image: string} = await knex('Story')
       .where('accountId', accountId)
       .where('id', id)
       .first()
@@ -131,11 +134,7 @@ class StoryDetails {
       return res.status(404).json({ message })
     }
 
-    if (image) {
-      fs.unlink(path.resolve(tmpPath, `${image}`), err => {
-        if (err) console.log(err)
-      })
-    }
+    removeImage(image)
 
     const message = getMessage('story.deleted')
     return res.status(200).json({ message })
