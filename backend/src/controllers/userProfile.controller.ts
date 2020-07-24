@@ -30,18 +30,23 @@ class UserProfile {
       return res.status(404).json({ message })
     }
 
-    const story: Story = await knex('Story')
+    const storiesData: Story[] = await knex('Story')
       .select('id', 'name', 'image')
       .where('isPublic', true)
-      .first()
+
+    const stories = storiesData.map(story => {
+      return {
+        ...story,
+        story_image_url: `http://127.0.0.1:3333/tmp/${story.image || ''}`
+      }
+    })
 
     delete user.password
 
     const serializedStories = {
       user,
-      story,
-      user_image_url: `http://127.0.0.1:3333/tmp/${user.profileImage || ''}`,
-      story_image_url: `http://127.0.0.1:3333/tmp/${story.image || ''}`
+      stories,
+      user_image_url: `http://127.0.0.1:3333/tmp/${user.profileImage || ''}`
     }
 
     return res.status(200).json(serializedStories)
@@ -63,7 +68,8 @@ class UserProfile {
     }
 
     if (user.id !== accountId) {
-      return res.status(403).json({ sai: 'ladrao' })
+      const message = getMessage('user.access.invalid')
+      return res.status(403).json({ message })
     }
 
     const trx = await knex.transaction()

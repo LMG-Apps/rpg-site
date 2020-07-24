@@ -42,5 +42,6 @@
     "story.description.string.max": "Description must have less than 200 characters.",
 
     "user.id.notfound": "User not found.",
-    "user.updated": "User updated"
+    "user.updated": "User updated",
+    "user.access.invalid": "You can't access this route."
 }

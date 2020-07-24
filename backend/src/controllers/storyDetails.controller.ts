@@ -5,9 +5,11 @@ import removeImage from '../helpers/removeImage.helper'
 
 interface Story {
   name: string;
+  accountId: number;
   description: string;
   text: string;
   image: string;
+  isPublic: boolean;
 }
 
 class StoryDetails {
@@ -50,7 +52,7 @@ class StoryDetails {
     await trx.commit()
 
     const message = getMessage('story.created')
-    return res.status(200).json({ story, message })
+    return res.status(200).json({ ...story, message })
   }
 
   async show (req: Request, res: Response) {
