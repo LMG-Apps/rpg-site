@@ -37,16 +37,20 @@ class UserProfile {
     const stories = storiesData.map(story => {
       return {
         ...story,
-        story_image_url: `http://127.0.0.1:3333/tmp/${story.image || ''}`
+        story_image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
       }
     })
 
     delete user.password
 
+    const serializedUser = {
+      ...user,
+      user_image_url: user.profileImage ? `http://127.0.0.1:3333/tmp/${user.profileImage}` : null
+    }
+
     const serializedStories = {
-      user,
-      stories,
-      user_image_url: `http://127.0.0.1:3333/tmp/${user.profileImage || ''}`
+      serializedUser,
+      stories
     }
 
     return res.status(200).json(serializedStories)

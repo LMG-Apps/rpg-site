@@ -18,10 +18,10 @@ class StoryDetails {
     const stories: Story[] = await knex('Story')
       .where('accountId', accountId)
 
-    const serializedStories = stories.map(point => {
+    const serializedStories = stories.map(story => {
       return {
-        ...point,
-        image_url: `http://127.0.0.1:3333/tmp/${point.image}`
+        ...story,
+        image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
       }
     })
 
@@ -71,7 +71,7 @@ class StoryDetails {
 
     const serializedStories = {
       ...story,
-      image_url: `http://127.0.0.1:3333/tmp/${story.image}`
+      image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
     }
 
     return res.status(200).json(serializedStories)
