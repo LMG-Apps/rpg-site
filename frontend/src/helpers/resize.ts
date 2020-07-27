@@ -10,21 +10,26 @@
 //   rl.close();
 // });
 // const sharp = require('sharp');
-import sharp from 'sharp';
+import sharp from 'sharp'
 
 const resize = (
-	width: number,
-	heigth: number,
-	source: string,
-	destination: string
+  width: number,
+  heigth: number,
+  source: string,
+  destination: string
 ) => {
-	sharp(source)
-		.resize(width, heigth)
-		.toFile(destination, (error, info) => {
-			console.log('compose', error, info);
-		});
-};
+  sharp(source)
+    .resize(width, heigth)
+    .toFile(destination, (error, info) => {
+      console.log('compose', error, info)
+    })
+}
 
-resize(2000, 2000, 'src/assets/images/campire1.jpeg', 'src/assets/images/campfireresize.jpeg');
+resize(
+  2000,
+  2000,
+  'src/assets/images/campire1.jpeg',
+  'src/assets/images/campfireresize.jpeg'
+)
 
-export default resize;
+export default resize

@@ -37,16 +37,8 @@ const StoryCard: React.FC<StoryCardProps> = ({
     ) : (
       <NavLink to="/story/description" style={{ textDecoration: 'none' }}>
         <Card>
-          <Grid
-            container
-            justify="center"
-            direction="row"
-            //   alignItems="flex-end"
-            style={{ height: '100%', width: '100%', borderRadius: '20px' }}
-          >
-            <BackgroundImage item image={image} />
-            <Grid item>Titulo do RPG pouco longo</Grid>
-          </Grid>
+          <BackgroundImage image={image} />
+          <Title>As historias de Veloster</Title>
         </Card>
       </NavLink>
     )}
@@ -72,7 +64,7 @@ const Card = styled.div`
   }
 `
 
-const BackgroundImage = styled(Grid)`
+const BackgroundImage = styled.div`
   width: 100%;
   height: 85%;
   border-radius: 20px 20px 0px 0px;
@@ -80,6 +72,16 @@ const BackgroundImage = styled(Grid)`
   background-size: 100% 100%;
   background-repeat: no-repeat;
   /* background-color: blue; */
+`
+
+const Title = styled.div`
+  /* background-color: red; */
+  text-align: center;
+  border-radius: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  padding: 0px 10px;
 `
 
 export default StoryCard

@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import LoginPage from './pages/login/login.page'
 import Cookies from 'universal-cookie'
 
@@ -7,29 +7,59 @@ import Dashboard from './pages/dashboard/dashboard.page'
 import ProfilePage from './pages/profile/profile.page'
 import StoryCreationPage from './pages/story-creation/story-creation.page'
 
+import Header from './components/header.component'
+
 const cookies = new Cookies()
 
 function App () {
-  const handleCookies = (info) => {
-    console.log(info)
-  }
+  const [width, setWidth] = useState(window.innerWidth)
+  const [height, setHeight] = useState(window.innerHeight)
+
+  const [loggedIn, setLoggedIn] = useState(false)
+
+  useEffect(() => {
+    if (cookies.get('token')) {
+      setLoggedIn(true)
+    }
+  })
 
   useEffect(() => {
     console.log('all cookies', cookies.getAll())
 
     cookies.addChangeListener(handleCookies)
-  })
+
+    window.addEventListener('resize', handleResize)
+
+    // Specify how to clean up after this effect:
+    return function cleanup () {
+      window.removeEventListener('resize', handleResize)
+    }
+  }, [])
+
+  const handleResize = (event) => {
+    console.log('innerwidth: ', event.currentTarget.innerWidth)
+    console.log('innerheight: ', event.currentTarget.innerHeight)
+
+    setWidth(event.currentTarget.innerWidth)
+    setHeight(event.currentTarget.innerHeight)
+  }
+
+  const handleCookies = (info) => {
+    console.log(info)
+  }
 
   return (
     <Router>
       <Switch>
         <Route exact path="/">
-          <LoginPage />
+          {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
         </Route>
         <Route path="/dashboard">
-          <Dashboard />
+          <Header width={width} />
+          <Dashboard width={width} />
         </Route>
         <Route path="/user">
+          <Header width={width} />
           <ProfilePage />
         </Route>
         <Route path="/story/create">
