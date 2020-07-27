@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express'
 const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const { url: path } = req
 
-  const excludedPaths = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot', '/auth/reset', '/refresh']
+  const excludedPaths = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot', '/auth/reset', '/refresh', '/tmp']
   const isExcluded = !!excludedPaths.find(p => path.startsWith(p))
   if (isExcluded) {
     return next()

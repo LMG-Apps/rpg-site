@@ -7,6 +7,7 @@
     "account.signup.email_exists": "Email already exists.",
     "account.signup.user_exists": "Username already exists.",
     "account.signup.username.string.min": "Username must contain between 5 and 15 characters.",
+    "account.signup.username.string.alphanum": "Username must contain only alpha-numeric characters.",
     "account.signup.email.string.empty": "Email is required.",
     "account.signin.email.any.required": "Email is required",
     "account.signup.username.string.empty": "Username is required.",
@@ -21,11 +22,26 @@
     "account.signin.success": "Logged in.",
 
     "account.reset.email.string.empty": "Email is required.",
+    "account.reset.password.string.empty": "Email is required.",
     "account.reset.email.invalid": "No account with this email exists.",
     "account.reset.email.sent": "Email sent.",
     "account.reset.token.invalid": "Your token is invalid or it has expired.",
     "account.reset.success": "Password changed.",
 
     "account.token.success": "Success.",
-    "account.token.invalid": "Invalid token."
+    "account.token.invalid": "Invalid token.",
+
+    "story.id.notfound": "Story not found",
+    "story.created": "Story created",
+    "story.deleted": "Story deleted",
+    "story.updated": "Story updated",
+    "story.name.string.required": "Name is required",
+    "story.name.any.required": "Name is required",
+    "story.text.string.max": "You have reached the maximum number of characters in the book",
+    "story.name.string.max": "Name must have less than 100 characters.",
+    "story.description.string.max": "Description must have less than 200 characters.",
+
+    "user.id.notfound": "User not found.",
+    "user.updated": "User updated",
+    "user.access.invalid": "You can't access this route."
 }
