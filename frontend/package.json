@@ -1,5 +1,6 @@
 {
   "name": "rpg-site",
+  "homepage": "http://malivuca.github.io/rpg-site",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -23,6 +24,8 @@
     "universal-cookie": "^4.0.3"
   },
   "scripts": {
+    "predeploy": "yarn run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
