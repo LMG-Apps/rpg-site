@@ -1,51 +1,27 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
-
 import campfire from '../../assets/images/campire2.jpeg'
 import campfire2 from '../../assets/images/campire1.jpeg'
 
 import StoryCard from './components/story-card.component'
 
-import Header from './components/header.component'
-
 import FriendList from './components/friend-list.component'
 
 import styled from 'styled-components'
 
-class Dashboard extends React.Component<{}, { width: number; height: number }> {
+class Dashboard extends React.Component<{width: number}, {}> {
   constructor (props) {
     super(props)
 
-    this.state = {
-      width: window.innerWidth,
-      height: window.innerHeight
-    }
+    this.state = {}
   }
-
-  componentDidMount () {
-    window.addEventListener('resize', this.handleResize)
-  }
-
-  componentWillUnmount () {
-    window.removeEventListener('resize', this.handleResize)
-  }
-
-  handleResize = (event) => {
-    console.log('innerwidth: ', event.currentTarget.innerWidth)
-    console.log('innerheight: ', event.currentTarget.innerHeight)
-    this.setState({
-      width: event.currentTarget.innerWidth,
-      height: event.currentTarget.innerHeight
-    })
-  };
 
   render () {
-    const { width, height } = this.state
+    const { width } = this.props
 
     return (
       <Background>
-        <Header width={width} />
+        {/* <Header width={width} /> */}
         <Container>
           <h2>Minhas historias</h2>
           <OuterRow>
