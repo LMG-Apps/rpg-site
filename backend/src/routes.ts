@@ -9,6 +9,7 @@ import RefreshToken from './controllers/refreshToken.controller'
 import StoryDetails from './controllers/storyDetails.controller'
 import StoryWrite from './controllers/storyWrite.controller'
 import UserProfile from './controllers/userProfile.controller'
+import FriendSolicitation from './controllers/friendSolicitation.controller'
 
 import { accountSignIn, accountSignUp, accountPasswordReset } from './validators/account.validators'
 import { storyDetailsValidator, storyWriteValidator } from './validators/story.validator'
@@ -42,5 +43,11 @@ routes.put('/story/write/:id', storyWriteValidator, storyWrite.update)
 const userProfile = new UserProfile()
 routes.put('/user/edit/:username', upload.single('image'), userProfile.update)
 routes.get('/user/:username', userProfile.show)
+
+const friendSolicitation = new FriendSolicitation()
+routes.get('/add-friend', friendSolicitation.index)
+routes.post('/add-friend/:id', friendSolicitation.create)
+routes.put('/add-friend/:id', friendSolicitation.update)
+routes.delete('/add-friend/:id', friendSolicitation.delete)
 
 export default routes

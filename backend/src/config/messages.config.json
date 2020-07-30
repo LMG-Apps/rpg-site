@@ -43,5 +43,17 @@
 
     "user.id.notfound": "User not found.",
     "user.updated": "User updated",
-    "user.access.invalid": "You can't access this route."
+    "user.access.invalid": "You can't access this route.",
+
+    "friend.username.required": "Username is required.",
+    "friend.username.notfound": "Username not found.",
+    "friend.status.isFriend": "You and this user are already friends.",
+    "friend.status.alreadySent": "You have already invited this user.",
+    "friend.status.error.invalidFriend": "Error: you cannot be your own friend. I am sorry :(",
+    "friend.status.alreadyReceivedInvite": "You have received an invite from this user. Accept or refuse it.",
+    "friend.status.sent": "Your invite has been sent.",
+    "friend.status.error": "You have already accepted this invitation.",
+    "friend.status.accepted": "Friend accepted.",
+    "friend.status.refused": "Invite refused."
+
 }
