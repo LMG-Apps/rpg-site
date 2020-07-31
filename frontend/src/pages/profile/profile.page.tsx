@@ -3,20 +3,34 @@ import React from 'react'
 import styled from 'styled-components'
 
 import UserInfo from './components/user-info.component'
-import Tabs from './components/tabs.component'
+// import Tabs from './components/tabs.component'
+import Tabs from '../../components/tabs.component'
 import StoryCard from '../dashboard/components/story-card.component'
 
-const ProfilePage: React.FC = () => (
-  <Background>
-    <Container>
-      <UserInfo />
-      <Tabs>
-        <StoryCard />
-        <StoryCard empty/>
-      </Tabs>
-    </Container>
-  </Background>
-)
+const ProfilePage: React.FC = () => {
+  const [activeTab, setAcitveTab] = React.useState('stories')
+
+  return (
+    <Background>
+      <Container>
+        <UserInfo />
+        <Tabs>
+          <TabContent label="Histórias">
+            <StoryCard />
+            <StoryCard empty />
+          </TabContent>
+          <TabContent label="Amigos">Meus amigos</TabContent>
+        </Tabs>
+        {/* <Tabs>
+          <TabContent active={activeTab} index="stories">
+            <StoryCard />
+            <StoryCard empty />
+          </TabContent>
+        </Tabs> */}
+      </Container>
+    </Background>
+  )
+}
 
 const Background = styled.div`
   display: flex;
@@ -25,6 +39,12 @@ const Background = styled.div`
   min-height: 100vh;
   color: white;
   justify-content: center;
+`
+
+const TabContent = styled.div`
+  visibility: ${(props) =>
+    props.index === props.active ? 'visible' : 'hidden'};
+  display: flex;
 `
 
 const Container = styled.div`

@@ -3,7 +3,7 @@ import React from 'react'
 import styled from 'styled-components'
 
 interface TabsProps {
-  children?: React.ReactElement[] | string;
+  children?: JSX.Element;
 }
 
 const Tabs: React.FC<TabsProps> = ({ children }: TabsProps) => {
