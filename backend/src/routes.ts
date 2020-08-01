@@ -10,6 +10,7 @@ import StoryDetails from './controllers/storyDetails.controller'
 import StoryWrite from './controllers/storyWrite.controller'
 import UserProfile from './controllers/userProfile.controller'
 import FriendSolicitation from './controllers/friendSolicitation.controller'
+import FriendList from './controllers/friendList.controller'
 
 import { accountSignIn, accountSignUp, accountPasswordReset } from './validators/account.validators'
 import { storyDetailsValidator, storyWriteValidator } from './validators/story.validator'
@@ -49,5 +50,9 @@ routes.get('/add-friend', friendSolicitation.index)
 routes.post('/add-friend/:id', friendSolicitation.create)
 routes.put('/add-friend/:id', friendSolicitation.update)
 routes.delete('/add-friend/:id', friendSolicitation.delete)
+
+const friendList = new FriendList()
+routes.get('/friend-list', friendList.index)
+routes.delete('/friend-list/:id', friendList.delete)
 
 export default routes

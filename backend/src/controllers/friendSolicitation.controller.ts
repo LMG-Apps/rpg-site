@@ -7,6 +7,7 @@ interface User {
   id: number;
   profileImage: string;
   status: string;
+  user2_id: number;
 }
 
 class FriendSolicitation {
@@ -43,24 +44,15 @@ class FriendSolicitation {
       return res.status(400).json({ message })
     }
 
-    const { status } = await knex('FriendList')
-      .where('user1_id', accountId)
-      .where('user2_id', id)
+    const { status }: User = await knex('FriendList')
+      .where(friend => {
+        friend.where('user1_id', accountId).andWhere('user2_id', id)
+      })
+      .orWhere(friend => {
+        friend.where('user1_id', id).andWhere('user2_id', accountId)
+      })
       .select('status')
       .first() || ''
-
-    if (!status) {
-      const { status: alreadyReceiveAnInvite } = await knex('FriendList')
-        .where('user1_id', id)
-        .where('user2_id', accountId)
-        .select('status')
-        .first() || ''
-
-      if (alreadyReceiveAnInvite) {
-        const message = getMessage('friend.status.alreadyReceivedInvite')
-        return res.status(400).json({ message })
-      }
-    }
 
     if (status === 'P') {
       const message = getMessage('friend.status.alreadySent')
@@ -120,10 +112,15 @@ class FriendSolicitation {
     const { accountId, params } = req
     const { id } = params
 
-    await knex('FriendList')
+    const data = await knex('FriendList')
       .where('user1_id', id)
       .where('user2_id', accountId)
       .del()
+
+    if (!data) {
+      const message = getMessage('friend.status.error')
+      return res.status(400).json({ message })
+    }
 
     const message = getMessage('friend.status.refused')
     return res.status(200).json({ message })
