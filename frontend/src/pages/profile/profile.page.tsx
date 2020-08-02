@@ -6,7 +6,7 @@ import UserInfo from './components/user-info.component'
 // import Tabs from './components/tabs.component'
 import Tabs from '../../components/tabs.component'
 import StoryCard from '../dashboard/components/story-card.component'
-import Friends from '../../components/friends.component'
+import Friends from './components/friends.component'
 
 const ProfilePage: React.FC = () => {
   return (

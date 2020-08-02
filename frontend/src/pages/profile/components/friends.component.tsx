@@ -1,7 +1,7 @@
 import React from 'react'
 
-import ProfileBadge from './profile-badge.component'
-import { StyledLink } from '../styles/app-styles'
+import ProfileBadge from '../../../components/profile-badge.component'
+import { StyledLink } from '../../../styles/app-styles'
 
 import styled from 'styled-components'
 
