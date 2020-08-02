@@ -13,7 +13,6 @@ const cookies = new Cookies()
 
 function App () {
   const [width, setWidth] = useState(window.innerWidth)
-  const [height, setHeight] = useState(window.innerHeight)
 
   const [loggedIn, setLoggedIn] = useState(false)
 
@@ -21,7 +20,7 @@ function App () {
     if (cookies.get('token')) {
       setLoggedIn(true)
     }
-  })
+  }, [loggedIn])
 
   useEffect(() => {
     console.log('all cookies', cookies.getAll())
@@ -37,11 +36,7 @@ function App () {
   }, [])
 
   const handleResize = (event) => {
-    console.log('innerwidth: ', event.currentTarget.innerWidth)
-    console.log('innerheight: ', event.currentTarget.innerHeight)
-
     setWidth(event.currentTarget.innerWidth)
-    setHeight(event.currentTarget.innerHeight)
   }
 
   const handleCookies = (info) => {

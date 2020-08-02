@@ -76,7 +76,7 @@ const Header = styled.div`
   display: flex;
   flex-direction: row;
   height: 40px;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid rgb(56, 68, 77);
 `
 
 export default Tabs

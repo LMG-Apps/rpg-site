@@ -6,27 +6,24 @@ import UserInfo from './components/user-info.component'
 // import Tabs from './components/tabs.component'
 import Tabs from '../../components/tabs.component'
 import StoryCard from '../dashboard/components/story-card.component'
+import Friends from '../../components/friends.component'
 
 const ProfilePage: React.FC = () => {
-  const [activeTab, setAcitveTab] = React.useState('stories')
-
   return (
     <Background>
       <Container>
         <UserInfo />
         <Tabs>
           <TabContent label="Histórias">
-            <StoryCard />
-            <StoryCard empty />
+            <Row>
+              <StoryCard />
+              <StoryCard empty />
+            </Row>
           </TabContent>
-          <TabContent label="Amigos">Meus amigos</TabContent>
+          <TabContent label="Amigos">
+            <Friends />
+          </TabContent>
         </Tabs>
-        {/* <Tabs>
-          <TabContent active={activeTab} index="stories">
-            <StoryCard />
-            <StoryCard empty />
-          </TabContent>
-        </Tabs> */}
       </Container>
     </Background>
   )
@@ -39,6 +36,12 @@ const Background = styled.div`
   min-height: 100vh;
   color: white;
   justify-content: center;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 15px;
 `
 
 const TabContent = styled.div`
