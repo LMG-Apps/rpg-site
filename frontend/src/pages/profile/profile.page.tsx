@@ -3,20 +3,31 @@ import React from 'react'
 import styled from 'styled-components'
 
 import UserInfo from './components/user-info.component'
-import Tabs from './components/tabs.component'
+// import Tabs from './components/tabs.component'
+import Tabs from '../../components/tabs.component'
 import StoryCard from '../dashboard/components/story-card.component'
+import Friends from '../../components/friends.component'
 
-const ProfilePage: React.FC = () => (
-  <Background>
-    <Container>
-      <UserInfo />
-      <Tabs>
-        <StoryCard />
-        <StoryCard empty/>
-      </Tabs>
-    </Container>
-  </Background>
-)
+const ProfilePage: React.FC = () => {
+  return (
+    <Background>
+      <Container>
+        <UserInfo />
+        <Tabs>
+          <TabContent label="Histórias">
+            <Row>
+              <StoryCard />
+              <StoryCard empty />
+            </Row>
+          </TabContent>
+          <TabContent label="Amigos">
+            <Friends />
+          </TabContent>
+        </Tabs>
+      </Container>
+    </Background>
+  )
+}
 
 const Background = styled.div`
   display: flex;
@@ -25,6 +36,18 @@ const Background = styled.div`
   min-height: 100vh;
   color: white;
   justify-content: center;
+`
+
+const Row = styled.div`
+  display: flex;
+  flex-flow: row wrap;
+  margin-top: 15px;
+`
+
+const TabContent = styled.div`
+  visibility: ${(props) =>
+    props.index === props.active ? 'visible' : 'hidden'};
+  display: flex;
 `
 
 const Container = styled.div`
