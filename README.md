@@ -7,8 +7,6 @@ Moreover, here you can also connect to other RPG players and share your thoughts
 
 ### Development status (frontend)
 #### Finished
-Login page
-Dashboard page
 #### Under development
 * Login page v1.0.1-alpha
 * Profile page v1.0.1-alpha
