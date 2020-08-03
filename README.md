@@ -9,10 +9,11 @@ Moreover, here you can also connect to other RPG players and share your thoughts
 #### Finished
 Login page
 Dashboard page
-#### Under development 
-Profile page v1.0.1-alpha
-Story creation page v1.0.1-alpha
-Story description page v0.0.1-alpha
+#### Under development
+* Login page v1.0.1-alpha
+* Profile page v1.0.1-alpha
+* Story creation page v1.0.1-alpha
+* Story description page v0.0.1-alpha
 #### Incoming features
 * A page to write a story
 * An online chat
