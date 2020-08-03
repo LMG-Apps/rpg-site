@@ -4,11 +4,10 @@ import styled from 'styled-components'
 
 interface TabProps {
   label: string;
-  activeTab: string | number;
-  onClick(tab: string | number): any;
+  onClick(tab: string | number): void;
 }
 
-const Tab: React.FC<TabProps> = ({ label, activeTab, onClick }: TabProps) => {
+const Tab: React.FC<TabProps> = ({ label, onClick }: TabProps) => {
   const handleOnClick = () => {
     onClick(label)
   }

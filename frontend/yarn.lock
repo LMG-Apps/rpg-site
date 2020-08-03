@@ -7700,9 +7700,9 @@ node-abi@^2.7.0:
     semver "^5.4.1"
 
 node-addon-api@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.0.1.tgz#990544a2607ec3f538443df4858f8c40089b7783"
-  integrity sha512-YUpjl57P55u2yUaKX5Bgy4t5s6SCNYMg+62XNg+k41aYbBL1NgWrZfcgljR5MxDxHDjzl0qHDNtH6SkW4DXNCA==
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/node-addon-api/-/node-addon-api-3.0.0.tgz#812446a1001a54f71663bed188314bba07e09247"
+  integrity sha512-sSHCgWfJ+Lui/u+0msF3oyCgvdkhxDbkCS6Q8uiJquzOimkJBvX6hl5aSSA7DR1XbMpdM8r7phjcF63sF4rkKg==
 
 node-forge@0.9.0:
   version "0.9.0"
@@ -10281,9 +10281,9 @@ signal-exit@^3.0.0, signal-exit@^3.0.2:
   integrity sha1-tf3AjxKH6hF4Yo5BXiUTK3NkbG0=
 
 simple-concat@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/simple-concat/-/simple-concat-1.0.0.tgz#7344cbb8b6e26fb27d66b2fc86f9f6d5997521c6"
-  integrity sha1-c0TLuLbib7J9ZrL8hvn21Zl1IcY=
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/simple-concat/-/simple-concat-1.0.1.tgz#f46976082ba35c2263f1c8ab5edfe26c41c9552f"
+  integrity sha512-cSFtAPtRhljv69IK0hTVZQ+OfE9nePi/rtJmw5UjHeVyVroEqJXP1sFztKUy1qU+xvz3u/sfYJLa947b7nAN2Q==
 
 simple-get@^3.0.3:
   version "3.1.0"

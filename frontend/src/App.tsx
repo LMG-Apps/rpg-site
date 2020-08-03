@@ -1,5 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  Redirect
+} from 'react-router-dom'
 import LoginPage from './pages/login/login.page'
 import Cookies from 'universal-cookie'
 
@@ -8,6 +13,7 @@ import ProfilePage from './pages/profile/profile.page'
 import StoryCreationPage from './pages/story-creation/story-creation.page'
 
 import Header from './components/header.component'
+import StoryDescriptionPage from './pages/story-description/story-description.page'
 
 const cookies = new Cookies()
 
@@ -45,12 +51,12 @@ function App () {
 
   return (
     <Router>
+      <Header width={width} />
       <Switch>
         <Route exact path="/">
           {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
         </Route>
         <Route path="/dashboard">
-          <Header width={width} />
           <Dashboard width={width} />
         </Route>
         <Route path="/user">
@@ -59,6 +65,9 @@ function App () {
         </Route>
         <Route path="/story/create">
           <StoryCreationPage />
+        </Route>
+        <Route path="/story/description">
+          <StoryDescriptionPage />
         </Route>
       </Switch>
     </Router>

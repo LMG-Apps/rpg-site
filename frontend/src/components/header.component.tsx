@@ -44,6 +44,11 @@ const StyledDiv = styled.div`
   color: white;
   padding: 0 30px;
   background-color: rgb(34, 34, 44);
+  transition: 300ms;
+
+  @media (max-width: 600px) {
+    height: 60px;
+  }
 `
 const Title = styled.div`
   display: flex;

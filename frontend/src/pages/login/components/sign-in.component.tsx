@@ -8,18 +8,6 @@ import { signIn } from '../../../helpers/api-methods'
 
 import styled from 'styled-components'
 
-const StyledButton = styled(Button)`
-  font-family: "Grenze Gotisch", cursive;
-  font-size: 24px;
-  text-transform: none;
-  line-height: 17px;
-  color: white;
-  background-color: rgba(255, 85, 85, 1);
-  &:hover {
-    background-color: rgba(255, 85, 85, 0.9);
-  }
-`
-
 export const SignIn: React.FC = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -69,3 +57,15 @@ export const SignIn: React.FC = () => {
     </Grid>
   )
 }
+
+const StyledButton = styled(Button)`
+  font-family: "Grenze Gotisch", cursive;
+  font-size: 24px;
+  text-transform: none;
+  line-height: 17px;
+  color: white;
+  background-color: rgba(255, 85, 85, 1);
+  &:hover {
+    background-color: rgba(255, 85, 85, 0.9);
+  }
+`

@@ -4,6 +4,7 @@ import ProfileBadge from '../../../components/profile-badge.component'
 import { StyledLink } from '../../../styles/app-styles'
 
 import styled from 'styled-components'
+import { Checkbox } from '@material-ui/core'
 
 // Array for testing purposes only
 const namesArray: Array<string> = [
@@ -28,7 +29,8 @@ function friendActions (status?: string) {
     case 'b':
       return <StyledLink underline>Desbloquear</StyledLink>
     default:
-      return <StyledLink underline>Adicionar amigo</StyledLink>
+      // return <StyledLink underline>Adicionar amigo</StyledLink>
+      return <Checkbox style={{ color: 'white' }} />
   }
 }
 
@@ -47,9 +49,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* min-height: 73vh; */
-  /* border-left: 1px solid rgb(56, 68, 77);
-  border-right: 1px solid rgb(56, 68, 77); */
+  width: 100%;
 `
 
 const Box = styled.div`

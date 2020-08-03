@@ -49,14 +49,13 @@ const Card = styled.div`
   width: 220px;
   height: 220px;
 
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgb(34,34,44);
   border-radius: 20px;
   align-items: center;
 
   font-family: "Grenze Gotisch", cursive;
-  color: rgba(225, 225, 225, 1);
+  color: white;
   font-size: 20px;
-  margin: 10px;
   transition: 300ms;
   :hover {
     cursor: pointer;

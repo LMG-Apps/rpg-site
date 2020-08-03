@@ -13,11 +13,19 @@ const ProfilePage: React.FC = () => {
     <Background>
       <Container>
         <UserInfo />
+        <br />
         <Tabs>
           <TabContent label="Histórias">
             <Row>
-              <StoryCard />
-              <StoryCard empty />
+              <Item>
+                <StoryCard />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
             </Row>
           </TabContent>
           <TabContent label="Amigos">
@@ -35,18 +43,29 @@ const Background = styled.div`
   background-color: rgb(22, 20, 26);
   min-height: 100vh;
   color: white;
-  justify-content: center;
+
+  @media (max-width: 600px) {
+    padding-top: 60px;
+  }
 `
 
 const Row = styled.div`
   display: flex;
   flex-flow: row wrap;
   margin-top: 15px;
+
+  @media (max-width: 650px) {
+    justify-content: center;
+  }
+`
+
+const Item = styled.div`
+  display: flex;
+  margin-right: 20px;
+  margin-bottom: 20px;
 `
 
 const TabContent = styled.div`
-  visibility: ${(props) =>
-    props.index === props.active ? 'visible' : 'hidden'};
   display: flex;
 `
 

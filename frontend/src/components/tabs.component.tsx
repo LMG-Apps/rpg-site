@@ -48,7 +48,6 @@ class Tabs extends Component<TabsProps, TabsState> {
 
             return (
               <Tab
-                activeTab={activeTab}
                 key={label}
                 label={label}
                 onClick={onClickTabItem}
