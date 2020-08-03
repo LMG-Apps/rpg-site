@@ -8,15 +8,16 @@ Moreover, here you can also connect to other RPG players and share your thoughts
 ### Development status (frontend)
 #### Finished
 Login page
-#### Under development 
 Dashboard page
+#### Under development 
+Profile page v1.0.1-alpha
+Story creation page v1.0.1-alpha
+Story description page v0.0.1-alpha
 #### Incoming features
-* A description page for the story
-* An editing page for the story
-* A user profile
+* A page to write a story
 * An online chat
 
-Last update: 17-07-2020
+Last update: 03-08-2020
 
 ## Available Scripts
 
