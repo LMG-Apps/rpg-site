@@ -1,25 +1,25 @@
 {
   "files": {
-    "main.css": "/rpgstorytelling.ml/static/css/main.e49d61c3.chunk.css",
-    "main.js": "/rpgstorytelling.ml/static/js/main.4f2c3b82.chunk.js",
-    "main.js.map": "/rpgstorytelling.ml/static/js/main.4f2c3b82.chunk.js.map",
-    "runtime-main.js": "/rpgstorytelling.ml/static/js/runtime-main.5583dea0.js",
-    "runtime-main.js.map": "/rpgstorytelling.ml/static/js/runtime-main.5583dea0.js.map",
-    "static/js/2.d6fa64ab.chunk.js": "/rpgstorytelling.ml/static/js/2.d6fa64ab.chunk.js",
-    "static/js/2.d6fa64ab.chunk.js.map": "/rpgstorytelling.ml/static/js/2.d6fa64ab.chunk.js.map",
-    "index.html": "/rpgstorytelling.ml/index.html",
-    "precache-manifest.038693993d0ec0e940d8ee4b3927f5e0.js": "/rpgstorytelling.ml/precache-manifest.038693993d0ec0e940d8ee4b3927f5e0.js",
-    "service-worker.js": "/rpgstorytelling.ml/service-worker.js",
-    "static/css/main.e49d61c3.chunk.css.map": "/rpgstorytelling.ml/static/css/main.e49d61c3.chunk.css.map",
-    "static/js/2.d6fa64ab.chunk.js.LICENSE.txt": "/rpgstorytelling.ml/static/js/2.d6fa64ab.chunk.js.LICENSE.txt",
-    "static/media/Logo2.png": "/rpgstorytelling.ml/static/media/Logo2.33a29fe5.png",
-    "static/media/campire1.jpeg": "/rpgstorytelling.ml/static/media/campire1.4c25125f.jpeg",
-    "static/media/campire2.jpeg": "/rpgstorytelling.ml/static/media/campire2.85cb1f0d.jpeg"
+    "main.css": "/static/css/main.e49d61c3.chunk.css",
+    "main.js": "/static/js/main.a605c3a9.chunk.js",
+    "main.js.map": "/static/js/main.a605c3a9.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.f770eb2f.js",
+    "runtime-main.js.map": "/static/js/runtime-main.f770eb2f.js.map",
+    "static/js/2.c4e4058e.chunk.js": "/static/js/2.c4e4058e.chunk.js",
+    "static/js/2.c4e4058e.chunk.js.map": "/static/js/2.c4e4058e.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.1821da828f6a95eb30193b80b929dcdb.js": "/precache-manifest.1821da828f6a95eb30193b80b929dcdb.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.e49d61c3.chunk.css.map": "/static/css/main.e49d61c3.chunk.css.map",
+    "static/js/2.c4e4058e.chunk.js.LICENSE.txt": "/static/js/2.c4e4058e.chunk.js.LICENSE.txt",
+    "static/media/Logo2.png": "/static/media/Logo2.33a29fe5.png",
+    "static/media/campire1.jpeg": "/static/media/campire1.4c25125f.jpeg",
+    "static/media/campire2.jpeg": "/static/media/campire2.85cb1f0d.jpeg"
   },
   "entrypoints": [
-    "static/js/runtime-main.5583dea0.js",
-    "static/js/2.d6fa64ab.chunk.js",
+    "static/js/runtime-main.f770eb2f.js",
+    "static/js/2.c4e4058e.chunk.js",
     "static/css/main.e49d61c3.chunk.css",
-    "static/js/main.4f2c3b82.chunk.js"
+    "static/js/main.a605c3a9.chunk.js"
   ]
 }
