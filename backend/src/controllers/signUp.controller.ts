@@ -1,10 +1,7 @@
 import knex from '../database/connection'
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import {
-  generateJwt,
-  generateRefreshJwt,
-} from '../helpers/jwt.helper'
+import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
 import getMessage from '../helpers/message.helper'
 
 const saltRounds = 10
@@ -13,13 +10,9 @@ class SignUpController {
   async store(req: Request, res: Response) {
     const { username, email, password } = req.body
 
-    const emailExists = await knex('Account')
-      .where('email', email)
-      .first()
+    const emailExists = await knex('Account').where('email', email).first()
 
-    const userExists = await knex('Account')
-      .where('username', username)
-      .first()
+    const userExists = await knex('Account').where('username', username).first()
 
     if (userExists) {
       const message = getMessage('account.signup.user_exists')
@@ -52,7 +45,7 @@ class SignUpController {
 
     delete Account.password
 
-    return res.status(200).json({
+    return res.status(201).json({
       message: getMessage('account.signup.success'),
       ...Account,
       token,

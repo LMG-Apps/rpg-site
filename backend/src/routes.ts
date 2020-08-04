@@ -17,6 +17,7 @@ import {
   accountSignUp,
   accountPasswordReset,
 } from './validators/account.validators'
+
 import {
   storyDetailsValidator,
   storyWriteValidator,
@@ -51,7 +52,7 @@ routes.post(
   '/story',
   upload.single('image'),
   storyDetailsValidator,
-  storyDetails.create
+  storyDetails.store
 )
 routes.delete('/story/:id', storyDetails.delete)
 
@@ -64,7 +65,7 @@ routes.get('/user/:username', userProfile.show)
 
 const friendSolicitation = new FriendSolicitation()
 routes.get('/add-friend', friendSolicitation.index)
-routes.post('/add-friend/:id', friendSolicitation.create)
+routes.post('/add-friend/:id', friendSolicitation.store)
 routes.put('/add-friend/:id', friendSolicitation.update)
 routes.delete('/add-friend/:id', friendSolicitation.delete)
 

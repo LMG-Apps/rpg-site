@@ -1,10 +1,7 @@
 import knex from '../database/connection'
 import bcrypt from 'bcrypt'
 import { Request, Response } from 'express'
-import {
-  generateJwt,
-  generateRefreshJwt,
-} from '../helpers/jwt.helper'
+import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
 import getMessage from '../helpers/message.helper'
 
 interface Account {
@@ -18,10 +15,7 @@ class SignInController {
   async index(req: Request, res: Response) {
     const { email, password } = req.body
 
-    const data = await knex('Account')
-      .where('email', email)
-      .distinct()
-      .first()
+    const data = await knex('Account').where('email', email).distinct().first()
 
     const Account: Account = data
 

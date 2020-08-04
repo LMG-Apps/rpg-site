@@ -32,7 +32,7 @@ class FriendSolicitation {
     return res.status(200).json(serializedUsers)
   }
 
-  async create(req: Request, res: Response) {
+  async store(req: Request, res: Response) {
     const { accountId, params } = req
     const { id } = params
 

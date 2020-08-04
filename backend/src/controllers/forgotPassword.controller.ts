@@ -71,7 +71,7 @@ class ForgotPassword {
         return res.status(500).json({ message: err })
       }
       const message = getMessage('account.reset.email.sent')
-      return res.status(200).json({ message })
+      return res.status(201).json({ message })
     })
   }
 
@@ -85,10 +85,7 @@ class ForgotPassword {
       .where('resetPasswordToken', token)
       .first()
 
-    if (
-      !account ||
-      account.resetPasswordExpires * 1000 < Date.now()
-    ) {
+    if (!account || account.resetPasswordExpires * 1000 < Date.now()) {
       const message = getMessage('account.reset.token.invalid')
       await trx('Account')
         .update('resetPasswordToken', knex.raw('DEFAULT'))

@@ -15,10 +15,7 @@ interface Story {
 class StoryDetails {
   async index(req: Request, res: Response) {
     const { accountId } = req
-    const stories: Story[] = await knex('Story').where(
-      'accountId',
-      accountId
-    )
+    const stories: Story[] = await knex('Story').where('accountId', accountId)
 
     const serializedStories = stories.map((story) => {
       return {
@@ -32,7 +29,7 @@ class StoryDetails {
     return res.status(200).json(serializedStories)
   }
 
-  async create(req: Request, res: Response) {
+  async store(req: Request, res: Response) {
     const { accountId, body } = req
     const { name, description, isPublic } = body
 
@@ -56,7 +53,7 @@ class StoryDetails {
     await trx.commit()
 
     const message = getMessage('story.created')
-    return res.status(200).json({ ...story, message })
+    return res.status(201).json({ ...story, message })
   }
 
   async show(req: Request, res: Response) {
