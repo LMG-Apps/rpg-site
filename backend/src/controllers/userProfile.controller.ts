@@ -4,21 +4,21 @@ import getMessage from '../helpers/message.helper'
 import removeImage from '../helpers/removeImage.helper'
 
 interface User {
-  id: number;
-  username: string;
-  profileImage: string;
-  password: string;
-  biography: string;
-  email: string;
+  id: number
+  username: string
+  profileImage: string
+  password: string
+  biography: string
+  email: string
 }
 
 interface Story {
-  name: string;
-  image: string;
+  name: string
+  image: string
 }
 
 class UserProfile {
-  async show (req: Request, res: Response) {
+  async show(req: Request, res: Response) {
     const { username } = req.params
 
     const user: User = await knex('Account')
@@ -34,10 +34,12 @@ class UserProfile {
       .select('id', 'name', 'image')
       .where('isPublic', true)
 
-    const stories = storiesData.map(story => {
+    const stories = storiesData.map((story) => {
       return {
         ...story,
-        story_image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
+        story_image_url: story.image
+          ? `http://127.0.0.1:3333/tmp/${story.image}`
+          : null,
       }
     })
 
@@ -45,18 +47,20 @@ class UserProfile {
 
     const serializedUser = {
       ...user,
-      user_image_url: user.profileImage ? `http://127.0.0.1:3333/tmp/${user.profileImage}` : null
+      user_image_url: user.profileImage
+        ? `http://127.0.0.1:3333/tmp/${user.profileImage}`
+        : null,
     }
 
     const serializedStories = {
       serializedUser,
-      stories
+      stories,
     }
 
     return res.status(200).json(serializedStories)
   }
 
-  async update (req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { username } = req.params
     const { accountId } = req
     const { biography } = req.body

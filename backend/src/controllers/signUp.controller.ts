@@ -1,18 +1,17 @@
 import knex from '../database/connection'
 import { Request, Response } from 'express'
 import bcrypt from 'bcrypt'
-import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
+import {
+  generateJwt,
+  generateRefreshJwt,
+} from '../helpers/jwt.helper'
 import getMessage from '../helpers/message.helper'
 
 const saltRounds = 10
 
 class SignUpController {
-  async store (req: Request, res: Response) {
-    const {
-      username,
-      email,
-      password
-    } = req.body
+  async store(req: Request, res: Response) {
+    const { username, email, password } = req.body
 
     const emailExists = await knex('Account')
       .where('email', email)
@@ -39,7 +38,7 @@ class SignUpController {
     const Account = {
       username,
       email,
-      password: hash
+      password: hash,
     }
 
     const insertedIds = await trx('Account').insert(Account)
@@ -57,7 +56,7 @@ class SignUpController {
       message: getMessage('account.signup.success'),
       ...Account,
       token,
-      refreshToken
+      refreshToken,
     })
   }
 }

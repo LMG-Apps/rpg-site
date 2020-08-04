@@ -1,15 +1,19 @@
 import { Request, Response } from 'express'
 import knex from '../database/connection'
 import getMessage from '../helpers/message.helper'
-import { getTokenFromHeaders, generateJwt, verifyRefreshJwt } from '../helpers/jwt.helper'
+import {
+  getTokenFromHeaders,
+  generateJwt,
+  verifyRefreshJwt,
+} from '../helpers/jwt.helper'
 
 interface Account {
-    id: number;
-    username: string;
+  id: number
+  username: string
 }
 
 class RefreshToken {
-  async index (req: Request, res: Response) {
+  async index(req: Request, res: Response) {
     const token = getTokenFromHeaders(req.headers)
 
     const messageInvalidToken = getMessage('account.token.invalid')
@@ -33,10 +37,12 @@ class RefreshToken {
       }
 
       const metadata = {
-        token: generateJwt({ id: account.id })
+        token: generateJwt({ id: account.id }),
       }
 
-      return res.status(200).json({ message: messageSuccessful, metadata })
+      return res
+        .status(200)
+        .json({ message: messageSuccessful, metadata })
     } catch (e) {
       return res.status(401).json({ message: messageInvalidToken })
     }

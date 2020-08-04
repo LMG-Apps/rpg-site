@@ -1,7 +1,7 @@
 import * as messages from '../config/messages.config.json'
 
 interface Message {
-    [key: string]: string;
+  [key: string]: string
 }
 
 const message: Message = messages

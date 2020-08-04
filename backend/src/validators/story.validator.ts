@@ -3,23 +3,23 @@ import { Request, Response, NextFunction } from 'express'
 import getValidatorError from '../helpers/validators.helper'
 
 const rules = {
-  name: Joi.string()
-    .required()
-    .max(100),
-  description: Joi.string()
-    .max(200),
-  text: Joi.string()
-    .max(16777215)
+  name: Joi.string().required().max(100),
+  description: Joi.string().max(200),
+  text: Joi.string().max(16777215),
 }
 
 const options = { abortEarly: false }
 
-export const storyDetailsValidator = (req: Request, res: Response, next: NextFunction) => {
+export const storyDetailsValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { name, description } = req.body
 
   const schema = Joi.object({
     name: rules.name,
-    description: rules.description
+    description: rules.description,
   })
 
   const { error } = schema.validate({ name, description }, options)
@@ -33,11 +33,15 @@ export const storyDetailsValidator = (req: Request, res: Response, next: NextFun
   next()
 }
 
-export const storyWriteValidator = (req: Request, res: Response, next: NextFunction) => {
+export const storyWriteValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { text } = req.body
 
   const schema = Joi.object({
-    text: rules.text
+    text: rules.text,
   })
 
   const { error } = schema.validate({ text }, options)

@@ -3,34 +3,33 @@ import { Request, Response, NextFunction } from 'express'
 import getValidatorError from '../helpers/validators.helper'
 
 const rules = {
-  username: Joi
-    .string()
-    .alphanum()
-    .min(5)
-    .max(15)
+  username: Joi.string().alphanum().min(5).max(15).required(),
+  email: Joi.string()
+    .email({
+      minDomainSegments: 2,
+      tlds: { allow: ['com', 'net', 'br'] },
+    })
     .required(),
-  email: Joi
-    .string()
-    .email({ minDomainSegments: 2, tlds: { allow: ['com', 'net', 'br'] } })
-    .required(),
-  password: Joi
-    .string()
+  password: Joi.string()
     .pattern(new RegExp('^[a-zA-Z0-9]{6,30}$'))
     .required(),
-  passwordConfirmation: Joi
-    .string()
+  passwordConfirmation: Joi.string()
     .valid(Joi.ref('password'))
-    .required()
+    .required(),
 }
 
 const options = { abortEarly: false }
 
-export const accountSignIn = (req: Request, res: Response, next: NextFunction) => {
+export const accountSignIn = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { email, password } = req.body
 
   const schema = Joi.object({
     email: rules.email,
-    password: rules.password
+    password: rules.password,
   })
 
   const { error } = schema.validate({ email, password }, options)
@@ -44,17 +43,24 @@ export const accountSignIn = (req: Request, res: Response, next: NextFunction) =
   next()
 }
 
-export const accountSignUp = (req: Request, res: Response, next: NextFunction) => {
+export const accountSignUp = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { username, email, password, passwordConfirmation } = req.body
 
   const schema = Joi.object({
     username: rules.username,
     email: rules.email,
     password: rules.password,
-    passwordConfirmation: rules.passwordConfirmation
+    passwordConfirmation: rules.passwordConfirmation,
   })
 
-  const { error } = schema.validate({ username, email, password, passwordConfirmation }, options)
+  const { error } = schema.validate(
+    { username, email, password, passwordConfirmation },
+    options
+  )
   if (error) {
     const messages = getValidatorError(error, 'account.signup')
 
@@ -64,15 +70,22 @@ export const accountSignUp = (req: Request, res: Response, next: NextFunction) =
   next()
 }
 
-export const accountPasswordReset = (req: Request, res: Response, next: NextFunction) => {
+export const accountPasswordReset = (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   const { password, passwordConfirmation } = req.body
 
   const schema = Joi.object({
     password: rules.password,
-    passwordConfirmation: rules.passwordConfirmation
+    passwordConfirmation: rules.passwordConfirmation,
   })
 
-  const { error } = schema.validate({ password, passwordConfirmation }, options)
+  const { error } = schema.validate(
+    { password, passwordConfirmation },
+    options
+  )
   if (error) {
     const messages = getValidatorError(error, 'account.signup')
 

@@ -3,15 +3,15 @@ import { Request, Response } from 'express'
 import getMessage from '../helpers/message.helper'
 
 interface User {
-  username: string;
-  id: number;
-  profileImage: string;
-  status: string;
-  user2_id: number;
+  username: string
+  id: number
+  profileImage: string
+  status: string
+  user2_id: number
 }
 
 class FriendSolicitation {
-  async index (req: Request, res: Response) {
+  async index(req: Request, res: Response) {
     const { accountId } = req
 
     const solicitations: User[] = await knex('FriendList')
@@ -20,17 +20,19 @@ class FriendSolicitation {
       .join('Account', 'Account.id', 'FriendList.user1_id')
       .select('Account.id', 'username', 'profileImage')
 
-    const serializedUsers = solicitations.map(user => {
+    const serializedUsers = solicitations.map((user) => {
       return {
         ...user,
-        profileImage: user.profileImage ? `http://127.0.0.1:3333/tmp/${user.profileImage}` : null
+        profileImage: user.profileImage
+          ? `http://127.0.0.1:3333/tmp/${user.profileImage}`
+          : null,
       }
     })
 
     return res.status(200).json(serializedUsers)
   }
 
-  async create (req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     const { accountId, params } = req
     const { id } = params
 
@@ -44,15 +46,16 @@ class FriendSolicitation {
       return res.status(400).json({ message })
     }
 
-    const { status }: User = await knex('FriendList')
-      .where(friend => {
-        friend.where('user1_id', accountId).andWhere('user2_id', id)
-      })
-      .orWhere(friend => {
-        friend.where('user1_id', id).andWhere('user2_id', accountId)
-      })
-      .select('status')
-      .first() || ''
+    const { status }: User =
+      (await knex('FriendList')
+        .where((friend) => {
+          friend.where('user1_id', accountId).andWhere('user2_id', id)
+        })
+        .orWhere((friend) => {
+          friend.where('user1_id', id).andWhere('user2_id', accountId)
+        })
+        .select('status')
+        .first()) || ''
 
     if (status === 'P') {
       const message = getMessage('friend.status.alreadySent')
@@ -67,7 +70,7 @@ class FriendSolicitation {
     const newFriends = {
       user1_id: accountId,
       user2_id: id,
-      status: 'P'
+      status: 'P',
     }
 
     const trx = await knex.transaction()
@@ -77,10 +80,10 @@ class FriendSolicitation {
     await trx.commit()
 
     const message = getMessage('friend.status.sent')
-    return res.status(200).json({ message })
+    return res.status(201).json({ message })
   }
 
-  async update (req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { accountId, params } = req
     const { id } = params
 
@@ -108,7 +111,7 @@ class FriendSolicitation {
     return res.status(200).json({ message })
   }
 
-  async delete (req: Request, res: Response) {
+  async delete(req: Request, res: Response) {
     const { accountId, params } = req
     const { id } = params
 

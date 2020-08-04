@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import getMessage from '../helpers/message.helper'
 
 class StoryWrite {
-  async update (req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
     const { text } = req.body

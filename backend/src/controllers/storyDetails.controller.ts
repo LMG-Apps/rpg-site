@@ -4,31 +4,35 @@ import getMessage from '../helpers/message.helper'
 import removeImage from '../helpers/removeImage.helper'
 
 interface Story {
-  name: string;
-  accountId: number;
-  description: string;
-  text: string;
-  image: string;
-  isPublic: boolean;
+  name: string
+  accountId: number
+  description: string
+  text: string
+  image: string
+  isPublic: boolean
 }
 
 class StoryDetails {
-  async index (req: Request, res: Response) {
+  async index(req: Request, res: Response) {
     const { accountId } = req
-    const stories: Story[] = await knex('Story')
-      .where('accountId', accountId)
+    const stories: Story[] = await knex('Story').where(
+      'accountId',
+      accountId
+    )
 
-    const serializedStories = stories.map(story => {
+    const serializedStories = stories.map((story) => {
       return {
         ...story,
-        image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
+        image_url: story.image
+          ? `http://127.0.0.1:3333/tmp/${story.image}`
+          : null,
       }
     })
 
     return res.status(200).json(serializedStories)
   }
 
-  async create (req: Request, res: Response) {
+  async create(req: Request, res: Response) {
     const { accountId, body } = req
     const { name, description, isPublic } = body
 
@@ -37,7 +41,7 @@ class StoryDetails {
       description,
       image: req.file ? req.file.filename : null,
       accountId,
-      isPublic
+      isPublic,
     }
 
     if (!name.trim()) {
@@ -55,7 +59,7 @@ class StoryDetails {
     return res.status(200).json({ ...story, message })
   }
 
-  async show (req: Request, res: Response) {
+  async show(req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
 
@@ -71,13 +75,15 @@ class StoryDetails {
 
     const serializedStories = {
       ...story,
-      image_url: story.image ? `http://127.0.0.1:3333/tmp/${story.image}` : null
+      image_url: story.image
+        ? `http://127.0.0.1:3333/tmp/${story.image}`
+        : null,
     }
 
     return res.status(200).json(serializedStories)
   }
 
-  async update (req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
     const { name, description, isPublic } = req.body
@@ -116,11 +122,11 @@ class StoryDetails {
     return res.status(200).json({ message })
   }
 
-  async delete (req: Request, res: Response) {
+  async delete(req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
 
-    const { image }: { image: string} = await knex('Story')
+    const { image }: { image: string } = await knex('Story')
       .where('accountId', accountId)
       .where('id', id)
       .first()
