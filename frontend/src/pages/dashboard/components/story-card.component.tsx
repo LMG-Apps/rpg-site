@@ -10,13 +10,13 @@ import { StyledLink } from '../../../styles/app-styles'
 import { NavLink } from 'react-router-dom'
 
 interface StoryCardProps {
-  empty?: boolean;
-  image?: string;
+  empty?: boolean
+  image?: string
 }
 
 const StoryCard: React.FC<StoryCardProps> = ({
   empty,
-  image
+  image,
 }: StoryCardProps) => (
   <>
     {empty ? (
@@ -49,11 +49,11 @@ const Card = styled.div`
   width: 220px;
   height: 220px;
 
-  background-color: rgb(34,34,44);
+  background-color: rgb(34, 34, 44);
   border-radius: 20px;
   align-items: center;
 
-  font-family: "Grenze Gotisch", cursive;
+  font-family: 'Grenze Gotisch', cursive;
   color: white;
   font-size: 20px;
   transition: 300ms;

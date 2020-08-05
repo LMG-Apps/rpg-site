@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-  Redirect
-} from 'react-router-dom'
+import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import LoginPage from './pages/login/login.page'
 import Cookies from 'universal-cookie'
 
@@ -14,10 +9,11 @@ import StoryCreationPage from './pages/story-creation/story-creation.page'
 
 import Header from './components/header.component'
 import StoryDescriptionPage from './pages/story-description/story-description.page'
+import { Button } from '@material-ui/core'
 
 const cookies = new Cookies()
 
-function App () {
+function App() {
   const [width, setWidth] = useState(window.innerWidth)
 
   const [loggedIn, setLoggedIn] = useState(false)
@@ -29,6 +25,10 @@ function App () {
   }, [loggedIn])
 
   useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
+  useEffect(() => {
     console.log('all cookies', cookies.getAll())
 
     cookies.addChangeListener(handleCookies)
@@ -36,7 +36,7 @@ function App () {
     window.addEventListener('resize', handleResize)
 
     // Specify how to clean up after this effect:
-    return function cleanup () {
+    return function cleanup() {
       window.removeEventListener('resize', handleResize)
     }
   }, [])
@@ -51,22 +51,34 @@ function App () {
 
   return (
     <Router>
-      <Header width={width} />
       <Switch>
         <Route exact path="/">
           {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
         </Route>
         <Route path="/dashboard">
+          <Header width={width} />
           <Dashboard width={width} />
         </Route>
         <Route path="/user">
           <Header width={width} />
           <ProfilePage />
+          <Button
+            onClick={() =>
+              cookies.remove('token', {
+                path: '/',
+                domain: 'http://localhost:3000',
+              })
+            }
+          >
+            Logout
+          </Button>
         </Route>
         <Route path="/story/create">
+          <Header width={width} />
           <StoryCreationPage />
         </Route>
         <Route path="/story/description">
+          <Header width={width} />
           <StoryDescriptionPage />
         </Route>
       </Switch>
