@@ -31,7 +31,7 @@ class StoryDetails {
 
   async store(req: Request, res: Response) {
     const { accountId, body } = req
-    const { name, description, isPublic } = body
+    const { name, description, isPublic, friends } = body
 
     const story = {
       name,
@@ -48,12 +48,35 @@ class StoryDetails {
 
     const trx = await knex.transaction()
 
-    await trx('Story').insert(story)
+    try {
+      const insertedStoryIds = await trx('Story').insert(story)
 
-    await trx.commit()
+      const story_id = insertedStoryIds[0]
 
-    const message = getMessage('story.created')
-    return res.status(201).json({ ...story, message })
+      const storyFriends = friends
+        .split(',')
+        .map((friend: string) => Number(friend.trim()))
+        .map((friend_id: Number) => {
+          return {
+            friend_id,
+            story_id,
+          }
+        })
+
+      await trx('Story_friends').insert(storyFriends)
+
+      await trx.commit()
+
+      const message = getMessage('story.created')
+      return res.status(201).json({ ...story, message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 
   async show(req: Request, res: Response) {
@@ -103,20 +126,29 @@ class StoryDetails {
 
     const trx = await knex.transaction()
 
-    await trx('Story')
-      .where('accountId', accountId)
-      .where('id', id)
-      .update('name', name)
-      .update('description', description)
-      .update('image', image || knex.raw('DEFAULT'))
-      .update('isPublic', isPublic)
+    try {
+      await trx('Story')
+        .where('accountId', accountId)
+        .where('id', id)
+        .update('name', name)
+        .update('description', description)
+        .update('image', image || knex.raw('DEFAULT'))
+        .update('isPublic', isPublic)
 
-    await trx.commit()
+      await trx.commit()
 
-    removeImage(story.image)
+      removeImage(story.image)
 
-    const message = getMessage('story.updated')
-    return res.status(200).json({ message })
+      const message = getMessage('story.updated')
+      return res.status(200).json({ message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 
   async delete(req: Request, res: Response) {

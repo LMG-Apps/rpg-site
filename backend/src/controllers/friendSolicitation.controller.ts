@@ -75,12 +75,21 @@ class FriendSolicitation {
 
     const trx = await knex.transaction()
 
-    await trx('FriendList').insert(newFriends)
+    try {
+      await trx('FriendList').insert(newFriends)
 
-    await trx.commit()
+      await trx.commit()
 
-    const message = getMessage('friend.status.sent')
-    return res.status(201).json({ message })
+      const message = getMessage('friend.status.sent')
+      return res.status(201).json({ message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 
   async update(req: Request, res: Response) {
@@ -100,15 +109,24 @@ class FriendSolicitation {
 
     const trx = await knex.transaction()
 
-    await trx('FriendList')
-      .where('user1_id', id)
-      .where('user2_id', accountId)
-      .update('status', 'A')
+    try {
+      await trx('FriendList')
+        .where('user1_id', id)
+        .where('user2_id', accountId)
+        .update('status', 'A')
 
-    trx.commit()
+      trx.commit()
 
-    const message = getMessage('friend.status.accepted')
-    return res.status(200).json({ message })
+      const message = getMessage('friend.status.accepted')
+      return res.status(200).json({ message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 
   async delete(req: Request, res: Response) {
