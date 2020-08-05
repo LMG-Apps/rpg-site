@@ -7,20 +7,12 @@ import getMessage from '../helpers/message.helper'
 const saltRounds = 10
 
 class SignUpController {
-  async store (req: Request, res: Response) {
-    const {
-      username,
-      email,
-      password
-    } = req.body
+  async store(req: Request, res: Response) {
+    const { username, email, password } = req.body
 
-    const emailExists = await knex('Account')
-      .where('email', email)
-      .first()
+    const emailExists = await knex('Account').where('email', email).first()
 
-    const userExists = await knex('Account')
-      .where('username', username)
-      .first()
+    const userExists = await knex('Account').where('username', username).first()
 
     if (userExists) {
       const message = getMessage('account.signup.user_exists')
@@ -32,33 +24,42 @@ class SignUpController {
       return res.status(400).json({ message })
     }
 
-    const trx = await knex.transaction()
-
     const hash = bcrypt.hashSync(password, saltRounds)
 
     const Account = {
       username,
       email,
-      password: hash
+      password: hash,
     }
 
-    const insertedIds = await trx('Account').insert(Account)
+    const trx = await knex.transaction()
 
-    const AccountId = insertedIds[0]
+    try {
+      const insertedIds = await trx('Account').insert(Account)
 
-    const token = generateJwt({ id: AccountId })
-    const refreshToken = generateRefreshJwt({ id: AccountId })
+      const AccountId = insertedIds[0]
 
-    await trx.commit()
+      const token = generateJwt({ id: AccountId })
+      const refreshToken = generateRefreshJwt({ id: AccountId })
 
-    delete Account.password
+      await trx.commit()
 
-    return res.status(200).json({
-      message: getMessage('account.signup.success'),
-      ...Account,
-      token,
-      refreshToken
-    })
+      delete Account.password
+
+      return res.status(201).json({
+        message: getMessage('account.signup.success'),
+        ...Account,
+        token,
+        refreshToken,
+      })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 }
 

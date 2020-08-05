@@ -12,22 +12,23 @@ import path from 'path'
 
 require('dotenv').config()
 
-const template = fs.readFileSync(path.resolve(__dirname, '..', 'views', 'emailTemplate.hjs'), 'utf-8')
+const template = fs.readFileSync(
+  path.resolve(__dirname, '..', 'views', 'emailTemplate.hjs'),
+  'utf-8'
+)
 const compiledTemplate = hogan.compile(template)
 
 const saltRounds = 10
 
 class ForgotPassword {
-  async store (req: Request, res: Response) {
+  async store(req: Request, res: Response) {
     const { email } = req.body
     if (!email || !email.trim()) {
       const message = getMessage('account.reset.email.string.empty')
       return res.status(400).json({ message })
     }
 
-    const user = await knex('Account')
-      .where('email', email)
-      .first()
+    const user = await knex('Account').where('email', email).first()
 
     if (!user) {
       const message = getMessage('account.reset.email.invalid')
@@ -40,38 +41,50 @@ class ForgotPassword {
 
     const trx = await knex.transaction()
 
-    await trx('Account')
-      .where('email', email)
-      .update('resetPasswordToken', token)
-      .update('resetPasswordExpires', expireTime)
+    try {
+      await trx('Account')
+        .where('email', email)
+        .update('resetPasswordToken', token)
+        .update('resetPasswordExpires', expireTime)
 
-    trx.commit()
+      trx.commit()
 
-    const smtpTransport = nodemailer.createTransport({
-      service: 'Gmail',
-      auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASS
+      const smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.EMAIL_PASS,
+        },
+      } as SMTPTransport.Options)
+
+      const mailOptions = {
+        to: email,
+        from: process.env.EMAIL,
+        subject: 'RPG - Password Reset',
+        html: compiledTemplate.render({
+          token,
+          user: user.username,
+        }),
       }
-    } as SMTPTransport.Options)
 
-    const mailOptions = {
-      to: email,
-      from: process.env.EMAIL,
-      subject: 'RPG - Password Reset',
-      html: compiledTemplate.render({ token, user: user.username })
+      smtpTransport.sendMail(mailOptions, (err) => {
+        if (err) {
+          return res.status(500).json({ message: err })
+        }
+        const message = getMessage('account.reset.email.sent')
+        return res.status(201).json({ message })
+      })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
     }
-
-    smtpTransport.sendMail(mailOptions, err => {
-      if (err) {
-        return res.status(500).json({ message: err })
-      }
-      const message = getMessage('account.reset.email.sent')
-      return res.status(200).json({ message })
-    })
   }
 
-  async update (req: Request, res: Response) {
+  async update(req: Request, res: Response) {
     const { token }: { token?: string } = req.query
     const { password } = req.body
 
@@ -83,24 +96,44 @@ class ForgotPassword {
 
     if (!account || account.resetPasswordExpires * 1000 < Date.now()) {
       const message = getMessage('account.reset.token.invalid')
-      await trx('Account')
-        .update('resetPasswordToken', knex.raw('DEFAULT'))
-        .update('resetPasswordExpires', knex.raw('DEFAULT'))
-        .where('id', account.id)
-      return res.status(401).json({ message })
+      try {
+        await trx('Account')
+          .update('resetPasswordToken', knex.raw('DEFAULT'))
+          .update('resetPasswordExpires', knex.raw('DEFAULT'))
+          .where('id', account.id)
+        return res.status(401).json({ message })
+      } catch (err) {
+        await trx.rollback()
+
+        const message = getMessage('unexpected.error')
+        return res.status(400).json({
+          message,
+        })
+      }
     }
 
     const hash = bcrypt.hashSync(password, saltRounds)
 
-    await trx('Account')
-      .update('password', hash)
-      .update('resetPasswordToken', knex.raw('DEFAULT'))
-      .update('resetPasswordExpires', knex.raw('DEFAULT'))
-      .where('id', account.id)
+    try {
+      await trx('Account')
+        .update('password', hash)
+        .update('resetPasswordToken', knex.raw('DEFAULT'))
+        .update('resetPasswordExpires', knex.raw('DEFAULT'))
+        .where('id', account.id)
 
-    trx.commit()
+      trx.commit()
 
-    return res.status(200).json({ message: getMessage('account.reset.success') })
+      return res.status(200).json({
+        message: getMessage('account.reset.success'),
+      })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 }
 

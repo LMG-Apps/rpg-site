@@ -4,20 +4,21 @@ import { IncomingHttpHeaders } from 'http'
 require('dotenv').config()
 
 export interface Session extends SignOptions {
-  id: number;
-  iat?: string;
-  exp?: string;
+  id: number
+  iat?: string
+  exp?: string
 }
 
 const tokenPrivateKey: string = process.env.JWT_TOKEN_PRIVATE_KEY!
-const refreshTokenPrivateKey: string = process.env.JWT_REFRESH_TOKEN_PRIVATE_KEY!
+const refreshTokenPrivateKey: string = process.env
+  .JWT_REFRESH_TOKEN_PRIVATE_KEY!
 
 const options = {
-  expiresIn: '30 minutes'
+  expiresIn: '30 minutes',
 }
 
 const refreshOptions = {
-  expiresIn: '30 days'
+  expiresIn: '30 days',
 }
 
 export const generateJwt = (payload: Session) => {

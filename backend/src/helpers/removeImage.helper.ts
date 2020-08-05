@@ -5,7 +5,7 @@ const tmpPath = path.resolve(__dirname, '..', '..', 'tmp')
 
 const removeImage = (image: string) => {
   if (image) {
-    fs.unlink(path.resolve(tmpPath, `${image}`), err => {
+    fs.unlink(path.resolve(tmpPath, `${image}`), (err) => {
       if (err) console.log(err)
     })
   }

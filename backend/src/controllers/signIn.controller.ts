@@ -5,31 +5,32 @@ import { generateJwt, generateRefreshJwt } from '../helpers/jwt.helper'
 import getMessage from '../helpers/message.helper'
 
 interface Account {
-    id: number;
-    email: string;
-    username: string;
-    password: string;
+  id: number
+  email: string
+  username: string
+  password: string
 }
 
 class SignInController {
-  async index (req: Request, res: Response) {
+  async index(req: Request, res: Response) {
     const { email, password } = req.body
 
-    const data = await knex('Account')
-      .where('email', email)
-      .distinct()
-      .first()
+    const data = await knex('Account').where('email', email).distinct().first()
 
     const Account: Account = data
 
-    const match = Account ? bcrypt.compareSync(password, Account.password) : null
+    const match = Account
+      ? bcrypt.compareSync(password, Account.password)
+      : null
     if (!match) {
       const message = getMessage('account.signin.invalid')
       return res.status(400).json({ message })
     }
 
     const token = generateJwt({ id: Account.id })
-    const refreshToken = generateRefreshJwt({ id: Account.id })
+    const refreshToken = generateRefreshJwt({
+      id: Account.id,
+    })
 
     delete Account.password
 
@@ -37,7 +38,7 @@ class SignInController {
       message: getMessage('account.signin.success'),
       ...Account,
       token,
-      refreshToken
+      refreshToken,
     })
   }
 }

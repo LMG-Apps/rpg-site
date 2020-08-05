@@ -1,13 +1,11 @@
 import Knex from 'knex'
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable('FriendList', (table) => {
+  return knex.schema.createTable('Story_friends', (table) => {
     table.increments('id').unsigned().primary()
 
-    table.string('status', 1).notNullable()
-
     table
-      .integer('user1_id')
+      .integer('friend_id')
       .notNullable()
       .unsigned()
       .references('id')
@@ -16,16 +14,16 @@ export async function up(knex: Knex) {
       .onUpdate('CASCADE')
 
     table
-      .integer('user2_id')
+      .integer('story_id')
       .notNullable()
       .unsigned()
       .references('id')
-      .inTable('Account')
+      .inTable('Story')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
   })
 }
 
 export async function down(knex: Knex) {
-  return knex.schema.dropTable('FriendList')
+  return knex.schema.dropTable('Story_friends')
 }
