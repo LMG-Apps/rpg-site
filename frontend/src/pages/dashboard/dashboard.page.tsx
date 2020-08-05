@@ -9,7 +9,7 @@ import FriendList from './components/friend-list.component'
 
 import styled from 'styled-components'
 
-class Dashboard extends React.Component<{width: number}, {}> {
+class Dashboard extends React.Component<{ width: number }, {}> {
   constructor (props) {
     super(props)
 
@@ -21,23 +21,36 @@ class Dashboard extends React.Component<{width: number}, {}> {
 
     return (
       <Background>
-        {/* <Header width={width} /> */}
         <Container>
           <h2>Minhas historias</h2>
           <OuterRow>
             <Row>
-              <StoryCard image={campfire} />
-              <StoryCard image={campfire2} />
-              <StoryCard empty />
-              <StoryCard empty />
-              <StoryCard empty />
-              <StoryCard empty />
-              <StoryCard empty />
-              <StoryCard empty />
+              <Item>
+                <StoryCard image={campfire} />
+              </Item>
+              <Item>
+                <StoryCard image={campfire2} />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
+              <Item>
+                <StoryCard empty />
+              </Item>
             </Row>
-            {width > 730 ? (
-              <FriendList />
-            ) : null}
+            {width > 738 ? <FriendList /> : null}
           </OuterRow>
         </Container>
       </Background>
@@ -46,35 +59,53 @@ class Dashboard extends React.Component<{width: number}, {}> {
 }
 
 const Background = styled.div`
+  display: flex;
   padding-top: 80px;
   background-color: rgb(22, 20, 26);
   min-height: 100vh;
   color: white;
   overflow: hidden;
-  /* @media (max-width: 768px) {
+
+  @media (max-width: 600px) {
     padding-top: 60px;
-  } */
+  }
 `
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 30px;
+  padding: 20px 30px;
+
+  @media (max-width: 738px) {
+    padding: 20px 20px; 
+    align-items: center;
+  }
 `
 
 const Row = styled.div`
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
+  padding-top: 20px;
 
-  @media (max-width: 730px) {
+  @media (max-width: 738px) {
     justify-content: center;
   }
 `
+
+const Item = styled.div`
+  display: flex;
+  margin-right: 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 480px) {
+    margin-right: 0;
+  }
+`
 const OuterRow = styled.div`
-display: flex;
-flex-flow: row nowrap;
-justify-content: flex-start;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-start;
 `
 
 export default Dashboard

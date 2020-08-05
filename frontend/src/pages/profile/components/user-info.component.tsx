@@ -26,7 +26,6 @@ const Row = styled.div`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  /* background-color: red; */
 `
 
 const Avatar = styled.div`

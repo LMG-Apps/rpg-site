@@ -1,6 +1,6 @@
 {
   "name": "rpg-site",
-  "homepage": "https://malivuca.github.io/rpg-site",
+  "homepage": "rpgstorytelling.ml",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -18,7 +18,6 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
-    "sharp": "^0.25.4",
     "styled-components": "^5.1.1",
     "typescript": "~3.7.2",
     "universal-cookie": "^4.0.3"
@@ -58,6 +57,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "gh-pages": "^3.1.0",
     "prettier": "^2.0.5",
+    "sharp": "^0.25.4",
     "ts-node": "^8.10.2"
   }
 }

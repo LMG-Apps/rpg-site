@@ -1,6 +1,5 @@
 import React from 'react'
 
-import Grid from '@material-ui/core/Grid'
 import Badge from '@material-ui/core/Badge'
 import Avatar from '@material-ui/core/Avatar'
 
@@ -14,6 +13,40 @@ interface ProfileBadgeProps {
   id?: number;
 }
 
+const ProfileBadge: React.FC<ProfileBadgeProps> = ({
+  name,
+  size,
+  id
+}: ProfileBadgeProps) => (
+  <Container>
+    <StyledLink underline to="/user">
+      <Name>{size === 'small' ? null : <h4>{name}</h4>}</Name>
+    </StyledLink>
+    <StyledLink to="/user">
+      <Badge
+        overlap="circle"
+        // anchorOrigin={{
+        //   vertical: 'top',
+        //   horizontal: 'right'
+        // }}
+        color="primary"
+        variant="dot"
+      >
+        <StyledAvatar alt="profile-pic">{name && name[0]}</StyledAvatar>
+      </Badge>
+    </StyledLink>
+  </Container>
+)
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`
+
+const Name = styled.div`
+  display: flex;
+  margin-left: 8px;
+`
 const StyledAvatar = styled(Avatar)`
   background-color: rgba(247, 157, 32, 1);
 
@@ -22,32 +55,5 @@ const StyledAvatar = styled(Avatar)`
     cursor: pointer;
   }
 `
-
-const ProfileBadge: React.FC<ProfileBadgeProps> = ({
-  name,
-  size,
-  id
-}: ProfileBadgeProps) => (
-  <StyledLink to="/user">
-    <Grid container direction="row-reverse" justify="flex-start" spacing={1}>
-      <Grid item>
-        {size === 'small' ? null : <h4 style={{ margin: 0 }}>{name}</h4>}
-      </Grid>
-      <Grid item>
-        <Badge
-          overlap="circle"
-          // anchorOrigin={{
-          //   vertical: 'top',
-          //   horizontal: 'right'
-          // }}
-          color="primary"
-          variant="dot"
-        >
-          <StyledAvatar alt="profile-pic">{name && name[0]}</StyledAvatar>
-        </Badge>
-      </Grid>
-    </Grid>
-  </StyledLink>
-)
 
 export default ProfileBadge
