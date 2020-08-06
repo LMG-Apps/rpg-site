@@ -1,12 +1,16 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-export const StyledLink = styled(Link)`
+interface LinkProps {
+  underline: boolean
+}
+
+export const StyledLink = styled(Link)<LinkProps>`
   display: flex;
   text-decoration: none;
   color: white;
 
   :hover {
-    text-decoration: ${props => props.underline ? 'underline' : 'none'};
+    text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
   }
 `

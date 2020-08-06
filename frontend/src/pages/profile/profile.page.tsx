@@ -8,12 +8,37 @@ import Tabs from '../../components/tabs.component'
 import StoryCard from '../dashboard/components/story-card.component'
 import Friends from './components/friends.component'
 
+import {
+  getFriends,
+  listFriendRequests,
+  addFriend,
+} from '../../helpers/api-methods'
+import { Button } from '@material-ui/core'
+
 const ProfilePage: React.FC = () => {
+  const [friends, setFriends] = React.useState(null)
+
+  React.useEffect(() => {
+    ;(async () => {
+      // setFriends(await getFriends());
+      const friends = await getFriends()
+
+      console.log(friends)
+
+      const friendRequests = await listFriendRequests()
+
+      console.log(friendRequests)
+    })()
+  }, [])
+
   return (
     <Background>
       <Container>
         <UserInfo />
         <br />
+        <Button onClick={() => addFriend(3)} color="primary">
+          Adicionar Teste
+        </Button>
         <Tabs>
           <TabContent label="Histórias">
             <Row>

@@ -10,6 +10,7 @@ import StoryCreationPage from './pages/story-creation/story-creation.page'
 import Header from './components/header.component'
 import StoryDescriptionPage from './pages/story-description/story-description.page'
 import { Button } from '@material-ui/core'
+import { logout } from './helpers/api-methods'
 
 const cookies = new Cookies()
 
@@ -62,16 +63,7 @@ function App() {
         <Route path="/user">
           <Header width={width} />
           <ProfilePage />
-          <Button
-            onClick={() =>
-              cookies.remove('token', {
-                path: '/',
-                domain: 'http://localhost:3000',
-              })
-            }
-          >
-            Logout
-          </Button>
+          <Button onClick={logout}>Logout</Button>
         </Route>
         <Route path="/story/create">
           <Header width={width} />

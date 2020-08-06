@@ -8,18 +8,18 @@ import styled from 'styled-components'
 import { StyledLink } from '../styles/app-styles'
 
 interface ProfileBadgeProps {
-  name?: string;
-  size?: 'default' | 'small';
-  id?: number;
+  name?: string
+  size?: 'default' | 'small'
+  id?: number
 }
 
 const ProfileBadge: React.FC<ProfileBadgeProps> = ({
   name,
   size,
-  id
+  id,
 }: ProfileBadgeProps) => (
   <Container>
-    <StyledLink underline to="/user">
+    <StyledLink underline="true" to="/user">
       <Name>{size === 'small' ? null : <h4>{name}</h4>}</Name>
     </StyledLink>
     <StyledLink to="/user">
