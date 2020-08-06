@@ -42,6 +42,7 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --ignore-watch node_modules src/server.ts",
-    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest"
+    "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
+    "start": "ts-node src/server.ts"
   }
 }
