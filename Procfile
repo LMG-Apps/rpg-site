@@ -1,1 +1,0 @@
-web:ts-node/backend/src/server.ts
