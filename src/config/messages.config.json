@@ -42,6 +42,7 @@
   "story.text.string.max": "You have reached the maximum number of characters in the book",
   "story.name.string.max": "Name must have less than 100 characters.",
   "story.description.string.max": "Description must have less than 200 characters.",
+  "story.friends.required": "Select at least 1 friend.",
 
   "user.id.notfound": "User not found.",
   "user.updated": "User updated",

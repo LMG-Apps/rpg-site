@@ -33,6 +33,11 @@ class StoryDetails {
     const { accountId, body } = req
     const { name, description, isPublic, friends } = body
 
+    if (!friends) {
+      const message = getMessage('story.friends.required')
+      return res.status(400).json({ message })
+    }
+
     const story = {
       name,
       description,
