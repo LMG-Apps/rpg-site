@@ -5,7 +5,6 @@ import path from 'path'
 
 import checkJwt from './middleware/jwt.middleware'
 
-const PORT = 3333
 const app = express()
 
 app.use(cors())
@@ -19,6 +18,4 @@ app.use('/tmp', express.static(path.resolve(__dirname, '..', 'tmp')))
 
 app.use(routes)
 
-app.listen(PORT, () => {
-  console.log(`Server executando na porta ${PORT}`)
-})
+app.listen(process.env.PORT || 3333)
