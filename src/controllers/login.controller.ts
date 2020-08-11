@@ -11,7 +11,7 @@ interface Account {
   password: string
 }
 
-const saltRounds = 9
+const saltRounds = 10
 
 class Login {
   async index(req: Request, res: Response) {
