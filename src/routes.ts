@@ -2,8 +2,7 @@ import express from 'express'
 import multer from 'multer'
 import multerConfig from './config/multer'
 
-import SignUpController from './controllers/signUp.controller'
-import SignInController from './controllers/signIn.controller'
+import Login from './controllers/login.controller'
 import ForgotPassword from './controllers/forgotPassword.controller'
 import RefreshToken from './controllers/refreshToken.controller'
 import StoryDetails from './controllers/storyDetails.controller'
@@ -26,11 +25,9 @@ import {
 const routes = express.Router()
 const upload = multer(multerConfig)
 
-const signUpController = new SignUpController()
-routes.post('/auth/sign-up', accountSignUp, signUpController.store)
-
-const signInController = new SignInController()
-routes.post('/auth/sign-in', accountSignIn, signInController.index)
+const login = new Login()
+routes.post('/auth/sign-up', accountSignUp, login.store)
+routes.get('/auth/sign-in', accountSignIn, login.index)
 
 const refreshToken = new RefreshToken()
 routes.get('/refresh', refreshToken.index)

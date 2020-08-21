@@ -4,6 +4,7 @@ import getMessage from '../helpers/message.helper'
 import removeImage from '../helpers/removeImage.helper'
 
 interface Story {
+  id: number
   name: string
   accountId: number
   description: string
@@ -32,6 +33,11 @@ class StoryDetails {
   async store(req: Request, res: Response) {
     const { accountId, body } = req
     const { name, description, isPublic, friends } = body
+
+    if (!friends) {
+      const message = getMessage('story.friends.required')
+      return res.status(400).json({ message })
+    }
 
     const story = {
       name,
@@ -106,7 +112,7 @@ class StoryDetails {
   async update(req: Request, res: Response) {
     const { accountId } = req
     const { id } = req.params
-    const { name, description, isPublic } = req.body
+    const { name, description, isPublic, friends } = req.body
     const image = req.file ? req.file.filename : null
 
     if (!name.trim()) {
@@ -127,6 +133,18 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
+      const storyFriends = friends
+        .split(',')
+        .map((friend: string) => Number(friend.trim()))
+        .map((friend_id: Number) => {
+          return {
+            friend_id,
+            story_id: story.id,
+          }
+        })
+
+      await trx('Story_friends').insert(storyFriends)
+
       await trx('Story')
         .where('accountId', accountId)
         .where('id', id)
