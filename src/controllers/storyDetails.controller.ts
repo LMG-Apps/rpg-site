@@ -2,6 +2,7 @@ import knex from '../database/connection'
 import { Request, Response } from 'express'
 import getMessage from '../helpers/message.helper'
 import removeImage from '../helpers/removeImage.helper'
+import getStoryParticipants from '../helpers/getStoryParticipants.helper'
 
 interface Story {
   id: number
@@ -59,15 +60,7 @@ class StoryDetails {
 
       const story_id = insertedStoryIds[0]
 
-      const storyFriends = friends
-        .split(',')
-        .map((friend: string) => Number(friend.trim()))
-        .map((friend_id: Number) => {
-          return {
-            friend_id,
-            story_id,
-          }
-        })
+      const storyFriends = getStoryParticipants(friends, story_id)
 
       await trx('Story_friends').insert(storyFriends)
 
@@ -133,17 +126,7 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
-      const storyFriends = friends
-        .split(',')
-        .map((friend: string) => Number(friend.trim()))
-        .map((friend_id: Number) => {
-          return {
-            friend_id,
-            story_id: story.id,
-          }
-        })
-
-      await trx('Story_friends').insert(storyFriends)
+      const storyFriends = getStoryParticipants(friends, story.id)
 
       await trx('Story')
         .where('accountId', accountId)
