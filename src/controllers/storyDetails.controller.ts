@@ -126,7 +126,14 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
-      const storyFriends = getStoryParticipants(friends, story.id)
+      const storyFriends = getStoryParticipants(friends, story.id).map(
+        (story) => story.friend_id
+      )
+
+      await trx('Story_friends')
+        .where('story_id', story.id)
+        .whereNotIn('friend_id', storyFriends)
+        .del()
 
       await trx('Story')
         .where('accountId', accountId)
