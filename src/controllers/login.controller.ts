@@ -14,7 +14,7 @@ interface Account {
 const saltRounds = 10
 
 class Login {
-  async index(req: Request, res: Response) {
+  async index(req: Request, res: Response): Promise<Response> {
     const { email, password } = req.body
 
     const data = await knex('Account').where('email', email).distinct().first()
@@ -43,7 +43,8 @@ class Login {
       refreshToken,
     })
   }
-  async store(req: Request, res: Response) {
+
+  async store(req: Request, res: Response): Promise<Response> {
     const { username, email, password } = req.body
 
     const emailExists = await knex('Account').where('email', email).first()
