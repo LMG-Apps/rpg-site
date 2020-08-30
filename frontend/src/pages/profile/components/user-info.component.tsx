@@ -4,6 +4,10 @@ import styled from 'styled-components'
 
 import campfire from '../../../assets/images/campire1.jpeg'
 
+interface AvatarProps {
+  image?: string
+}
+
 const UserSection: React.FC = () => (
   <Row>
     <UserInfo>
@@ -33,7 +37,7 @@ const Avatar = styled.div`
   background-color: white;
   width: 128px;
   height: 128px;
-  background-image: url(${(props) => props.image});
+  background-image: url(${(props: AvatarProps) => props.image});
   background-size: 100% 100%;
   background-repeat: no-repeat;
   box-shadow: 0px 0px 1px 5px orange;
