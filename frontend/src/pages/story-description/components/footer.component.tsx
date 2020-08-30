@@ -7,7 +7,7 @@ import MenuBookIcon from '@material-ui/icons/MenuBook'
 import DeleteIcon from '@material-ui/icons/Delete'
 
 interface FooterProps {
-  width?: number;
+  width?: number
 }
 
 const Footer: React.FC<FooterProps> = ({ width }: FooterProps) => (
@@ -47,7 +47,7 @@ const StyledDiv = styled.div`
   transition: 300ms;
   visibility: hidden;
 
-  @media (max-width: 600px) {
+  @media (max-width: 700px) {
     visibility: visible;
     height: 60px;
   }

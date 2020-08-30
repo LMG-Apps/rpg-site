@@ -3,7 +3,7 @@ import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import AddIcon from '@material-ui/icons/Add'
 
-import styled from 'styled-components'
+import styled, { StyledInterface, StyledComponent } from 'styled-components'
 
 import { StyledLink } from '../../../styles/app-styles'
 
@@ -11,6 +11,10 @@ import { NavLink } from 'react-router-dom'
 
 interface StoryCardProps {
   empty?: boolean
+  image?: string
+}
+
+interface BackgroundImageProps {
   image?: string
 }
 
@@ -67,7 +71,7 @@ const BackgroundImage = styled.div`
   width: 100%;
   height: 85%;
   border-radius: 20px 20px 0px 0px;
-  background-image: url(${(props) => props.image});
+  background-image: url(${(props: BackgroundImageProps) => props.image});
   background-size: 100% 100%;
   background-repeat: no-repeat;
   /* background-color: blue; */

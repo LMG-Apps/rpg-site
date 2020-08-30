@@ -12,6 +12,21 @@ import StoryDescriptionPage from './pages/story-description/story-description.pa
 import { Button } from '@material-ui/core'
 import { logout } from './helpers/api-methods'
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+
+import { GlobalStyle } from './styles/app-styles'
+
+const theme = createMuiTheme({
+  typography: {
+    fontFamily: `-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+   "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;`,
+    fontSize: 18,
+    // fontWeightLight: 300,
+    // fontWeightRegular: 400,
+    // fontWeightMedium: 500,
+  },
+})
+
 const cookies = new Cookies()
 
 function App() {
@@ -51,30 +66,35 @@ function App() {
   }
 
   return (
-    <Router>
-      <Switch>
-        <Route exact path="/">
-          {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
-        </Route>
-        <Route path="/dashboard">
-          <Header width={width} />
-          <Dashboard width={width} />
-        </Route>
-        <Route path="/user">
-          <Header width={width} />
-          <ProfilePage />
-          <Button onClick={logout}>Logout</Button>
-        </Route>
-        <Route path="/story/create">
-          <Header width={width} />
-          <StoryCreationPage />
-        </Route>
-        <Route path="/story/description">
-          <Header width={width} />
-          <StoryDescriptionPage />
-        </Route>
-      </Switch>
-    </Router>
+    <>
+      <GlobalStyle />
+      <MuiThemeProvider theme={theme}>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
+            </Route>
+            <Route path="/dashboard">
+              <Header width={width} />
+              <Dashboard width={width} />
+            </Route>
+            <Route path="/user">
+              <Header width={width} />
+              <ProfilePage />
+              <Button onClick={logout}>Logout</Button>
+            </Route>
+            <Route path="/story/create">
+              <Header width={width} />
+              <StoryCreationPage />
+            </Route>
+            <Route path="/story/description">
+              <Header width={width} />
+              <StoryDescriptionPage />
+            </Route>
+          </Switch>
+        </Router>
+      </MuiThemeProvider>
+    </>
   )
 }
 

@@ -15,6 +15,10 @@ import {
 } from '../../helpers/api-methods'
 import { Button } from '@material-ui/core'
 
+interface TabContentProps {
+  label?: string
+}
+
 const ProfilePage: React.FC = () => {
   const [friends, setFriends] = React.useState(null)
 
@@ -90,7 +94,7 @@ const Item = styled.div`
   margin-bottom: 20px;
 `
 
-const TabContent = styled.div`
+const TabContent = styled.div<TabContentProps>`
   display: flex;
 `
 
