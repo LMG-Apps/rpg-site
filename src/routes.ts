@@ -6,7 +6,6 @@ import Login from './controllers/login.controller'
 import ForgotPassword from './controllers/forgotPassword.controller'
 import RefreshToken from './controllers/refreshToken.controller'
 import StoryDetails from './controllers/storyDetails.controller'
-import StoryWrite from './controllers/storyWrite.controller'
 import UserProfile from './controllers/userProfile.controller'
 import FriendSolicitation from './controllers/friendSolicitation.controller'
 import FriendList from './controllers/friendList.controller'
@@ -52,9 +51,7 @@ routes.post(
   storyDetails.store
 )
 routes.delete('/story/:id', storyDetails.delete)
-
-const storyWrite = new StoryWrite()
-routes.put('/story/write/:id', storyWriteValidator, storyWrite.update)
+routes.patch('/story/write/:id', storyWriteValidator, storyDetails.patch)
 
 const userProfile = new UserProfile()
 routes.put('/user/edit/:username', upload.single('image'), userProfile.update)

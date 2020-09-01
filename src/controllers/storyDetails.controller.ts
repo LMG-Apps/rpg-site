@@ -126,14 +126,11 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
-      const storyFriends = getStoryParticipants(friends, story.id).map(
-        (story) => story.friend_id
-      )
+      const storyFriends = getStoryParticipants(friends, story.id)
 
-      await trx('Story_friends')
-        .where('story_id', story.id)
-        .whereNotIn('friend_id', storyFriends)
-        .del()
+      await trx('Story_friends').where('story_id', story.id).del()
+
+      await trx('Story_friends').insert(storyFriends)
 
       await trx('Story')
         .where('accountId', accountId)
@@ -145,7 +142,9 @@ class StoryDetails {
 
       await trx.commit()
 
-      removeImage(story.image)
+      if (story.image) {
+        removeImage(story.image)
+      }
 
       const message = getMessage('story.updated')
       return res.status(200).json({ message })
@@ -179,10 +178,49 @@ class StoryDetails {
       return res.status(404).json({ message })
     }
 
-    removeImage(image)
+    if (image) {
+      removeImage(image)
+    }
 
     const message = getMessage('story.deleted')
     return res.status(200).json({ message })
+  }
+
+  async patch(req: Request, res: Response) {
+    const { accountId } = req
+    const { id } = req.params
+    const { text } = req.body
+
+    const story = await knex('Story')
+      .where('accountId', accountId)
+      .where('id', id)
+      .first()
+
+    if (!story) {
+      const message = getMessage('story.id.notfound')
+      return res.status(404).json({ message })
+    }
+
+    const trx = await knex.transaction()
+
+    try {
+      await trx('Story')
+        .where('accountId', accountId)
+        .where('id', id)
+        .update('text', text)
+
+      await trx.commit()
+
+      const message = getMessage('story.updated')
+      return res.status(200).json({ message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
   }
 }
 

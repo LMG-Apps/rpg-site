@@ -5,10 +5,7 @@ interface ErrorMessages {
   [key: string]: string
 }
 
-const getValidatorError = (
-  error: ValidationError,
-  messagePath: string
-) => {
+const getValidatorError = (error: ValidationError, messagePath: string) => {
   if (!error) {
     return null
   }
@@ -17,6 +14,7 @@ const getValidatorError = (
   error.details.map((detail) => {
     const message = detail.message
     const type = detail.type
+    // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
     const key = detail.context?.key!
 
     const path = `${messagePath}.${key}.${type}`

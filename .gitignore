@@ -1,6 +1,7 @@
 node_modules
 .env
-tmp/
+tmp/*
+!tmp/.gitkeep
 prettier.config.js
 .editorconfig
 .eslintrc.json

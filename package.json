@@ -53,7 +53,7 @@
     "typescript": "^3.9.6"
   },
   "scripts": {
-    "dev": "ts-node-dev --respawn --ignore-watch node_modules src/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --ignore-watch node_modules src/server.ts",
     "knex:migrate": "knex --knexfile knexfile.ts migrate:latest",
     "start": "ts-node --transpile-only src/server.ts"
   }

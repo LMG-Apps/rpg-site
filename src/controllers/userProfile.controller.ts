@@ -86,7 +86,9 @@ class UserProfile {
 
       await trx.commit()
 
-      removeImage(user.profileImage)
+      if (user.profileImage) {
+        removeImage(user.profileImage)
+      }
 
       const message = getMessage('user.updated')
       return res.status(200).json({ message })
