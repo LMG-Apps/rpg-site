@@ -104,9 +104,7 @@ class StoryDetails {
 
   async update(req: Request, res: Response) {
     const { accountId } = req
-    const { id } = req.params
     const { name, description, isPublic, friends } = req.body
-    const image = req.file ? req.file.filename : null
 
     if (!name.trim()) {
       const message = getMessage('story.name.string.required')
@@ -115,7 +113,6 @@ class StoryDetails {
 
     const story: Story = await knex('Story')
       .where('accountId', accountId)
-      .where('id', id)
       .first()
 
     if (!story) {
@@ -134,17 +131,11 @@ class StoryDetails {
 
       await trx('Story')
         .where('accountId', accountId)
-        .where('id', id)
         .update('name', name)
         .update('description', description)
-        .update('image', image || knex.raw('DEFAULT'))
         .update('isPublic', isPublic)
 
       await trx.commit()
-
-      if (story.image) {
-        removeImage(story.image)
-      }
 
       const message = getMessage('story.updated')
       return res.status(200).json({ message })
@@ -160,18 +151,13 @@ class StoryDetails {
 
   async delete(req: Request, res: Response) {
     const { accountId } = req
-    const { id } = req.params
 
     const { image }: { image: string } = await knex('Story')
       .where('accountId', accountId)
-      .where('id', id)
       .first()
       .select('image')
 
-    const story = await knex('Story')
-      .where('accountId', accountId)
-      .where('id', id)
-      .del()
+    const story = await knex('Story').where('accountId', accountId).del()
 
     if (!story) {
       const message = getMessage('story.id.notfound')
@@ -186,14 +172,42 @@ class StoryDetails {
     return res.status(200).json({ message })
   }
 
-  async patch(req: Request, res: Response) {
+  async write(req: Request, res: Response) {
     const { accountId } = req
-    const { id } = req.params
     const { text } = req.body
 
-    const story = await knex('Story')
+    const story = await knex('Story').where('accountId', accountId).first()
+
+    if (!story) {
+      const message = getMessage('story.id.notfound')
+      return res.status(404).json({ message })
+    }
+
+    const trx = await knex.transaction()
+
+    try {
+      await trx('Story').where('accountId', accountId).update('text', text)
+
+      await trx.commit()
+
+      const message = getMessage('story.updated')
+      return res.status(200).json({ message })
+    } catch (err) {
+      await trx.rollback()
+
+      const message = getMessage('unexpected.error')
+      return res.status(400).json({
+        message,
+      })
+    }
+  }
+
+  async avatar(req: Request, res: Response) {
+    const { accountId } = req
+    const image = req.file ? req.file.filename : null
+
+    const story: Story = await knex('Story')
       .where('accountId', accountId)
-      .where('id', id)
       .first()
 
     if (!story) {
@@ -206,12 +220,15 @@ class StoryDetails {
     try {
       await trx('Story')
         .where('accountId', accountId)
-        .where('id', id)
-        .update('text', text)
+        .update('image', image || knex.raw('DEFAULT'))
 
       await trx.commit()
 
-      const message = getMessage('story.updated')
+      if (story.image) {
+        removeImage(story.image)
+      }
+
+      const message = getMessage('story.image.updated')
       return res.status(200).json({ message })
     } catch (err) {
       await trx.rollback()

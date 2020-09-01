@@ -37,6 +37,7 @@
   "story.created": "Story created",
   "story.deleted": "Story deleted",
   "story.updated": "Story updated",
+  "story.image.updated": "Story image updated",
   "story.name.string.required": "Name is required",
   "story.name.any.required": "Name is required",
   "story.text.string.max": "You have reached the maximum number of characters in the book",
@@ -46,7 +47,7 @@
 
   "user.id.notfound": "User not found.",
   "user.updated": "User updated",
-  "user.access.invalid": "You can't access this route.",
+  "user.avatar.updated": "Avatar updated",
 
   "friend.username.required": "Username is required.",
   "friend.username.notfound": "Username not found.",
