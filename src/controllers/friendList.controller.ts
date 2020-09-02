@@ -34,11 +34,15 @@ class FriendList {
       .where('status', 'A')
 
     const friends = friendsData.map((friend) => {
+      const image_url = friend.profileImage
+        ? `http://127.0.0.1:3333/tmp/${friend.profileImage}`
+        : null
+
+      delete friend.profileImage
+
       return {
         ...friend,
-        profileImage: friend.profileImage
-          ? `http://127.0.0.1:3333/tmp/${friend.profileImage}`
-          : null,
+        image_url,
       }
     })
 

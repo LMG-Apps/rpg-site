@@ -39,7 +39,7 @@ const storyDetails = new StoryDetails()
 routes.get('/story', storyDetails.index)
 routes.get('/story/:id', storyDetails.show)
 routes.put(
-  '/story',
+  '/story/:id',
   upload.single('image'),
   storyDetailsValidator,
   storyDetails.update
@@ -50,9 +50,9 @@ routes.post(
   storyDetailsValidator,
   storyDetails.store
 )
-routes.delete('/story', storyDetails.delete)
-routes.patch('/story/avatar', upload.single('image'), storyDetails.avatar)
-routes.patch('/story/write', storyWriteValidator, storyDetails.write)
+routes.delete('/story/:id', storyDetails.delete)
+routes.patch('/story/:id/avatar', upload.single('image'), storyDetails.avatar)
+routes.patch('/story/:id/write', storyWriteValidator, storyDetails.write)
 
 const userProfile = new UserProfile()
 routes.put('/user/edit', userProfile.update)

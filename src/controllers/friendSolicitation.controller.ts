@@ -21,11 +21,15 @@ class FriendSolicitation {
       .select('Account.id', 'username', 'profileImage')
 
     const serializedUsers = solicitations.map((user) => {
+      const image_url = user.profileImage
+        ? `http://127.0.0.1:3333/tmp/${user.profileImage}`
+        : null
+
+      delete user.profileImage
+
       return {
         ...user,
-        profileImage: user.profileImage
-          ? `http://127.0.0.1:3333/tmp/${user.profileImage}`
-          : null,
+        image_url,
       }
     })
 

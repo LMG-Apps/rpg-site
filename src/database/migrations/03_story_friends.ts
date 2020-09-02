@@ -1,11 +1,11 @@
 import Knex from 'knex'
 
 export async function up(knex: Knex) {
-  return knex.schema.createTable('Story_friends', (table) => {
+  return knex.schema.createTable('Story_members', (table) => {
     table.increments('id').unsigned().primary()
 
     table
-      .integer('friend_id')
+      .integer('member_id')
       .notNullable()
       .unsigned()
       .references('id')

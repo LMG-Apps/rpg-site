@@ -2,7 +2,7 @@ import knex from '../database/connection'
 import { Request, Response } from 'express'
 import getMessage from '../helpers/message.helper'
 import removeImage from '../helpers/removeImage.helper'
-import getStoryParticipants from '../helpers/getStoryParticipants.helper'
+import getStoryMembers from '../helpers/getStoryMembers.helper'
 
 interface Story {
   id: number
@@ -14,17 +14,26 @@ interface Story {
   isPublic: boolean
 }
 
+interface User {
+  username: string
+  profileImage: string
+}
+
 class StoryDetails {
   async index(req: Request, res: Response) {
     const { accountId } = req
     const stories: Story[] = await knex('Story').where('accountId', accountId)
 
     const serializedStories = stories.map((story) => {
+      const image_url = story.image
+        ? `http://127.0.0.1:3333/tmp/${story.image}`
+        : null
+
+      delete story.image
+
       return {
         ...story,
-        image_url: story.image
-          ? `http://127.0.0.1:3333/tmp/${story.image}`
-          : null,
+        image_url,
       }
     })
 
@@ -33,10 +42,10 @@ class StoryDetails {
 
   async store(req: Request, res: Response) {
     const { accountId, body } = req
-    const { name, description, isPublic, friends } = body
+    const { name, description, isPublic, members } = body
 
-    if (!friends) {
-      const message = getMessage('story.friends.required')
+    if (!members) {
+      const message = getMessage('story.members.required')
       return res.status(400).json({ message })
     }
 
@@ -60,14 +69,27 @@ class StoryDetails {
 
       const story_id = insertedStoryIds[0]
 
-      const storyFriends = getStoryParticipants(friends, story_id)
+      const storyMembers = getStoryMembers(members, story_id)
 
-      await trx('Story_friends').insert(storyFriends)
+      await trx('Story_members').insert(storyMembers)
 
       await trx.commit()
 
       const message = getMessage('story.created')
-      return res.status(201).json({ ...story, message })
+
+      const serializedStory = {
+        ...story,
+        image_url: story.image
+          ? `http://127.0.0.1:3333/tmp/${story.image}`
+          : null,
+      }
+
+      delete serializedStory.image
+
+      return res.status(201).json({
+        story: serializedStory,
+        message,
+      })
     } catch (err) {
       await trx.rollback()
 
@@ -99,20 +121,50 @@ class StoryDetails {
         : null,
     }
 
-    return res.status(200).json(serializedStories)
+    delete serializedStories.image
+
+    const storyMembers: User[] = await knex('Story_members')
+      .select('Account.id', 'username', 'profileImage')
+      .join('Account', 'Account.id', 'friend_id')
+      .where('story_id', id)
+
+    const serializedStoryMembers = storyMembers.map((user) => {
+      const image_url = user.profileImage
+        ? `http://127.0.0.1:3333/tmp/${user.profileImage}`
+        : null
+
+      delete user.profileImage
+
+      return {
+        ...user,
+        image_url,
+      }
+    })
+
+    return res.status(200).json({
+      stories: serializedStories,
+      story_members: serializedStoryMembers,
+    })
   }
 
   async update(req: Request, res: Response) {
     const { accountId } = req
-    const { name, description, isPublic, friends } = req.body
+    const { id } = req.params
+    const { name, description, isPublic, members } = req.body
 
     if (!name.trim()) {
       const message = getMessage('story.name.string.required')
       return res.status(400).json({ message })
     }
 
+    if (!members) {
+      const message = getMessage('story.members.required')
+      return res.status(400).json({ message })
+    }
+
     const story: Story = await knex('Story')
       .where('accountId', accountId)
+      .where('id', id)
       .first()
 
     if (!story) {
@@ -123,14 +175,15 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
-      const storyFriends = getStoryParticipants(friends, story.id)
+      const storyMembers = getStoryMembers(members, story.id)
 
-      await trx('Story_friends').where('story_id', story.id).del()
+      await trx('Story_members').where('story_id', story.id).del()
 
-      await trx('Story_friends').insert(storyFriends)
+      await trx('Story_members').insert(storyMembers)
 
       await trx('Story')
         .where('accountId', accountId)
+        .where('id', id)
         .update('name', name)
         .update('description', description)
         .update('isPublic', isPublic)
@@ -151,13 +204,19 @@ class StoryDetails {
 
   async delete(req: Request, res: Response) {
     const { accountId } = req
+    const { id } = req.params
 
-    const { image }: { image: string } = await knex('Story')
+    const { image }: { image: string } =
+      (await knex('Story')
+        .where('accountId', accountId)
+        .where('id', id)
+        .first()
+        .select('image')) || {}
+
+    const story = await knex('Story')
       .where('accountId', accountId)
-      .first()
-      .select('image')
-
-    const story = await knex('Story').where('accountId', accountId).del()
+      .where('id', id)
+      .del()
 
     if (!story) {
       const message = getMessage('story.id.notfound')
@@ -174,9 +233,13 @@ class StoryDetails {
 
   async write(req: Request, res: Response) {
     const { accountId } = req
+    const { id } = req.params
     const { text } = req.body
 
-    const story = await knex('Story').where('accountId', accountId).first()
+    const story = await knex('Story')
+      .where('accountId', accountId)
+      .where('id', id)
+      .first()
 
     if (!story) {
       const message = getMessage('story.id.notfound')
@@ -186,7 +249,10 @@ class StoryDetails {
     const trx = await knex.transaction()
 
     try {
-      await trx('Story').where('accountId', accountId).update('text', text)
+      await trx('Story')
+        .where('accountId', accountId)
+        .where('id', id)
+        .update('text', text)
 
       await trx.commit()
 
@@ -204,10 +270,12 @@ class StoryDetails {
 
   async avatar(req: Request, res: Response) {
     const { accountId } = req
+    const { id } = req.params
     const image = req.file ? req.file.filename : null
 
     const story: Story = await knex('Story')
       .where('accountId', accountId)
+      .where('id', id)
       .first()
 
     if (!story) {
@@ -220,6 +288,7 @@ class StoryDetails {
     try {
       await trx('Story')
         .where('accountId', accountId)
+        .where('id', id)
         .update('image', image || knex.raw('DEFAULT'))
 
       await trx.commit()

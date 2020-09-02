@@ -33,11 +33,15 @@ class UserProfile {
       .where('isPublic', true)
 
     const stories = storiesData.map((story) => {
+      const image_url = story.image
+        ? `http://127.0.0.1:3333/tmp/${story.image}`
+        : null
+
+      delete story.image
+
       return {
         ...story,
-        story_image_url: story.image
-          ? `http://127.0.0.1:3333/tmp/${story.image}`
-          : null,
+        image_url,
       }
     })
 
@@ -50,12 +54,12 @@ class UserProfile {
         : null,
     }
 
-    const serializedStories = {
-      serializedUser,
-      stories,
-    }
+    delete user.profileImage
 
-    return res.status(200).json(serializedStories)
+    return res.status(200).json({
+      user: serializedUser,
+      stories,
+    })
   }
 
   async update(req: Request, res: Response) {
