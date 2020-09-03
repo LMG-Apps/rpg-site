@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     --color-background: rgb(22, 20, 26);
     --color-primary-lighter: #9871F5;
     --color-primary-light: #916BEA;
-    --color-primary: #8257E5;
+    --color-primary: rgb(33, 34, 44);
     --color-primary-dark: #774DD6;
     --color-primary-darker: #6842C2;
     --color-secondary: #04D361;

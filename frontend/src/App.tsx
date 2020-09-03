@@ -15,6 +15,7 @@ import { logout } from './helpers/api-methods'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 import { GlobalStyle } from './styles/app-styles'
+import StoryEditionPage from './pages/story-edition/story-edtion.page'
 
 const theme = createMuiTheme({
   typography: {
@@ -89,7 +90,11 @@ function App() {
             </Route>
             <Route path="/story/description">
               <Header width={width} />
-              <StoryDescriptionPage />
+              <StoryDescriptionPage width={width} />
+            </Route>
+            <Route path="/story/edit">
+              <Header width={width} />
+              <StoryEditionPage />
             </Route>
           </Switch>
         </Router>

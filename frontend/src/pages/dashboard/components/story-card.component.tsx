@@ -12,6 +12,11 @@ import { NavLink } from 'react-router-dom'
 interface StoryCardProps {
   empty?: boolean
   image?: string
+  small?: boolean
+}
+
+interface CardProps {
+  small?: boolean
 }
 
 interface BackgroundImageProps {
@@ -21,11 +26,12 @@ interface BackgroundImageProps {
 const StoryCard: React.FC<StoryCardProps> = ({
   empty,
   image,
+  small,
 }: StoryCardProps) => (
   <>
     {empty ? (
       <StyledLink to="/story/create">
-        <Card>
+        <Card small={small}>
           <Grid
             container
             justify="center"
@@ -49,9 +55,9 @@ const StoryCard: React.FC<StoryCardProps> = ({
   </>
 )
 
-const Card = styled.div`
-  width: 220px;
-  height: 220px;
+const Card = styled.div<CardProps>`
+  width: ${(props) => (props.small ? '110px' : '220px')};
+  height: ${(props) => (props.small ? '110px' : '220px')};
 
   background-color: rgb(34, 34, 44);
   border-radius: 20px;

@@ -10,13 +10,13 @@ import FriendList from './components/friend-list.component'
 import styled from 'styled-components'
 
 class Dashboard extends React.Component<{ width: number }, {}> {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.state = {}
   }
 
-  render () {
+  render() {
     const { width } = this.props
 
     return (
@@ -29,7 +29,7 @@ class Dashboard extends React.Component<{ width: number }, {}> {
                 <StoryCard image={campfire} />
               </Item>
               <Item>
-                <StoryCard image={campfire2} />
+                <StoryCard image={campfire2} small />
               </Item>
               <Item>
                 <StoryCard empty />
@@ -77,7 +77,7 @@ const Container = styled.div`
   padding: 20px 30px;
 
   @media (max-width: 738px) {
-    padding: 20px 20px; 
+    padding: 20px 20px;
     align-items: center;
   }
 `

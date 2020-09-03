@@ -7,12 +7,11 @@ import styled from 'styled-components'
 import { StyledLink } from '../styles/app-styles'
 
 interface HeaderProps {
-  width: number;
+  width: number
 }
 const Header: React.FC<HeaderProps> = ({ width }: HeaderProps) => (
-
   <StyledDiv>
-    <StyledLink to='/dashboard'>
+    <StyledLink to="/dashboard">
       <Title>
         <img alt="site-logo" src={logo} width="32" height="38" />
         <h2 style={{ margin: '0', marginLeft: '10px' }}>RPG Storytelling</h2>
@@ -42,7 +41,7 @@ const StyledDiv = styled.div`
   justify-content: space-between;
   /* Styling */
   color: white;
-  padding: 0 30px;
+  padding: 0 20px;
   background-color: rgb(34, 34, 44);
   transition: 300ms;
 

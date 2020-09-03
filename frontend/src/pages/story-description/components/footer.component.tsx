@@ -38,17 +38,16 @@ const StyledDiv = styled.div`
   height: 80px;
   width: 100%;
   /* Defines itens arrangement in the div */
-  display: flex;
   justify-content: space-around;
   /* Styling */
   color: white;
   padding: 0 30px;
   background-color: rgb(34, 34, 44);
   transition: 300ms;
-  visibility: hidden;
+  display: none;
 
   @media (max-width: 700px) {
-    visibility: visible;
+    display: flex;
     height: 60px;
   }
 `

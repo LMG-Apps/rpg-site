@@ -12,19 +12,6 @@ import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
 import SettingsIcon from '@material-ui/icons/Settings'
 
-const StyledButton = styled(Button)`
-  font-family: 'Grenze Gotisch', cursive;
-  font-size: 24px;
-  text-transform: none;
-  line-height: 17px;
-  color: white;
-  background-color: rgba(255, 85, 85, 1);
-
-  :hover {
-    background-color: rgba(255, 85, 85, 0.9);
-  }
-`
-
 const StoryDescriptionPage: React.FC = () => {
   return (
     <Background>
