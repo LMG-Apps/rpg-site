@@ -7548,6 +7548,30 @@ mkdirp@^1.0.3:
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
 
+mobx-persist@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/mobx-persist/-/mobx-persist-0.4.1.tgz#fe5790eda04e0ee0b91c512d1347104e09363f9a"
+  integrity sha512-cPxVuZTY5neesxOV/Z25SF4+/NbC6wfHOe9HT5XoSEkAALNxNE41yDK48peJQ3iK14m0G2ywQRklCXeV3wftnQ==
+  dependencies:
+    serializr "^1.1.11"
+
+mobx-react-lite@>=2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/mobx-react-lite/-/mobx-react-lite-2.2.1.tgz#9c05dd799005d29ec1671ae86ca30b3ab5411055"
+  integrity sha512-SxOuV7Q1MLdj9uRUG8N1x9lBa4cS9c+YwlcrvrBVuCTlNrgRrrHuydfBHW/0f3pALhvGhcg+JEvf1gMWOuej4A==
+
+mobx-react@^6.3.0:
+  version "6.3.0"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-6.3.0.tgz#7d11799f988bbdadc49e725081993b18baa20329"
+  integrity sha512-C14yya2nqEBRSEiJjPkhoWJLlV8pcCX3m2JRV7w1KivwANJqipoiPx9UMH4pm6QNMbqDdvJqoyl+LqNu9AhvEQ==
+  dependencies:
+    mobx-react-lite ">=2.2.0"
+
+mobx@^5.15.6:
+  version "5.15.6"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-5.15.6.tgz#24750af56f87bcf9c3cf82ece4c79eb91bb71968"
+  integrity sha512-U5nnx3UNdRkUjntpwzO060VWifGVx/JZeu/aMw4y28dTjDNjoY3vNKs6tFNm7z1qIfcPInsd9L9HIm8H0zTDqg==
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -10088,6 +10112,11 @@ serialize-javascript@^4.0.0:
   integrity sha512-GaNA54380uFefWghODBWEGisLZFj00nS5ACs6yHa9nLqlLpVLO8ChDGeKRjZnV4Nh4n0Qi7nhYZD/9fCPzEqkw==
   dependencies:
     randombytes "^2.1.0"
+
+serializr@^1.1.11:
+  version "1.5.4"
+  resolved "https://registry.yarnpkg.com/serializr/-/serializr-1.5.4.tgz#3ddf1cb7b4465c9c3f72bab0cbc41e09dbe50c33"
+  integrity sha512-ImLlkNfNSSv9d7Ah1j/yrPk1FHbRC1zkD7URcgx/8M1eYHGUxGf/Ig/d8ML04ifqN7QesyYKsfLYA4xjAVAR/g==
 
 serve-index@^1.9.1:
   version "1.9.1"

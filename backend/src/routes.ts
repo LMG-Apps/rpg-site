@@ -11,14 +11,14 @@ import FriendSolicitation from './controllers/friendSolicitation.controller'
 import FriendList from './controllers/friendList.controller'
 
 import {
-  accountSignIn,
-  accountSignUp,
-  accountPasswordReset,
+	accountSignIn,
+	accountSignUp,
+	accountPasswordReset,
 } from './validators/account.validators'
 
 import {
-  storyDetailsValidator,
-  storyWriteValidator,
+	storyDetailsValidator,
+	storyWriteValidator,
 } from './validators/story.validator'
 
 const routes = express.Router()
@@ -26,7 +26,7 @@ const upload = multer(multerConfig)
 
 const login = new Login()
 routes.post('/auth/sign-up', accountSignUp, login.store)
-routes.get('/auth/sign-in', accountSignIn, login.index)
+routes.post('/auth/sign-in', accountSignIn, login.index)
 
 const refreshToken = new RefreshToken()
 routes.get('/refresh', refreshToken.index)
@@ -39,16 +39,16 @@ const storyDetails = new StoryDetails()
 routes.get('/story', storyDetails.index)
 routes.get('/story/:id', storyDetails.show)
 routes.put(
-  '/story/:id',
-  upload.single('image'),
-  storyDetailsValidator,
-  storyDetails.update
+	'/story/:id',
+	upload.single('image'),
+	storyDetailsValidator,
+	storyDetails.update
 )
 routes.post(
-  '/story',
-  upload.single('image'),
-  storyDetailsValidator,
-  storyDetails.store
+	'/story',
+	upload.single('image'),
+	storyDetailsValidator,
+	storyDetails.store
 )
 routes.delete('/story/:id', storyDetails.delete)
 routes.patch('/story/:id/avatar', upload.single('image'), storyDetails.avatar)

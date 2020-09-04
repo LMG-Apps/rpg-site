@@ -1,20 +1,17 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
-import { StylesProvider } from '@material-ui/styles'
-
-import campfire from '../../assets/images/campire1.jpeg'
-import Button from '@material-ui/core/Button'
+import ProfileBadge from '../../components/profile-badge.component'
 import Footer from './components/footer.component'
+
+import Button from '@material-ui/core/Button'
 
 import DeleteIcon from '@material-ui/icons/Delete'
 import CreateIcon from '@material-ui/icons/Create'
 import SettingsIcon from '@material-ui/icons/Settings'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { Collapse } from '@material-ui/core'
-import Friends from '../profile/components/friends.component'
-import ProfileBadge from '../../components/profile-badge.component'
+
+import campfire from '../../assets/images/campire1.jpeg'
+
+import styled from 'styled-components'
 
 interface StoryDescriptionPageProps {
   width: number
@@ -287,19 +284,6 @@ const DividerDesktop = styled.div`
 
   @media (max-width: 700px) {
     display: none;
-  }
-`
-
-const StyledButton = styled(Button)`
-  font-family: 'Grenze Gotisch', cursive;
-  font-size: 24px;
-  text-transform: none;
-  line-height: 17px;
-  color: white;
-  background-color: rgba(255, 85, 85, 1);
-
-  :hover {
-    background-color: rgba(255, 85, 85, 0.9);
   }
 `
 

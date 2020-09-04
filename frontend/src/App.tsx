@@ -1,21 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
-import LoginPage from './pages/login/login.page'
+import { Provider, observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
 
-import Dashboard from './pages/dashboard/dashboard.page'
-import ProfilePage from './pages/profile/profile.page'
-import StoryCreationPage from './pages/story-creation/story-creation.page'
+import Routes from './routes'
 
-import Header from './components/header.component'
-import StoryDescriptionPage from './pages/story-description/story-description.page'
-import { Button } from '@material-ui/core'
-import { logout } from './helpers/api-methods'
-
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
+import { RootStoreContext } from './stores/root.store'
 
 import { GlobalStyle } from './styles/app-styles'
-import StoryEditionPage from './pages/story-edition/story-edtion.page'
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 
 const theme = createMuiTheme({
   typography: {
@@ -30,20 +22,12 @@ const theme = createMuiTheme({
 
 const cookies = new Cookies()
 
-function App() {
+const App: React.FC = observer(() => {
   const [width, setWidth] = useState(window.innerWidth)
 
-  const [loggedIn, setLoggedIn] = useState(false)
+  const rootStore = React.useContext(RootStoreContext)
 
-  useEffect(() => {
-    if (cookies.get('token')) {
-      setLoggedIn(true)
-    }
-  }, [loggedIn])
-
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+  console.log('loggedIN', rootStore.userStore.loginStatus.loggedIn)
 
   useEffect(() => {
     console.log('all cookies', cookies.getAll())
@@ -58,6 +42,20 @@ function App() {
     }
   }, [])
 
+  useEffect(() => {
+    if (cookies.get('token')) {
+      rootStore.userStore.setLoggedIn(true)
+    } else {
+      rootStore.userStore.setLoggedIn(false)
+    }
+  }, [rootStore.userStore, rootStore.userStore.loginStatus.loggedIn])
+
+  // console.log(rootStore.userStore.loginStatus.loggedIn)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const handleResize = (event) => {
     setWidth(event.currentTarget.innerWidth)
   }
@@ -70,37 +68,12 @@ function App() {
     <>
       <GlobalStyle />
       <MuiThemeProvider theme={theme}>
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              {loggedIn ? <Redirect to="/dashboard" /> : <LoginPage />}
-            </Route>
-            <Route path="/dashboard">
-              <Header width={width} />
-              <Dashboard width={width} />
-            </Route>
-            <Route path="/user">
-              <Header width={width} />
-              <ProfilePage />
-              <Button onClick={logout}>Logout</Button>
-            </Route>
-            <Route path="/story/create">
-              <Header width={width} />
-              <StoryCreationPage />
-            </Route>
-            <Route path="/story/description">
-              <Header width={width} />
-              <StoryDescriptionPage width={width} />
-            </Route>
-            <Route path="/story/edit">
-              <Header width={width} />
-              <StoryEditionPage />
-            </Route>
-          </Switch>
-        </Router>
+        <Provider {...rootStore}>
+          <Routes width={width} />
+        </Provider>
       </MuiThemeProvider>
     </>
   )
-}
+})
 
 export default App

@@ -9,7 +9,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 const StoryEditionPage: React.FC = () => {
   const [expanded, setExpanded] = React.useState(false)
-  const [data, setData] = React.useState('')
 
   React.useEffect(() => {
     // Get data

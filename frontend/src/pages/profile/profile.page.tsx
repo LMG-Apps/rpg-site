@@ -1,31 +1,31 @@
 import React from 'react'
 
-import styled from 'styled-components'
-
-import UserInfo from './components/user-info.component'
-// import Tabs from './components/tabs.component'
-import Tabs from '../../components/tabs.component'
-import StoryCard from '../dashboard/components/story-card.component'
-import Friends from './components/friends.component'
-
 import {
   getFriends,
   listFriendRequests,
   addFriend,
+  signOut,
 } from '../../helpers/api-methods'
-import { Button, InputAdornment, IconButton } from '@material-ui/core'
+
+import UserInfo from './components/user-info.component'
+import Tabs from '../../components/tabs.component'
+import StoryCard from '../dashboard/components/story-card.component'
+import Friends from './components/friends.component'
 import { CustomInput } from '../../components/filled-input.component'
 
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import { Button, InputAdornment, IconButton } from '@material-ui/core'
+
 import SendRoundedIcon from '@material-ui/icons/SendRounded'
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded'
+
+import styled from 'styled-components'
 
 interface TabContentProps {
   label?: string
 }
 
 const ProfilePage: React.FC = () => {
-  const [friends, setFriends] = React.useState(null)
+  // const [friends, setFriends] = React.useState(null)
   const [amigo, setAmigo] = React.useState('')
 
   React.useEffect(() => {
@@ -46,8 +46,11 @@ const ProfilePage: React.FC = () => {
       <Container>
         <UserInfo />
         <br />
-        <Button onClick={() => addFriend(14)} color="primary">
+        <Button onClick={() => addFriend(4)} color="primary">
           Adicionar Teste
+        </Button>
+        <Button color="primary" onClick={signOut}>
+          Logout
         </Button>
         <Tabs>
           <TabContent label="Histórias">

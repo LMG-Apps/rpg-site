@@ -1,13 +1,13 @@
 import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
-import AddIcon from '@material-ui/icons/Add'
-
-import styled, { StyledInterface, StyledComponent } from 'styled-components'
-
-import { StyledLink } from '../../../styles/app-styles'
 
 import { NavLink } from 'react-router-dom'
+import { StyledLink } from '../../../styles/app-styles'
+
+import AddIcon from '@material-ui/icons/Add'
+
+import styled from 'styled-components'
 
 interface StoryCardProps {
   empty?: boolean

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import Grid from '@material-ui/core/Grid'
 import Button from '@material-ui/core/Button'
@@ -8,9 +8,23 @@ import { signIn } from '../../../helpers/api-methods'
 
 import styled from 'styled-components'
 
-export const SignIn: React.FC = () => {
+import { observer } from 'mobx-react'
+import { RootStoreContext } from '../../../stores/root.store'
+// interface SignInProps {
+//   setLoggedIn(value: boolean): HookCallbacks
+// }
+
+export const SignIn: React.FC = observer(() => {
+  const rootStore = useContext(RootStoreContext)
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const handleLogin = () => {
+    if (signIn(email, password)) {
+      rootStore.userStore.setLoggedIn(true)
+    }
+  }
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -20,7 +34,7 @@ export const SignIn: React.FC = () => {
           fontSize: '40px',
           textAlign: 'center',
           lineHeight: '30px',
-          marginBottom: '10px'
+          marginBottom: '10px',
         }}
       >
         Bem vindo
@@ -48,7 +62,7 @@ export const SignIn: React.FC = () => {
         <StyledButton
           variant="contained"
           size="large"
-          onClick={() => signIn(email, password)}
+          onClick={handleLogin}
           fullWidth
         >
           Entrar
@@ -56,10 +70,10 @@ export const SignIn: React.FC = () => {
       </Grid>
     </Grid>
   )
-}
+})
 
 const StyledButton = styled(Button)`
-  font-family: "Grenze Gotisch", cursive;
+  font-family: 'Grenze Gotisch', cursive;
   font-size: 24px;
   text-transform: none;
   line-height: 17px;

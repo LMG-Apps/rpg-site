@@ -1,6 +1,7 @@
 {
   "extends": "./paths.json",
   "compilerOptions": {
-    "isolatedModules": true
+    "isolatedModules": true,
+    "experimentalDecorators": true
   }
 }

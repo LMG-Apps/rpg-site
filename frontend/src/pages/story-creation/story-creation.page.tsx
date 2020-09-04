@@ -4,7 +4,6 @@ import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
 import Collapse from '@material-ui/core/Collapse'
 import { CustomInput } from '../../components/filled-input.component'
-import Friends from '../profile/components/friends.component'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import ProfileBadge from '../../components/profile-badge.component'
 
@@ -25,7 +24,7 @@ const StoryCreationPage: React.FC = () => {
   const [expanded, setExpanded] = useState(false)
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [users, setUsers] = useState([])
+  // const [users, setUsers] = useState([])
   const [friends, setFriends] = useState<Friend[]>([])
 
   React.useEffect(() => {

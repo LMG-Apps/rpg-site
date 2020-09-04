@@ -1,14 +1,18 @@
 import axios from 'axios'
 import Cookies from 'universal-cookie'
 
+// Defining new Cookies instance
 const cookies = new Cookies()
 
+// Defining base URL for API requests
 const baseURL = 'http://localhost:3333/'
 
+// Instancing an axios api using the base URL
 const api = axios.create({
   baseURL: baseURL,
 })
 
+// Token management
 const getToken: any = () => {
   return cookies.get('token')
 }
@@ -31,20 +35,36 @@ const requestHandler = async (url: string, requestOptions: object) => {
   }
 }
 
+// Sign in, Sign up and Sign Out Methods
 export const signIn: any = async (email: string, password: string) => {
   const informationJSON = {
     email: email,
     password: password,
   }
 
-  const response = await api.post('auth/sign-in', informationJSON)
+  console.log(email, password)
 
-  console.log('Response: ', response)
+  try {
+    const response = await api.post('auth/sign-in', informationJSON)
 
-  if (response.status === 200) {
-    cookies.set('token', response.data.token)
-    cookies.set('refreshToken', response.data.refreshToken)
+    console.log('Response: ', response)
+
+    if (response.status === 200) {
+      cookies.set('token', response.data.token)
+      cookies.set('refreshToken', response.data.refreshToken)
+
+      // rootStore.userStore.setLoggedIn(true)
+    }
+  } catch (error) {
+    console.log(error)
   }
+}
+
+export const signOut: any = () => {
+  cookies.remove('token', { path: '/' })
+  cookies.remove('refreshToken', { path: '/' })
+
+  // rootStore.userStore.setLoggedIn(false)
 }
 
 export const signUp: any = async (
@@ -86,12 +106,7 @@ export const signUp: any = async (
 //   console.log('Response data: ', await response.json())
 // }
 
-export const logout: any = () => {
-  cookies.remove('token', { path: '/' })
-  cookies.remove('refreshToken', { path: '/' })
-}
-
-// ----------------Friend Routes----------------
+// ----------------Friends Routes----------------
 
 export const getFriends: any = async () => {
   const response = await api.get('/friend-list', {
