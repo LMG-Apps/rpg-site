@@ -43,25 +43,32 @@ export const signUp: any = async (
     password: password,
     passwordConfirmation: cPassword,
   }
-  const response = await api.post('auth/sign-up', informationJSON)
 
-  console.log('RESPONSE: ', response)
+  console.log('Estive aqui')
+
+  // try {
+  //   const response = await api.post('auth/sign-up', informationJSON)
+
+  //   console.log('Response:', response)
+  // } catch (error) {
+  //   console.log('ERROR: ', error)
+  // }
 
   // Metodo antigo
 
-  // const requestOptions = {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(informationJSON)
-  // Authorization: `bearer${token}`
-  // }
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(informationJSON),
+    // Authorization: `bearer${token}`
+  }
 
-  // const response = await fetch(
-  //   'http://localhost:3333/auth/sign-up',
-  //   requestOptions
-  // )
-  // console.log('Initia lResponse: ', response)
-  // console.log('Response data: ', await response.json())
+  const response = await fetch(
+    'http://localhost:3333/auth/sign-up',
+    requestOptions
+  )
+  console.log('Initia lResponse: ', response)
+  console.log('Response data: ', await response.json())
 }
 
 export const logout: any = () => {
