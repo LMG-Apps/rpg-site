@@ -35,8 +35,8 @@ const requestHandler = async (url: string, requestOptions: object) => {
   }
 }
 
-// Sign in, Sign up and Sign Out Methods
-export const signIn: any = async (email: string, password: string) => {
+// Sign in, Sign up and Methods
+export const signIn = async (email: string, password: string) => {
   const informationJSON = {
     email: email,
     password: password,
@@ -49,25 +49,22 @@ export const signIn: any = async (email: string, password: string) => {
 
     console.log('Response: ', response)
 
-    if (response.status === 200) {
+    if (response.status >= 200 && response.status < 300) {
       cookies.set('token', response.data.token)
       cookies.set('refreshToken', response.data.refreshToken)
 
-      // rootStore.userStore.setLoggedIn(true)
+      return true
     }
+
+    return false
   } catch (error) {
     console.log(error)
+
+    return false
   }
 }
 
-export const signOut: any = () => {
-  cookies.remove('token', { path: '/' })
-  cookies.remove('refreshToken', { path: '/' })
-
-  // rootStore.userStore.setLoggedIn(false)
-}
-
-export const signUp: any = async (
+export const signUp = async (
   email: string,
   username: string,
   password: string,
@@ -84,8 +81,19 @@ export const signUp: any = async (
     const response = await api.post('auth/sign-up', informationJSON)
 
     console.log('Response:', response)
+
+    if (response.status >= 200 && response.status < 300) {
+      cookies.set('token', response.data.token)
+      cookies.set('refreshToken', response.data.refreshToken)
+
+      return true
+    }
+
+    return false
   } catch (error) {
     console.log('ERROR: ', error)
+
+    return false
   }
 }
 

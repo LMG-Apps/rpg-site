@@ -1,10 +1,10 @@
 import React from 'react'
+import Cookies from 'universal-cookie'
 
 import {
   getFriends,
   listFriendRequests,
   addFriend,
-  signOut,
 } from '../../helpers/api-methods'
 
 import UserInfo from './components/user-info.component'
@@ -19,14 +19,26 @@ import SendRoundedIcon from '@material-ui/icons/SendRounded'
 import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded'
 
 import styled from 'styled-components'
+import { RootStoreContext } from '../../stores/root.store'
+
+// Defining new Cookies instance
+const cookies = new Cookies()
 
 interface TabContentProps {
   label?: string
 }
 
 const ProfilePage: React.FC = () => {
+  const rootStore = React.useContext(RootStoreContext)
   // const [friends, setFriends] = React.useState(null)
   const [amigo, setAmigo] = React.useState('')
+
+  const signOut: any = () => {
+    cookies.remove('token', { path: '/' })
+    cookies.remove('refreshToken', { path: '/' })
+
+    rootStore.userStore.setLoggedIn(false)
+  }
 
   React.useEffect(() => {
     ;(async () => {

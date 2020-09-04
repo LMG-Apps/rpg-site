@@ -53,8 +53,8 @@ const Routes: React.FC<RoutesProps> = ({ width }: RoutesProps) => {
           <Route exact path="/">
             <LoginPage />
           </Route>
-          {/* <Route path="/404" component={() => <h1>NOT FOUND</h1>} />
-          <Redirect to="/404" /> */}
+          <Route path="/404" component={() => <Redirect to="/" />} />
+          <Redirect to="/" />
         </Switch>
       )}
     </Router>

@@ -20,8 +20,8 @@ export const SignIn: React.FC = observer(() => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const handleLogin = () => {
-    if (signIn(email, password)) {
+  const handleLogin = async () => {
+    if (await signIn(email, password)) {
       rootStore.userStore.setLoggedIn(true)
     }
   }

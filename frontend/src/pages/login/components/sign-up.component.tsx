@@ -7,25 +7,34 @@ import TextField from '@material-ui/core/TextField'
 import { signUp } from '../../../helpers/api-methods'
 
 import styled from 'styled-components'
+import { RootStoreContext } from '../../../stores/root.store'
 
 const StyledButton = styled(Button)`
-  font-family: "Grenze Gotisch", cursive;
+  font-family: 'Grenze Gotisch', cursive;
   font-size: 24px;
   text-transform: none;
   line-height: 17px;
   color: white;
   background-color: rgba(255, 85, 85, 1);
-  
+
   :hover {
     background-color: rgba(255, 85, 85, 0.9);
   }
 `
 
 export const SignUp: React.FC = () => {
+  const rootStore = React.useContext(RootStoreContext)
+
   const [email, setEmail] = useState('')
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [cPassword, setCpassword] = useState('')
+
+  const handleSignUp = async () => {
+    if (await signUp(email, username, password, cPassword)) {
+      rootStore.userStore.setLoggedIn(true)
+    }
+  }
 
   return (
     <Grid container direction="column" spacing={2}>
@@ -71,7 +80,7 @@ export const SignUp: React.FC = () => {
       </Grid>
       <Grid item>
         <StyledButton
-          onClick={() => signUp(email, username, password, cPassword)}
+          onClick={handleSignUp}
           variant="contained"
           size="large"
           fullWidth
