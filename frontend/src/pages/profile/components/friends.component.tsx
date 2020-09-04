@@ -10,20 +10,21 @@ import { Checkbox } from '@material-ui/core'
 const namesArray: Array<string> = [
   'Gustavo Lopes',
   'Miguel Demarque',
-  'Luis Felipe',
+  'Luiz Felipe',
   'Nicolas Gen',
   'Leonel P',
-  'Yves'
+  'Yves',
 ]
 
 interface FriendsProps {
-  status?: string;
+  status?: string
+  id?: number
 }
 
-function friendActions (status?: string) {
+function friendActions(status?: string) {
   switch (status) {
     case 'p':
-      return <StyledLink underline>Cancelar convite</StyledLink>
+      return <StyledLink underline>Cancelar o miguel gay</StyledLink>
     case 'a':
       return <StyledLink underline>Desfazer amizade</StyledLink>
     case 'b':

@@ -13,7 +13,12 @@ import {
   listFriendRequests,
   addFriend,
 } from '../../helpers/api-methods'
-import { Button } from '@material-ui/core'
+import { Button, InputAdornment, IconButton } from '@material-ui/core'
+import { CustomInput } from '../../components/filled-input.component'
+
+import AccountCircle from '@material-ui/icons/AccountCircle'
+import SendRoundedIcon from '@material-ui/icons/SendRounded'
+import PersonAddRoundedIcon from '@material-ui/icons/PersonAddRounded'
 
 interface TabContentProps {
   label?: string
@@ -21,6 +26,7 @@ interface TabContentProps {
 
 const ProfilePage: React.FC = () => {
   const [friends, setFriends] = React.useState(null)
+  const [amigo, setAmigo] = React.useState('')
 
   React.useEffect(() => {
     ;(async () => {
@@ -40,7 +46,7 @@ const ProfilePage: React.FC = () => {
       <Container>
         <UserInfo />
         <br />
-        <Button onClick={() => addFriend(3)} color="primary">
+        <Button onClick={() => addFriend(14)} color="primary">
           Adicionar Teste
         </Button>
         <Tabs>
@@ -58,6 +64,45 @@ const ProfilePage: React.FC = () => {
             </Row>
           </TabContent>
           <TabContent label="Amigos">
+            <CustomInput
+              label="Adicionar amigo"
+              value={amigo}
+              onChange={(event) => setAmigo(event.target.value)}
+              placeholder="Digite o nome do usuário"
+              variant="filled"
+              fullWidth
+              style={{
+                marginTop: '10px',
+                marginBottom: '10px',
+                display: 'flex',
+                alignItems: 'center',
+              }}
+              InputLabelProps={{
+                style: { color: 'grey', marginTop: '-5px' },
+              }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <PersonAddRoundedIcon
+                      style={{
+                        color: 'white',
+                      }}
+                    />
+                  </InputAdornment>
+                ),
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={() => addFriend(amigo)}>
+                      <SendRoundedIcon
+                        style={{
+                          color: 'white',
+                        }}
+                      />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
             <Friends />
           </TabContent>
         </Tabs>

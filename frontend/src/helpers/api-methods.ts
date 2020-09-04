@@ -3,8 +3,10 @@ import Cookies from 'universal-cookie'
 
 const cookies = new Cookies()
 
+const baseURL = 'http://localhost:3333/'
+
 const api = axios.create({
-  baseURL: 'http://localhost:3333',
+  baseURL: baseURL,
 })
 
 const getToken: any = () => {
@@ -13,6 +15,20 @@ const getToken: any = () => {
 
 const getRefreshToken: any = () => {
   return cookies.get('refreshToken')
+}
+
+const requestHandler = async (url: string, requestOptions: object) => {
+  const path = baseURL + url
+
+  try {
+    const response = await fetch(path, requestOptions)
+
+    if (response.status >= 200 && response.status < 300) {
+      return response
+    }
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export const signIn: any = async (email: string, password: string) => {
@@ -44,39 +60,38 @@ export const signUp: any = async (
     passwordConfirmation: cPassword,
   }
 
-  console.log('Estive aqui')
+  try {
+    const response = await api.post('auth/sign-up', informationJSON)
 
-  // try {
-  //   const response = await api.post('auth/sign-up', informationJSON)
-
-  //   console.log('Response:', response)
-  // } catch (error) {
-  //   console.log('ERROR: ', error)
-  // }
-
-  // Metodo antigo
-
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(informationJSON),
-    // Authorization: `bearer${token}`
+    console.log('Response:', response)
+  } catch (error) {
+    console.log('ERROR: ', error)
   }
-
-  const response = await fetch(
-    'http://localhost:3333/auth/sign-up',
-    requestOptions
-  )
-  console.log('Initia lResponse: ', response)
-  console.log('Response data: ', await response.json())
 }
+
+// Metodo antigo
+
+//   const requestOptions = {
+//     method: 'POST',
+//     headers: { 'Content-Type': 'application/json' },
+//     body: JSON.stringify(informationJSON),
+//     // Authorization: `bearer${token}`
+//   }
+
+//   const response = await fetch(
+//     'http://localhost:3333/auth/sign-up',
+//     requestOptions
+//   )
+//   console.log('Initia lResponse: ', response)
+//   console.log('Response data: ', await response.json())
+// }
 
 export const logout: any = () => {
   cookies.remove('token', { path: '/' })
   cookies.remove('refreshToken', { path: '/' })
 }
 
-/* Friend routes */
+// ----------------Friend Routes----------------
 
 export const getFriends: any = async () => {
   const response = await api.get('/friend-list', {
@@ -120,6 +135,16 @@ export const refuseFriendRequest: any = async (id: string) => {
 
 export const removeFriend: any = async (id: string) => {
   const response = await api.delete(`/friend-list/${id}`, {
+    headers: { Authorization: `Bearer ${getToken()}` },
+  })
+
+  return response
+}
+
+// ----------------Create story routes----------------
+
+export const createStory: any = async () => {
+  const response = await api.post('/story', {
     headers: { Authorization: `Bearer ${getToken()}` },
   })
 

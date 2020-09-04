@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import styled from 'styled-components'
 import Button from '@material-ui/core/Button'
@@ -6,13 +6,38 @@ import Collapse from '@material-ui/core/Collapse'
 import { CustomInput } from '../../components/filled-input.component'
 import Friends from '../profile/components/friends.component'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ProfileBadge from '../../components/profile-badge.component'
+
+import { getFriends } from '../../helpers/api-methods'
+import { Checkbox } from '@material-ui/core'
 
 interface Options {
-  name: string;
+  name: string
+}
+
+interface Friend {
+  id: number
+  username: string
+  profileImage: string
 }
 
 const StoryCreationPage: React.FC = () => {
-  const [expanded, setExpanded] = React.useState(false)
+  const [expanded, setExpanded] = useState(false)
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [users, setUsers] = useState([])
+  const [friends, setFriends] = useState<Friend[]>([])
+
+  React.useEffect(() => {
+    ;(async () => {
+      setFriends(await getFriends())
+    })()
+  }, [])
+
+  const handleFriends = (event) => {
+    console.log(event.target.checked)
+    console.log(event.target.value)
+  }
 
   return (
     <Background>
@@ -21,11 +46,17 @@ const StoryCreationPage: React.FC = () => {
           <h1>Crie sua historia!</h1>
         </Item>
         <Item>
-          <CustomInput label="Nome da história" variant="filled" fullWidth />
+          <CustomInput
+            label="Nome da história"
+            variant="filled"
+            value={name}
+            fullWidth
+          />
         </Item>
         <Item>
           <CustomInput
             label="Descrição da história (Opcional)"
+            value={description}
             variant="filled"
             multiline
             rows={4}
@@ -52,11 +83,31 @@ const StoryCreationPage: React.FC = () => {
         </Item>
         <Collapse in={expanded}>
           <Item>
-            <Friends />
+            {friends.map((friend) => (
+              <Box key={friend.id}>
+                <ProfileBadge name={friend.username} />
+                <Actions>
+                  <Checkbox
+                    onChange={(event) => handleFriends(event)}
+                    value={friend.id}
+                    style={{ color: 'white' }}
+                  />
+                </Actions>
+              </Box>
+            ))}
           </Item>
         </Collapse>
         <Item>
-          <Button style={{ color: 'white', backgroundColor: 'rgb(33, 34, 44)', textTransform: 'none' }} fullWidth>Finalizar</Button>
+          <Button
+            style={{
+              color: 'white',
+              backgroundColor: 'rgb(33, 34, 44)',
+              textTransform: 'none',
+            }}
+            fullWidth
+          >
+            Finalizar
+          </Button>
         </Item>
       </Container>
     </Background>
@@ -90,6 +141,19 @@ const Item = styled.div`
     min-width: 90vw;
     /* width: 100%; */
   }
+`
+
+const Box = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid rgb(56, 68, 77);
+  width: 100%;
+`
+const Actions = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 export default StoryCreationPage
