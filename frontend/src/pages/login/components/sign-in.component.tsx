@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react'
 import GoogleLogin, {
   GoogleLoginResponse,
   GoogleLoginResponseOffline,
+  useGoogleLogin,
 } from 'react-google-login'
 import Cookies from 'universal-cookie'
 
@@ -18,40 +19,6 @@ import gIcon from '../../../assets/images/google.svg'
 import styled from 'styled-components'
 
 const cookies = new Cookies()
-
-const responseGoogle = (response) => {
-  console.log(response)
-}
-
-interface TokenObject {
-  token_type: string
-  access_token: string
-  scope: string
-  login_hint: string
-  expires_in: number
-}
-
-interface ProfileObject {
-  email: string
-  familyName: string
-  givenName: string
-  googleId: string
-  imageUrl: string
-  name: string
-  __proto__: Object
-}
-
-interface GoogleResponse {
-  Da: string
-  accessToken: string
-  googleId: string
-  profileObj: ProfileObject
-  tokenId: string
-  tokenObj: TokenObject
-  tt: any
-  wc: TokenObject
-  __proto__: Object
-}
 
 export const SignIn: React.FC = observer(() => {
   const rootStore = useContext(RootStoreContext)
@@ -74,6 +41,7 @@ export const SignIn: React.FC = observer(() => {
   }
 
   const googleLogin = (response: any, success: boolean) => {
+    console.log('Google response', response)
     if (success) {
       cookies.set('token', response.tokenId)
       rootStore.userStore.setLoggedIn(true)
@@ -180,4 +148,5 @@ const StyledButton = styled(Button)`
 `
 const GoogleButton = styled(Button)`
   text-transform: none;
+  font-weight: 420;
 `
