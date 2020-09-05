@@ -37,13 +37,18 @@ class FriendSolicitation {
   }
 
   async store(req: Request, res: Response) {
-    const { accountId, params } = req
-    const { id } = params
+    const { accountId, body } = req
+    const { username } = body
 
-    if (!id) {
+    if (!username.trim()) {
       const message = getMessage('friend.username.notfound')
       return res.status(404).json({ message })
     }
+
+    const { id } = await knex('Account')
+      .where('username', username)
+      .select('id')
+      .first()
 
     if (+id === accountId) {
       const message = getMessage('friend.status.error.invalidFriend')

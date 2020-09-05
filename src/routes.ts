@@ -61,7 +61,7 @@ routes.patch('/user/edit/avatar', upload.single('image'), userProfile.patch)
 
 const friendSolicitation = new FriendSolicitation()
 routes.get('/add-friend', friendSolicitation.index)
-routes.post('/add-friend/:id', friendSolicitation.store)
+routes.post('/add-friend', friendSolicitation.store)
 routes.put('/add-friend/:id', friendSolicitation.update)
 routes.delete('/add-friend/:id', friendSolicitation.delete)
 
