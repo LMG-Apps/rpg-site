@@ -26,7 +26,7 @@ const upload = multer(multerConfig)
 
 const login = new Login()
 routes.post('/auth/sign-up', accountSignUp, login.store)
-routes.get('/auth/sign-in', accountSignIn, login.index)
+routes.post('/auth/sign-in', accountSignIn, login.index)
 
 const refreshToken = new RefreshToken()
 routes.get('/refresh', refreshToken.index)
