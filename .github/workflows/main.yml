@@ -35,6 +35,8 @@ jobs:
           yarn install
           echo "Building..."
           yarn run build
+        env:
+          CI: false
           
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.5.9
