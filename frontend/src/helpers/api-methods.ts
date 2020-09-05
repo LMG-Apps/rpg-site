@@ -21,8 +21,24 @@ const getRefreshToken: any = () => {
   return cookies.get('refreshToken')
 }
 
+const getTokenExpire = (token: string) => {
+  if (!token) return 0
+
+  try {
+    const [, payload] = token.split('.')
+    const data = JSON.parse(atob(payload))
+    const expires = data ? data.exp : 0
+    return expires
+  } catch (e) {
+    return 0
+  }
+}
+
 const requestHandler = async (url: string, requestOptions: object) => {
   const path = baseURL + url
+
+  const token = getToken()
+  const refreshToken = getRefreshToken()
 
   try {
     const response = await fetch(path, requestOptions)
