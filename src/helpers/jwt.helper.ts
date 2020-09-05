@@ -9,6 +9,13 @@ export interface Session extends SignOptions {
   exp?: string
 }
 
+export interface TokenPayload {
+  id: number
+  username: string
+  iat: number
+  exp: number
+}
+
 const tokenPrivateKey: string = process.env.JWT_TOKEN_PRIVATE_KEY!
 const refreshTokenPrivateKey: string = process.env
   .JWT_REFRESH_TOKEN_PRIVATE_KEY!

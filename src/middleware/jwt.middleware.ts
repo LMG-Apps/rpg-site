@@ -1,12 +1,23 @@
-import { verifyJwt, getTokenFromHeaders } from '../helpers/jwt.helper'
+import {
+  verifyJwt,
+  getTokenFromHeaders,
+  TokenPayload,
+} from '../helpers/jwt.helper'
 import getMessage from '../helpers/message.helper'
 import { Request, Response, NextFunction } from 'express'
 
 const checkJwt = (req: Request, res: Response, next: NextFunction) => {
   const { url: path } = req
 
-  const excludedPaths = ['/auth/sign-in', '/auth/sign-up', '/auth/forgot', '/auth/reset', '/refresh', '/tmp']
-  const isExcluded = !!excludedPaths.find(p => path.startsWith(p))
+  const excludedPaths = [
+    '/auth/sign-in',
+    '/auth/sign-up',
+    '/auth/forgot',
+    '/auth/reset',
+    '/refresh',
+    '/tmp',
+  ]
+  const isExcluded = !!excludedPaths.find((p) => path.startsWith(p))
   if (isExcluded) {
     return next()
   }
@@ -20,7 +31,8 @@ const checkJwt = (req: Request, res: Response, next: NextFunction) => {
 
   try {
     const decoded = verifyJwt(token)
-    req.accountId = Object(decoded).id
+    const { id } = decoded as TokenPayload
+    req.accountId = id
     next()
   } catch (e) {
     const message = getMessage('account.token.invalid')

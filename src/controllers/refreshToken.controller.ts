@@ -5,6 +5,7 @@ import {
   getTokenFromHeaders,
   generateJwt,
   verifyRefreshJwt,
+  TokenPayload,
 } from '../helpers/jwt.helper'
 
 interface Account {
@@ -25,14 +26,13 @@ class RefreshToken {
 
     try {
       const decoded = verifyRefreshJwt(token)
-      const account: Account = await knex('Account')
-        .where('id', Object(decoded).id)
-        .first()
+      const { id } = decoded as TokenPayload
+      const account: Account = await knex('Account').where('id', id).first()
 
       if (!account) {
         return res.status(401).json({ message: messageInvalidToken })
       }
-      if (Object(decoded).id !== account.id) {
+      if (id !== account.id) {
         return res.status(401).json({ message: messageInvalidToken })
       }
 
