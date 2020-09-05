@@ -30,6 +30,7 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install and Build
         run: |
+          cd frontend
           echo "Installing..."
           yarn install
           echo "Building..."
