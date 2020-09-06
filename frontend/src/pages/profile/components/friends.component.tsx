@@ -1,50 +1,80 @@
 import React from 'react'
 
+import { AxiosResponse } from 'axios'
+import {
+  acceptFriendRequest,
+  getFriends,
+  listFriendRequests,
+} from '../../../helpers/api-methods'
+
 import ProfileBadge from '../../../components/profile-badge.component'
-import { StyledLink } from '../../../styles/app-styles'
+
+import { IconButton } from '@material-ui/core'
+
+import CheckRoundedIcon from '@material-ui/icons/CheckRounded'
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import styled from 'styled-components'
-import { Checkbox } from '@material-ui/core'
-
-// Array for testing purposes only
-const namesArray: Array<string> = [
-  'Gustavo Lopes',
-  'Miguel Demarque',
-  'Luiz Felipe',
-  'Nicolas Gen',
-  'Leonel P',
-  'Yves',
-]
 
 interface FriendsProps {
+  id: number
+  username: string
   status?: string
-  id?: number
+  image_url?: string
 }
 
-function friendActions(status?: string) {
-  switch (status) {
-    case 'p':
-      return <StyledLink underline>Cancelar o miguel gay</StyledLink>
-    case 'a':
-      return <StyledLink underline>Desfazer amizade</StyledLink>
-    case 'b':
-      return <StyledLink underline>Desbloquear</StyledLink>
-    default:
-      // return <StyledLink underline>Adicionar amigo</StyledLink>
-      return <Checkbox style={{ color: 'white' }} />
-  }
-}
+const Friends: React.FC = () => {
+  const [friends, setFriends] = React.useState<FriendsProps[]>([])
+  const [friendRequests, setFriendRequests] = React.useState<FriendsProps[]>([])
 
-const Friends: React.FC<FriendsProps> = ({ status }: FriendsProps) => (
-  <Container>
-    {namesArray.map((user, index) => (
-      <Box key={index}>
-        <ProfileBadge name={user} />
-        <Actions>{friendActions(status)}</Actions>
-      </Box>
-    ))}
-  </Container>
-)
+  const [loading, setLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    ;(async () => {
+      // setFriends(await getFriends());
+      setLoading(true)
+
+      setFriends(await getFriends())
+
+      // console.log(friends)
+
+      const friendsRequests: AxiosResponse = await listFriendRequests()
+
+      setFriendRequests(friendsRequests.data)
+
+      setLoading(false)
+      // console.log(friendRequests)
+    })()
+  }, [])
+
+  return (
+    <Container>
+      {friendRequests.length > 0
+        ? friendRequests.map((user, index) => (
+            <Box key={user.id}>
+              <ProfileBadge name={user.username} />
+              <Actions>
+                <IconButton onClick={() => acceptFriendRequest(user.id)}>
+                  <CheckRoundedIcon style={{ color: 'green' }} />
+                </IconButton>
+                <IconButton>
+                  <CloseRoundedIcon style={{ color: 'red' }} />
+                </IconButton>
+              </Actions>
+            </Box>
+          ))
+        : null}
+      {friends.length > 0
+        ? friends.map((user, index) => (
+            <Box key={user.id}>
+              <ProfileBadge name={user.username} />
+              <Actions>Remover</Actions>
+            </Box>
+          ))
+        : null}
+    </Container>
+  )
+}
 
 const Container = styled.div`
   display: flex;
@@ -65,6 +95,11 @@ const Box = styled.div`
 const Actions = styled.div`
   display: flex;
   align-items: center;
+  cursor: pointer;
+
+  :hover {
+    text-decoration: underline;
+  }
 `
 
 export default Friends

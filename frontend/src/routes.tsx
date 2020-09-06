@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { HashRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import { observer } from 'mobx-react'
 
 import { RootStoreContext } from './stores/root.store'
 
@@ -15,12 +16,26 @@ interface RoutesProps {
   width: number
 }
 
-const Routes: React.FC<RoutesProps> = ({ width }: RoutesProps) => {
+const Routes: React.FC<RoutesProps> = observer(({ width }: RoutesProps) => {
   const rootStore = useContext(RootStoreContext)
 
-  return (
-    <Router>
-      {rootStore.userStore.loginStatus.loggedIn ? (
+  if (
+    !rootStore.userStore.hydrating &&
+    !rootStore.userStore.loginStatus.loggedIn
+  ) {
+    return (
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <LoginPage />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    )
+  } else if (rootStore.userStore.loginStatus.loggedIn) {
+    return (
+      <Router>
         <Switch>
           <Route exact path="/">
             <Redirect to="/dashboard" />
@@ -45,20 +60,12 @@ const Routes: React.FC<RoutesProps> = ({ width }: RoutesProps) => {
             <Header width={width} />
             <StoryEditionPage />
           </Route>
+        </Switch>
+      </Router>
+    )
+  }
 
-          {/* <Route path="/404" component={() => <h1>NOT FOUND</h1>} /> */}
-        </Switch>
-      ) : (
-        <Switch>
-          <Route exact path="/">
-            <LoginPage />
-          </Route>
-          <Route path="/404" component={() => <Redirect to="/" />} />
-          <Redirect to="/" />
-        </Switch>
-      )}
-    </Router>
-  )
-}
+  return null
+})
 
 export default Routes

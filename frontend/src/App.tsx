@@ -27,8 +27,7 @@ const App: React.FC = observer(() => {
 
   const rootStore = React.useContext(RootStoreContext)
 
-  console.log('loggedIN', rootStore.userStore.loginStatus.loggedIn)
-
+  // ola
   useEffect(() => {
     console.log('all cookies', cookies.getAll())
 
@@ -43,14 +42,21 @@ const App: React.FC = observer(() => {
   }, [])
 
   useEffect(() => {
-    if (cookies.get('token')) {
-      rootStore.userStore.setLoggedIn(true)
-    } else {
-      rootStore.userStore.setLoggedIn(false)
+    if (!rootStore.userStore.hydrating) {
+      if (cookies.get('token')) {
+        rootStore.userStore.setLoggedIn(true)
+      } else {
+        rootStore.userStore.setLoggedIn(false)
+      }
     }
-  }, [rootStore.userStore, rootStore.userStore.loginStatus.loggedIn])
+  }, [rootStore.userStore])
 
-  // console.log(rootStore.userStore.loginStatus.loggedIn)
+  console.log(
+    'hydrating:',
+    rootStore.userStore.hydrating,
+    'loggedIn:',
+    rootStore.userStore.loginStatus.loggedIn
+  )
 
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -68,9 +74,7 @@ const App: React.FC = observer(() => {
     <>
       <GlobalStyle />
       <MuiThemeProvider theme={theme}>
-        <Provider {...rootStore}>
-          <Routes width={width} />
-        </Provider>
+        <Routes width={width} />
       </MuiThemeProvider>
     </>
   )

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 interface LinkProps {
-  underline: boolean
+  underline?: boolean
 }
 
 export const GlobalStyle = createGlobalStyle`
@@ -74,12 +74,13 @@ export const GlobalStyle = createGlobalStyle`
   }
 `
 
-export const StyledLink = styled(Link)<LinkProps>`
+export const StyledLink = styled(Link)`
   display: flex;
   text-decoration: none;
   color: white;
 
   :hover {
-    text-decoration: ${(props) => (props.underline ? 'underline' : 'none')};
+    text-decoration: ${(props: LinkProps) =>
+      props.underline ? 'underline' : 'none'};
   }
 `

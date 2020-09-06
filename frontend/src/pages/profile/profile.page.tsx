@@ -40,19 +40,6 @@ const ProfilePage: React.FC = () => {
     rootStore.userStore.setLoggedIn(false)
   }
 
-  React.useEffect(() => {
-    ;(async () => {
-      // setFriends(await getFriends());
-      const friends = await getFriends()
-
-      console.log(friends)
-
-      const friendRequests = await listFriendRequests()
-
-      console.log(friendRequests)
-    })()
-  }, [])
-
   return (
     <Background>
       <Container>

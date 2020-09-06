@@ -13,7 +13,12 @@ export class UserStore {
     this.rootStore = rootStore
   }
 
-  @persist @observable loginStatus: LoginStatus = { loggedIn: false }
+  @persist('object') @observable loginStatus: LoginStatus = { loggedIn: false }
+  @observable hydrating: boolean = false
+
+  setHydrating(value: boolean) {
+    this.hydrating = value
+  }
 
   setLoggedIn(value: boolean) {
     this.loginStatus.loggedIn = value

@@ -12,6 +12,7 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import campfire from '../../assets/images/campire1.jpeg'
 
 import styled from 'styled-components'
+import { StyledLink } from '../../styles/app-styles'
 
 interface StoryDescriptionPageProps {
   width: number
@@ -38,18 +39,20 @@ const StoryDescriptionPage: React.FC<StoryDescriptionPageProps> = ({
             >
               Escrever
             </Button>
-            <Button
-              style={{
-                color: 'white',
-                backgroundColor: 'rgb(33, 34, 44)',
-                textTransform: 'none',
-                width: '150px',
-                boxShadow: '1px 1px 5px 0 black',
-              }}
-              endIcon={<SettingsIcon />}
-            >
-              Editar
-            </Button>
+            <StyledLink to="/story/edit">
+              <Button
+                style={{
+                  color: 'white',
+                  backgroundColor: 'rgb(33, 34, 44)',
+                  textTransform: 'none',
+                  width: '150px',
+                  boxShadow: '1px 1px 5px 0 black',
+                }}
+                endIcon={<SettingsIcon />}
+              >
+                Editar
+              </Button>
+            </StyledLink>
             <Button
               style={{
                 color: 'white',
@@ -99,16 +102,16 @@ const StoryDescriptionPage: React.FC<StoryDescriptionPageProps> = ({
           <span>Gustavo Lopes</span>
         </Participants> */}
         <Participants>
-          <Card>
+          <ParticipantsCard>
             <h2>Mestre</h2>
             <ProfileBadge name="Nicolas" />
-          </Card>
-          <Card>
+          </ParticipantsCard>
+          <ParticipantsCard>
             <h2>Membros</h2>
             <ProfileBadge name="Luiz Felipe" />
             <ProfileBadge name="Miguel Demarque" />
             <ProfileBadge name="Gustavo Lopes" />
-          </Card>
+          </ParticipantsCard>
         </Participants>
         <Footer />
       </Container>
@@ -169,7 +172,8 @@ const Actions = styled.div`
   /* margin-left: 16px; */
   /* justify-self: start; */
 
-  button:not(:first-child) {
+  button:not(:first-child),
+  a {
     margin-top: 20px;
   }
 
@@ -199,7 +203,6 @@ const RpgTitle = styled.div`
 const Participants = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   grid-area: participants;
 
   justify-self: right;
@@ -251,17 +254,37 @@ const Description = styled.div`
   }
 `
 
-const Card = styled.div`
+const ParticipantsCard = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   padding: 30px;
   background-color: var(--color-primary);
-  width: 100%;
+  width: 280px;
   box-shadow: 1px 1px 5px 0 black;
 
   div:not(:first-child) {
     margin-top: 30px;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+`
+
+const DescriptionCard = styled.div`
+  display: flex;
+  padding: 30px;
+  background-color: var(--color-primary);
+  /* width: 280px; */
+  box-shadow: 1px 1px 5px 0 black;
+
+  div:not(:first-child) {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
   }
 `
 

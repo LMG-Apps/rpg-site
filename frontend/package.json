@@ -14,6 +14,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.2",
     "axios": "^0.19.2",
     "bl": "^4.0.3",
@@ -29,7 +30,8 @@
     "serialize-javascript": "^3.1.0",
     "styled-components": "^5.1.1",
     "typescript": "~3.7.2",
-    "universal-cookie": "^4.0.3"
+    "universal-cookie": "^4.0.3",
+    "yargs-parser": "^13.1.2"
   },
   "scripts": {
     "predeploy": "yarn run build",

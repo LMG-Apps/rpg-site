@@ -19,7 +19,7 @@ const ProfileBadge: React.FC<ProfileBadgeProps> = ({
   id,
 }: ProfileBadgeProps) => (
   <Container>
-    <StyledLink underline="true" to="/user">
+    <StyledLink underline to="/user">
       <Name>{size === 'small' ? null : <h4>{name}</h4>}</Name>
     </StyledLink>
     <StyledLink to="/user">
