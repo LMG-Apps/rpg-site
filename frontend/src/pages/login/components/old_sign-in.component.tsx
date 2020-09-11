@@ -1,10 +1,9 @@
 import React, { useState, useContext } from 'react'
-import { FiLogIn } from 'react-icons/fi'
-// import GoogleLogin, {
-//   GoogleLoginResponse,
-//   GoogleLoginResponseOffline,
-//   useGoogleLogin,
-// } from 'react-google-login'
+import GoogleLogin, {
+  GoogleLoginResponse,
+  GoogleLoginResponseOffline,
+  useGoogleLogin,
+} from 'react-google-login'
 import Cookies from 'universal-cookie'
 
 import { RootStoreContext } from '../../../stores/root.store'
@@ -15,12 +14,11 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Alert from '@material-ui/lab/Alert'
 
-// import gIcon from '../../../assets/images/google.svg'
+import gIcon from '../../../assets/images/google.svg'
 
 import styled from 'styled-components'
-import { StyledLink } from '../../../styles/app-styles'
 
-// const cookies = new Cookies()
+const cookies = new Cookies()
 
 export const SignIn: React.FC = observer(() => {
   const rootStore = useContext(RootStoreContext)
@@ -42,19 +40,19 @@ export const SignIn: React.FC = observer(() => {
     }
   }
 
-  // const googleLogin = (response: any, success: boolean) => {
-  //   console.log('Google response', response)
-  //   if (success) {
-  //     cookies.set('token', response.tokenId)
-  //     rootStore.userStore.setLoggedIn(true)
-  //   } else {
-  //     console.log(response)
-  //   }
-  // }
+  const googleLogin = (response: any, success: boolean) => {
+    console.log('Google response', response)
+    if (success) {
+      cookies.set('token', response.tokenId)
+      rootStore.userStore.setLoggedIn(true)
+    } else {
+      console.log(response)
+    }
+  }
 
   return (
     <Container>
-      <h1 style={{ fontWeight: 400 }}>Bem vindo</h1>
+      <Title>Bem vindo</Title>
       <form
         onSubmit={(event) => {
           event.preventDefault()
@@ -68,7 +66,7 @@ export const SignIn: React.FC = observer(() => {
             setEmailError(''),
           ]}
           label="Usuário"
-          variant="standard"
+          variant="outlined"
           fullWidth
         />
         <TextField
@@ -78,36 +76,25 @@ export const SignIn: React.FC = observer(() => {
             setPasswordError(''),
           ]}
           label="Senha"
-          variant="standard"
+          variant="outlined"
           type="password"
           fullWidth
-          style={{ margin: '28px 0 0 0', color: '#232129' }}
         />
 
         {emailError ? <Alert severity="error">{emailError}</Alert> : null}
         {passwordError ? <Alert severity="error">{passwordError}</Alert> : null}
 
-        <StyledLink to="/forgot">Esqueci minha senha</StyledLink>
         <StyledButton
           type="submit"
           variant="contained"
           size="large"
           onClick={handleLogin}
           fullWidth
-          style={{
-            margin: '48px 0 0 0',
-            color: '#f0f0f0',
-            background: '#EA4335',
-          }}
         >
           Entrar
         </StyledButton>
       </form>
-      <StyledLink to="/signup">
-        <FiLogIn size={20} />
-        <p>Criar conta</p>
-      </StyledLink>
-      {/* <GoogleLogin
+      <GoogleLogin
         clientId="736423435956-4tp7t676eqltolhm3srflm6bmkcit5nq.apps.googleusercontent.com"
         render={(renderProps) => (
           <GoogleButton
@@ -121,66 +108,33 @@ export const SignIn: React.FC = observer(() => {
         onSuccess={(response) => googleLogin(response, true)}
         onFailure={(response) => googleLogin(response, false)}
         cookiePolicy={'single_host_origin'}
-      /> */}
+      />
     </Container>
   )
 })
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  flex-flow: column wrap;
+
+  div {
+    margin-bottom: 5px;
+  }
 
   form {
-    margin: 80px 0 40px;
-    width: 340px;
-    text-align: center;
-
-    a {
-      color: #ea4335;
-      display: block;
-      font-size: 16px;
-      margin-top: 24px;
-      text-decoration: none;
-      transition: color 0.2;
-
-      &:hover {
-        color: #d62516;
-      }
-    }
-  }
-
-  > a {
-    color: #ea4335;
-    display: flex;
-    align-items: center;
-    margin-top: 24px;
-    font-size: 18px;
-    text-decoration: none;
-    transition: color 0.2s;
-
-    svg {
-      margin-right: 14px;
-    }
-
-    p {
-      line-height: 0;
-    }
-
-    &:hover {
-      color: #d62516;
-    }
-  }
-
-  h1 {
-    margin-bottom: 24px;
-    font-family: 'Grenze Gotisch', cursive;
-    font-weight: bold;
-    font-size: 48px;
-    color: #232129;
+    margin-bottom: 10px;
   }
 `
+
+const Title = styled.h1`
+  font-family: Grenze Gotisch, cursive;
+  font-size: 40px;
+  font-weight: 400;
+  text-align: center;
+  /* line-height: 30px; */
+  margin-bottom: 10px;
+`
+
 const StyledButton = styled(Button)`
   font-family: 'Grenze Gotisch', cursive;
   font-size: 24px;
@@ -192,7 +146,7 @@ const StyledButton = styled(Button)`
     background-color: rgba(255, 85, 85, 0.9);
   }
 `
-// const GoogleButton = styled(Button)`
-//   text-transform: none;
-//   font-weight: 420;
-// `
+const GoogleButton = styled(Button)`
+  text-transform: none;
+  font-weight: 420;
+`

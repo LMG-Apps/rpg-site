@@ -7,37 +7,42 @@ import SignInSignUpCard from './components/sign-in-sign-up-card.component'
 import styled from 'styled-components'
 
 import campfire from '../../assets/images/campire1.jpeg'
+import { SignIn } from './components/sign-in.component'
+
+const Container = styled.div`
+  height: 100vh;
+
+  display: flex;
+
+  justify-content: stretch;
+`
 
 const BackgroundImage = styled.div`
   /* Div size and position */
-  position: fixed;
-  height: 100%;
-  width: 100%;
+  flex: 1;
   /* Background image settings */
-  background-image: url(${campfire});
-  background-size: max(100vw, 1280px) max(100vh, 720px);
-  background-repeat: no-repeat;
-
-  overflow-x: hidden;
+  background: url(${campfire}) no-repeat center;
+  background-size: cover;
 `
 
 const StyledGrid = styled(Grid)`
-  padding: 20px;
-  height: 100vh;
-
-  /* Custom padding for mobile */
-  @media (max-width: 600px) {
-    padding: 10px;
-  }
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 700px;
+  background: #f4ede8;
 `
 
 const LoginPage: React.FC = () => {
   return (
-    <BackgroundImage>
-      <StyledGrid container justify="flex-end" alignItems="center">
-        <SignInSignUpCard />
+    <Container>
+      <StyledGrid container>
+        <SignIn />
       </StyledGrid>
-    </BackgroundImage>
+      <BackgroundImage />
+    </Container>
   )
 }
 

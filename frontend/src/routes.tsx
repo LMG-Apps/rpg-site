@@ -4,7 +4,7 @@ import { observer } from 'mobx-react'
 
 import { RootStoreContext } from './stores/root.store'
 
-import LoginPage from './pages/login/login.page'
+import LoginPage from './pages/login/old_login.page'
 import Dashboard from './pages/dashboard/dashboard.page'
 import ProfilePage from './pages/profile/profile.page'
 import StoryCreationPage from './pages/story-creation/story-creation.page'

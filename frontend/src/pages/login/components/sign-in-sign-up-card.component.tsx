@@ -8,7 +8,7 @@ import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 import { StylesProvider } from '@material-ui/core/styles'
 
-import { SignIn } from './sign-in.component'
+import { SignIn } from './old_sign-in.component'
 import { SignUp } from './sign-up.component'
 
 import styled from 'styled-components'

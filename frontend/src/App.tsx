@@ -27,7 +27,14 @@ const App: React.FC = observer(() => {
 
   const rootStore = React.useContext(RootStoreContext)
 
-  // ola
+  const handleResize = React.useCallback((event) => {
+    setWidth(event.currentTarget.innerWidth)
+  }, [])
+
+  const handleCookies = React.useCallback((info) => {
+    console.log(info)
+  }, [])
+
   useEffect(() => {
     console.log('all cookies', cookies.getAll())
 
@@ -38,8 +45,9 @@ const App: React.FC = observer(() => {
     // Specify how to clean up after this effect:
     return function cleanup() {
       window.removeEventListener('resize', handleResize)
+      cookies.removeChangeListener(handleCookies)
     }
-  }, [])
+  }, [handleCookies, handleResize])
 
   useEffect(() => {
     if (!rootStore.userStore.hydrating) {
@@ -61,14 +69,6 @@ const App: React.FC = observer(() => {
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
-
-  const handleResize = (event) => {
-    setWidth(event.currentTarget.innerWidth)
-  }
-
-  const handleCookies = (info) => {
-    console.log(info)
-  }
 
   return (
     <>
