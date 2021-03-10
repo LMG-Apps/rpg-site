@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Provider, observer } from 'mobx-react'
+import { observer } from 'mobx-react'
 import Cookies from 'universal-cookie'
 
 import Routes from './routes'
