@@ -16,7 +16,7 @@
     "@types/react-dom": "^16.9.0",
     "@types/react-router-dom": "^5.1.5",
     "@types/styled-components": "^5.1.2",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bl": "^4.0.3",
     "lodash": "^4.17.19",
     "mobx": "^5.15.6",
