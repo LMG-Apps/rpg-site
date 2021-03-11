@@ -2,8 +2,6 @@ import React from 'react'
 
 import Grid from '@material-ui/core/Grid'
 
-import SignInSignUpCard from './components/sign-in-sign-up-card.component'
-
 import styled from 'styled-components'
 
 import campfire from '../../assets/images/campire1.jpeg'

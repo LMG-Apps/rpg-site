@@ -5,7 +5,6 @@ import { FiLogIn } from 'react-icons/fi'
 //   GoogleLoginResponseOffline,
 //   useGoogleLogin,
 // } from 'react-google-login'
-import Cookies from 'universal-cookie'
 
 import { RootStoreContext } from '../../../stores/root.store'
 import { observer } from 'mobx-react'

@@ -22,7 +22,7 @@ class Dashboard extends React.Component<{ width: number }, {}> {
     return (
       <Background>
         <Container>
-          <h2>Minhas historias</h2>
+          <h1>Minhas historias</h1>
           <OuterRow>
             <Row>
               <Item>
@@ -74,7 +74,7 @@ const Background = styled.div`
 const Container = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 30px;
+  padding: 20px 40px;
 
   @media (max-width: 738px) {
     padding: 20px 20px;
