@@ -11,6 +11,7 @@ import StoryCreationPage from './pages/story-creation/story-creation.page'
 import StoryEditionPage from './pages/story-edition/story-edtion.page'
 import StoryDescriptionPage from './pages/story-description/story-description.page'
 import Header from './components/header.component'
+import TestPage from './pages/test/test.page'
 
 interface RoutesProps {
   width: number
@@ -59,6 +60,9 @@ const Routes: React.FC<RoutesProps> = observer(({ width }: RoutesProps) => {
           <Route path="/story/edit">
             <Header width={width} />
             <StoryEditionPage />
+          </Route>
+          <Route path="/test">
+            <TestPage />
           </Route>
         </Switch>
       </Router>
