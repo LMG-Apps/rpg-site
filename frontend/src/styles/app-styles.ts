@@ -49,9 +49,10 @@ export const GlobalStyle = createGlobalStyle`
     /* user-select: none; */
   }
   html, body, #root {
-    height: 100vh;
-    width: 100vw;
+    /*height: 100vh;
+    width: 100vw;*/
   }
+
   body {
     background-color: var(--color-background)
   } 
